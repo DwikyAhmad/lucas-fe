@@ -52,7 +52,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} 
-        ${mrsSheppards.variable} ${josefinSans.variable} ${istokWeb.variable} antialiased`}
+        ${mrsSheppards.variable} ${josefinSans.variable} ${istokWeb.variable} antialiased bg-white`}
       >
         {children}
       </body>

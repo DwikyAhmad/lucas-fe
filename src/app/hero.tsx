@@ -56,7 +56,7 @@ export default function Hero() {
                             berlaku serta bersertifikat halal
                         </p>
                         <Button
-                            className=" bg-primaryBlack mt-4 w-fit px-5 py-6 rounded-xl font-istokWeb font-bold
+                            className=" bg-primaryBlack mt-4 w-[440px] px-5 py-6 rounded-xl font-istokWeb font-bold
                         text-lg"
                         >
                             Check Our Product Here
