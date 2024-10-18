@@ -62,6 +62,7 @@ const config: Config = {
 				primaryBlueNavy: '#313855',
 				blue: '#1E274B',
 				darkRed2: '#6D2222',
+				orange: '#ED7200',
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
