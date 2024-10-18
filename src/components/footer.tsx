@@ -12,7 +12,7 @@ import { Button } from "./ui/button";
 export default function Footer() {
     return (
         <>
-            <div className="font-poppins text-white bg-primaryRed flex py-4 justify-around">
+            <div className="font-poppins text-white bg-primaryRed flex py-4 justify-between px-12">
                 <div className="flex flex-col">
                     <div className="bg-primaryBlueNavy flex gap-4 py-3 px-5 rounded-xl font-semibold w-max">
                         <div className="flex items-center">
