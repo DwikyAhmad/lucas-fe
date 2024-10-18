@@ -1,7 +1,7 @@
 import Image from "next/image";
 import phapros from "@/assets/homepage/Phapros.svg";
 import bgHero from "@/assets/homepage/bg_hero.svg";
-import icon from "./icon.svg"
+import icon from "@/app/icon.svg"
 import LoginForm from "./loginForm";
 import { Button } from "@/components/ui/button"
 import arrow from "@/assets/miscellaneous/Arrow.svg"
