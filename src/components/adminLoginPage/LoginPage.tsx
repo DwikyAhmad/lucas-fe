@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 
 export default function LoginPage() {
     return (
-        <div className="text-black font-poppins bg-darkRed2 h-screen flex justify-evenly items-center">
+        <div className="text-black font-poppins bg-darkRed2 h-screen flex gap-5 justify-center items-center">
             <div className="w-[350px] h-[450px] relative">
                 <p className="absolute text-white z-10 text-3xl top-5 left-5 w-[250px] font-light">
                     “ A reliable pharma company that improves people health and
