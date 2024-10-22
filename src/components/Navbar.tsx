@@ -12,7 +12,7 @@ export default function Navbar() {
             <ul className="flex gap-2 font-light">
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">Home</li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">About Us</li>
-                <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">Product & Services</li>
+                <a className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" href="/productService">Product & Services</a>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">News</li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">LucaShop</li>
             </ul>
