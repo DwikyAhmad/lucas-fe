@@ -1,10 +1,10 @@
 import Navbar from "@/components/navbar";
-import Hero from "./hero";
-import Ceritificate from "./ceritificate";
-import Aboutus from "./aboutus";
-import Products from "./products";
-import Clients from "./clients";
-import Qna from "./qna";
+import Hero from "../components/homepage/hero";
+import Ceritificate from "../components/homepage/ceritificate";
+import Aboutus from "../components/homepage/aboutus";
+import Products from "../components/homepage/products";
+import Clients from "../components/homepage/clients";
+import Qna from "../components/homepage/qna";
 import Footer from "../components/footer";
 
 export default function Home() {

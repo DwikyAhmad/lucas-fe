@@ -1,13 +1,13 @@
 import Image from "next/image";
 import phapros from "@/assets/homepage/Phapros.svg";
 import bgHero from "@/assets/homepage/bg_hero.svg";
-import icon from "./icon.svg"
-import { Input } from "@/components/ui/input"
+import icon from "@/app/icon.svg"
+import LoginForm from "./loginForm";
 import { Button } from "@/components/ui/button"
 import arrow from "@/assets/miscellaneous/Arrow.svg"
 
 
-export default function Hero() {
+export default function Hero() {    
     return (
         <>
             <div className="pt-6 pb-12 px-4 relative font-poppins">
@@ -65,20 +65,7 @@ export default function Hero() {
                         </Button>
                     </div>
                     <div className="flex justify-center">
-                        <div className="bg-white/30 backdrop-blur-md w-[500px] px-5 py-5 rounded-xl border-2 border-white/60">
-                            <p className="text-center text-2xl font-bold">Sign In</p>
-                            <div className="flex flex-col">
-                                <label htmlFor="username" className="mt-4 font-istokWeb font-bold text-xs">Username</label>
-                                <Input className="bg-white text-black" type="text" name="username" id="username" placeholder="lucas.jaya"/>
-                                <label htmlFor="password" className="mt-4 font-istokWeb font-bold text-xs">Password</label>
-                                <Input className="bg-white text-black" type="password" name="password" id="password" placeholder="************"/>
-                                <div className="flex justify-between text-sm mt-1">
-                                    <a href="#">Forgot Password?</a>
-                                    <p>Don&apos;t have account yet? <a href="#" className="underline">Sign Up Here</a></p>
-                                </div>
-                                <Button className="mt-8">LOGIN</Button>
-                            </div>
-                        </div>
+                        <LoginForm/>
                     </div>
                 </div>
             </div>
