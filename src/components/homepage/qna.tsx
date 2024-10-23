@@ -10,7 +10,7 @@ export default function Qna() {
         <div className="font-poppins bg-white mt-4">
             <div className="bg-gray-200 text-black text-center py-6">
                 <h2 className="text-primaryBlueNavy text-center text-5xl font-semibold ">
-                    Most <span className="text-primaryRed">Questions</span>
+                    General <span className="text-primaryRed">FAQs</span>
                 </h2>
                 <div className="flex justify-center mt-3">
                     <div className="border-b-4 w-[200px] border-primaryRed"></div>

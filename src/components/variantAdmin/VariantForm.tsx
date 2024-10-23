@@ -13,13 +13,35 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 
-export default function ProductForm() {
+export default function VariantForm() {
     return (
-        <div className="text-black font-poppins bg-darkRed h-screen flex flex-col items-center">
+        <div className="text-black font-poppins bg-darkRed flex flex-col items-center">
             <h1 className="text-white text-3xl font-semibold pt-8 text-center">
-                ADD PRODUCT
+                ADD VARIANT
             </h1>
             <div className="bg-white w-[680px] p-5 mt-8 rounded-lg flex flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                    <Label className="font-semibold">Parent Product</Label>
+                    <Select>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Paracetamol" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Paracetamol</SelectLabel>
+                                <SelectItem value="apple">Apple</SelectItem>
+                                <SelectItem value="banana">Banana</SelectItem>
+                                <SelectItem value="blueberry">
+                                    Blueberry
+                                </SelectItem>
+                                <SelectItem value="grapes">Grapes</SelectItem>
+                                <SelectItem value="pineapple">
+                                    Pineapple
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
                 <div className="flex gap-5 justify-between">
                     <Label
                         className="text-nowrap self-center font-semibold"
@@ -193,7 +215,7 @@ export default function ProductForm() {
                     </div>
                 </div>
                 <div className="flex gap-5 justify-between">
-                <Label
+                    <Label
                         className="text-nowrap self-center font-semibold"
                         htmlFor="companyName"
                     >
@@ -208,10 +230,12 @@ export default function ProductForm() {
                     />
                 </div>
                 <div className="flex justify-between">
-                    <div><Button variant={'destructive'}>Back</Button></div>
+                    <div>
+                        <Button variant={"destructive"}>Back</Button>
+                    </div>
                     <div className="flex gap-4">
                         <Button>Create Product</Button>
-                        <Button variant={'outline'}>Add Variant</Button>
+                        <Button variant={"outline"}>Add Variant</Button>
                     </div>
                 </div>
             </div>
