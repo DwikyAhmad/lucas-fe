@@ -6,6 +6,7 @@ import { HiOutlineMenu } from "react-icons/hi";
 import { useState, useEffect, useRef } from "react";
 
 export default function Navbar() {
+    
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +45,10 @@ export default function Navbar() {
                                 About Us
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
+                                <a href="productsService">
+
                                 Product & Services
+                                </a>
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 News
