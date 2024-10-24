@@ -3,7 +3,6 @@ import HeaderCategories from '@/components/ui/productService/headerCategoriesNam
 import HeaderProduct from '@/components/ui/productService/productCategoriesHeader'
 import React, { useEffect } from 'react'
 import Image from 'next/image';
-import { cursorTo } from 'readline';
 
 type detailProductTypeProps ={ params: { id: string } }
 
