@@ -21,10 +21,10 @@ export default function Hero() {
                 />
                 <div className="absolute inset-0 bg-black/30 backdrop-blur-sm -z-10"></div>
                 <div>
-                    <h1 className="font-poppins font-bold text-center text-6xl">
+                    <h1 className="font-poppins font-bold text-center text-3xl sm:text-6xl">
                         SELAMAT DATANG
                     </h1>
-                    <p className="text-center font-josefinSans font-light text-xl tracking-wide">
+                    <p className="text-center font-josefinSans font-light text-md sm:text-xl tracking-wide">
                         Penuhi kebutuhan kesehatanmu disini
                     </p>
                 </div>
@@ -32,23 +32,24 @@ export default function Hero() {
                     <div>
                         <div className="bg-[#999999] flex gap-4 py-3 px-5 rounded-xl font-semibold w-max">
                             <div className="flex items-center">
-                                <div className="bg-[#E42228] p-2">
+                                <div className="bg-[#E42228] p-1 sm:p-2">
                                     <Image
                                         src={icon}
                                         alt="LucasDjaja Logo"
+                                        className="max-sm:w-[28px] "
                                     />
                                 </div>
                             </div>
                             <div className="flex flex-col items-end">
-                                <p className="text-5xl">LUCAS DJAJA</p>
+                                <p className="text-[28px] sm:text-5xl">LUCAS DJAJA</p>
                                 <Image
-                                    className="w-[150px]"
+                                    className="w-[90px] sm:w-[150px]"
                                     src={phapros}
                                     alt="Phapros Logo"
                                 />
                             </div>
                         </div>
-                        <p className="mt-3 w-[440px] text-justify font-poppins font-light">
+                        <p className="mt-3 w-[280px] sm:w-[440px] max-sm:text-sm text-justify font-poppins font-light">
                             Lucas Group Pharmaceutical memiliki tujuan untuk
                             menyediakan produk farmasi dan healthcare yang
                             terjangkau namun tetap berkualitas. Semua produk
@@ -56,7 +57,7 @@ export default function Hero() {
                             berlaku serta bersertifikat halal
                         </p>
                         <Button
-                            className=" bg-primaryBlack mt-4 w-[440px] px-5 py-6 rounded-xl font-istokWeb font-bold
+                            className=" bg-primaryBlack mt-4 w-[280px] sm:w-[440px] px-5 py-6 rounded-xl font-istokWeb font-bold
                         text-lg"
                         >
                             Check Our Product Here
@@ -64,7 +65,7 @@ export default function Hero() {
                             <Image src={arrow} alt="Arrow" className="w-[10px]" />
                         </Button>
                     </div>
-                    <div className="flex justify-center">
+                    <div className="hidden justify-center lg:flex">
                         <LoginForm/>
                     </div>
                 </div>
