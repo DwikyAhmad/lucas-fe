@@ -1,43 +1,50 @@
+'use client';
+
 import Navbar from '@/components/navbar'
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from 'next/image';
-import CardProducts from '@/components/ui/cardProducts';
+import CardProducts from '@/components/ui/productService/productCard';
+import HeaderProduct from '@/components/ui/productService/productCategoriesHeader';
+import ProductCard from '@/components/ui/productService/productCard';
+import Footer from '@/components/footer';
+import { useRouter } from 'next/navigation';
 
 
 const productService = () => {
+    const router = useRouter();
+    const toDetailPage = (id:string) => {
+      // Redirect ke halaman /dashboard saat button diklik
+      router.push(`/productsService/${id}`);
+    };
+
     return (
         <>
             <Navbar />
+            <HeaderProduct pageTitle={'PRODUCTS CATEGORIES'}  />
+            <div className="bg-primaryBlueNavy h-[100vh]" onClick={() => toDetailPage("1")}>
+                {/* for each products */}
+                <ProductCard
+                src="https://i.pinimg.com/enabled_lo/564x/36/a1/ce/36a1ceede11c2234f40147d17c4d031c.jpg"
+                alt="Deskripsi gambar"
+                width={500}
+                height={500}
+                title="Generic Product"
+                description="Sejak tahun 2003, Lucas group adalah satu-satunya perusahaan swasta  swasta yang ditunjuk untuk mensuplai kebutuhan obat nasional, selain  selain tiga BUMN. Sampai dengan saat ini Lucas Group sudah  bergabung ke dalam Kimia Farma Group dan masih aktif mengi- kuti  tender e catalog untuk memasok kebutuhan obat obatan generic ke  seluruh wilayah Indonesia."
+                tags={['Generic', 'Antibiotik']}
+                
+/>  
 
-            <div className="bg-primaryBlueNavy w-full  py-4 flex flex-col justify-center align-middle   " >
-                <div className='header flex mb-10'>
-                    <div className="flex flex-col w-full align-middle  items-center space-x-2 justify-center g-4 ">
-                        <div className="title w-max ">
-                            <h2 className='text-[80px] font-black '>PRODUCTS CATEGORIES</h2>
-                        </div>
-                        <div className="searchbar w-6/12 flex">
-                            <Input type="input" placeholder="Search categories here... " className='text-primaryBlueNavy border-b-primaryBlack border-4 bg-white font-poppins mx-2 h-12' />
-                            <Button type="submit" className='h-full'>Search</Button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-primaryBlueNavy">
-                    <CardProducts />
-                    <CardProducts />
-                    <CardProducts />
-
-                    
-                </div>
+               
+            </div>
+            <Footer />
 
         
             
             
             
             
-            </div>
         </>
     )
 }
