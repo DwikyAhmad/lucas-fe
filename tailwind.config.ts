@@ -64,7 +64,7 @@ const config: Config = {
 				darkRed2: '#6D2222',
 				orange: '#ED7200',
 				brightGreen: '#11A803',
-				redBricks: '#8E2C2C'
+				redBricks: '#8E2C2C',
     		},
     		borderRadius: {
     			lg: 'var(--radius)',

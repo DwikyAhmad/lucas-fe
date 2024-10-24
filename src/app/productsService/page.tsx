@@ -2,17 +2,15 @@
 
 import Navbar from '@/components/navbar'
 import React from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import Image from 'next/image';
-import CardProducts from '@/components/ui/productService/productCard';
+
 import HeaderProduct from '@/components/ui/productService/productCategoriesHeader';
-import ProductCard from '@/components/ui/productService/productCard';
+import ProductCard from '@/components/ui/productService/categorieCard';
 import Footer from '@/components/footer';
 import { useRouter } from 'next/navigation';
 
 
 const productService = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter();
     const toDetailPage = (id:string) => {
       // Redirect ke halaman /dashboard saat button diklik
