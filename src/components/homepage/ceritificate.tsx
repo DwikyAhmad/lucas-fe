@@ -23,27 +23,27 @@ export default function Ceritificate() {
                     Certificates Of Achievement
                 </p>
                 <div className="flex justify-center mt-3">
-                    <Carousel className="w-[900px]">
+                    <Carousel className="w-[210px] sm:w-[500px] lg:w-[900px]">
                         <CarouselContent>
-                            <CarouselItem className="basis-1/5 flex justify-center">
+                            <CarouselItem className="basis-1/3 sm:basis-1/5 flex justify-center">
                                 <Image src={iso14000} alt="ISO 14000" />
                             </CarouselItem>
-                            <CarouselItem className="basis-1/5 flex justify-center">
+                            <CarouselItem className="basis-1/3 sm:basis-1/5 flex justify-center">
                                 <Image src={kan} alt="kan" />
                             </CarouselItem>
-                            <CarouselItem className="basis-1/5 flex justify-center">
+                            <CarouselItem className="basis-1/3 sm:basis-1/5 flex justify-center">
                                 <Image src={iso9000} alt="iso9000" />
                             </CarouselItem>
-                            <CarouselItem className="basis-1/5 flex justify-center">
+                            <CarouselItem className="basis-1/3 sm:basis-1/5 flex justify-center">
                                 <Image src={bpom} alt="bpom" />
                             </CarouselItem>
-                            <CarouselItem className="basis-1/5 flex justify-center">
+                            <CarouselItem className="basis-1/3 sm:basis-1/5 flex justify-center">
                                 <Image src={kemenkes} alt="kemenkes" />
                             </CarouselItem>
-                            <CarouselItem className="basis-1/5 flex justify-center">
+                            <CarouselItem className="basis-1/3 sm:basis-1/5 flex justify-center">
                                 <Image src={mui} alt="mui" />
                             </CarouselItem>
-                            <CarouselItem className="basis-1/5 flex justify-center">
+                            <CarouselItem className="basis-1/3 sm:basis-1/5 flex justify-center">
                                 <Image src={iaf} alt="iaf" />
                             </CarouselItem>
                         </CarouselContent>
@@ -53,7 +53,7 @@ export default function Ceritificate() {
                 </div>
             </div>
             <div className="bg-white flex justify-center pt-9">
-                <Image src={lucas} alt="lucas" className="w-[800px]" />
+                <Image src={lucas} alt="lucas" className="w-[280px] sm:w-[600px] lg:w-[800px]" />
             </div>
         </div>
     );

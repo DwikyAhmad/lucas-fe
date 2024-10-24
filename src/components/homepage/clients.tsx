@@ -43,8 +43,8 @@ export default function Clients() {
 
     return (
         <div className="bg-white text-black font-poppins px-2 py-4 flex justify-center">
-            <div className="border-2 border-black/70 rounded-lg px-2 py-2 flex justify-evenly w-[70%] items-center">
-                <div className="text-5xl text-wrap w-[300px] font-bold text-primaryRed">
+            <div className="border-2 border-black/70 rounded-lg px-4 py-2 md:tex flex flex-wrap justify-evenly w-[90%] lg:w-[90%] xl:w-[70%] items-center">
+                <div className="text-2xl sm:text-3xl text-center lg:text-start mb-2 lg:mb-0 lg:text-5xl text-wrap w-[250px] font-bold text-primaryRed">
                     <span className="text-primaryBlueNavy">Our</span> Best Client
                 </div>
                 <div className="flex justify-center flex-wrap gap-6 w-[600px] h-[300px] overflow-hidden bg-gray-200 px-4 py-2 rounded-lg"

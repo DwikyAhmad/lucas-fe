@@ -12,17 +12,18 @@ import { Button } from "./ui/button";
 export default function Footer() {
     return (
         <>
-            <div className="font-poppins text-white bg-primaryRed flex py-4 justify-between px-12">
-                <div className="flex flex-col">
+            <div className="font-poppins text-white bg-primaryRed flex py-4 justify-evenly gap-8 lg:justify-between px-4 sm:px-12 flex-wrap">
+                <div className="flex flex-col lg:items-start">
                     <div className="bg-primaryBlueNavy flex gap-4 py-3 px-5 rounded-xl font-semibold w-max">
                         <div className="flex items-center">
                             <div className="bg-[#E42228] p-2">
-                                <Image src={icon} alt="LucasDjaja Logo" />
+                                <Image src={icon} alt="LucasDjaja Logo"
+                                className="max-sm:w-[30px]"/>
                             </div>
                         </div>
                         <div className="flex flex-col items-center">
-                            <p className="text-5xl text-white">LUCAS DJAJA</p>
-                            <div className="w-[300px] text-xs text-white font-normal text-center">
+                            <p className="text-xl sm:text-5xl text-white">LUCAS DJAJA</p>
+                            <div className="w-[180px] sm:w-[300px] text-xs text-white font-normal text-center">
                                 <p>
                                     “A reliable pharma company that improves
                                     people health and quality of life“
@@ -30,7 +31,7 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-4 flex gap-10">
+                    <div className="mt-4 flex flex-wrap gap-2 sm:gap-10">
                         <div>
                             <h3>Contact Us</h3>
                             <div className="flex gap-2">
@@ -40,7 +41,7 @@ export default function Footer() {
                                 <Image src={call} alt="call" />
                             </div>
                         </div>
-                        <div className="w-[400px]">
+                        <div className="w-[250px] sm:w-[300px]">
                             <p className="font-bold">PT LUCAS DJAJA</p>
                             <p className="font-light text-sm">
                                 Jl. Ciwastra RT.07 / RW.06, Kel.Margasari,
@@ -48,7 +49,7 @@ export default function Footer() {
                             </p>
                         </div>
                     </div>
-                    <div className="mt-4 flex gap-10">
+                    <div className="mt-8 sm:mt-4 flex flex-wrap gap-2 sm:gap-10">
                         <div className="flex gap-4 items-center">
                             <p>Language</p>
                             <div className="flex gap-1">
@@ -56,7 +57,7 @@ export default function Footer() {
                                 <Image src={english} alt="English" />
                             </div>
                         </div>
-                        <div className="w-[400px]">
+                        <div className="w-[250px] sm:w-[300px]">
                             <p className="font-bold">PT MARIN LIZA FARMASI</p>
                             <p className="font-light text-sm">
                                 Jl. Terusan Kiaracondong No.43, Kec.Buah Batu,
@@ -71,9 +72,9 @@ export default function Footer() {
                         <Textarea className="mt-2" placeholder="Type your message here." />
                         <Button className="text-white mt-2 w-full">Send</Button>
                     </div>
-                    <div className="mt-auto">
+                    <div className="mt-5 lg:mt-auto">
                         <p className="">Customer Center</p>
-                        <div className="flex gap-2 text-white">
+                        <div className="flex gap-2 text-white flex-wrap">
                             <p className="bg-blue px-2 py-1 rounded-xl">+62 22 7562974</p>
                             <p className="bg-darkRed px-2 py-1 rounded-xl">marketing@lucas.co.id</p>
                         </div>
