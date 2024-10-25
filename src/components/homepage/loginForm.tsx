@@ -17,11 +17,11 @@ export default function LoginForm() {
 
     const login = async () => {
         try {
-            const response = await axios.post(`/api/auth/login`, {
+            const response = await axios.post(`/api/auth/login/user`, {
                 email: email,
                 password: password,
             });
-            console.log(response.data);
+            console.log(response);
         } catch (error) {
             console.error(error);
         }

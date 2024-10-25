@@ -4,27 +4,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import axios from "axios";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
+import login from "./login";
+import { Toaster } from "react-hot-toast";
 
 export default function LoginForm() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const router = useRouter()
 
-    const loginSubmit = () => {
-        axios.post("/api/auth/login/admin", {
+    const handleLogin = async () => {
+        const response = await login({
             email,
-            password
-        }).then((res) => {
-            console.log(res.data);
-        }).catch((err) => {
-            console.log(err);
+            password,
         });
+        
+        if (response)
+            router.push('/admin/dashboard')
     }
 
     return (
         <div className="bg-white w-[500px] rounded-lg p-3 sm:p-5 flex flex-col justify-center">
+            <Toaster />
             <div className="bg-darkRed p-3 rounded-lg">
                 <h1 className="text-white font-semibold text-center text-xl">
                     ADMIN LOGIN
@@ -58,7 +61,7 @@ export default function LoginForm() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <Button className="mt-8 w-full mb-4" variant={"secondary"} onClick={loginSubmit}>
+                <Button className="mt-8 w-full mb-4" variant={"secondary"} onClick={handleLogin}>
                     Login
                 </Button>
             </div>
