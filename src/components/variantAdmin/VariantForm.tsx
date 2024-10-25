@@ -12,14 +12,15 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function VariantForm() {
     return (
-        <div className="text-black font-poppins bg-darkRed flex flex-col items-center">
+        <div className="text-black font-poppins min-h-screen pb-10 bg-darkRed flex flex-col items-center">
             <h1 className="text-white text-3xl font-semibold pt-8 text-center">
                 ADD VARIANT
             </h1>
-            <div className="bg-white w-[680px] p-5 mt-8 rounded-lg flex flex-col gap-5">
+            <div className="bg-white w-[280px] sm:w-[630px] p-5 mt-8 rounded-lg flex flex-col gap-5">
                 <div className="flex flex-col gap-2">
                     <Label className="font-semibold">Parent Product</Label>
                     <Select>
@@ -42,7 +43,7 @@ export default function VariantForm() {
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap self-center font-semibold"
                         htmlFor="productName"
@@ -50,14 +51,14 @@ export default function VariantForm() {
                         Product Name
                     </Label>
                     <Input
-                        className="w-[500px]"
+                        className="w-[450px]"
                         type="text"
                         id="productName"
                         name="productName"
                         placeholder="Product Name"
                     />
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap font-semibold"
                         htmlFor="description"
@@ -66,12 +67,12 @@ export default function VariantForm() {
                     </Label>
                     <Textarea
                         id="description"
-                        className="w-[500px]"
+                        className="w-[450px]"
                         name="description"
                         placeholder="Description"
                     />
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap font-semibold self-center"
                         htmlFor="size"
@@ -109,7 +110,7 @@ export default function VariantForm() {
                         </Select>
                     </div>
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap self-center font-semibold"
                         htmlFor="productType"
@@ -117,21 +118,21 @@ export default function VariantForm() {
                         Product Type
                     </Label>
                     <Input
-                        className="w-[500px]"
+                        className="w-[450px]"
                         type="text"
                         id="productType"
                         name="productType"
                         placeholder="Product Type"
                     />
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap font-semibold self-center"
                         htmlFor="categories"
                     >
                         Categories
                     </Label>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 flex-wrap">
                         <div className="flex items-center space-x-2">
                             <Switch
                                 className="data-[state=checked]:bg-darkRed"
@@ -162,7 +163,7 @@ export default function VariantForm() {
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap font-semibold"
                         htmlFor="composition"
@@ -171,12 +172,12 @@ export default function VariantForm() {
                     </Label>
                     <Textarea
                         id="composition"
-                        className="w-[500px]"
+                        className="w-[450px]"
                         name="composition"
                         placeholder="Product Composition"
                     />
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap font-semibold self-center"
                         htmlFor="price"
@@ -214,7 +215,7 @@ export default function VariantForm() {
                         />
                     </div>
                 </div>
-                <div className="flex gap-5 justify-between">
+                <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap self-center font-semibold"
                         htmlFor="companyName"
@@ -222,20 +223,22 @@ export default function VariantForm() {
                         Company Name
                     </Label>
                     <Input
-                        className="w-[500px]"
+                        className="w-[450px]"
                         type="text"
                         id="companyName"
                         name="companyName"
                         placeholder="Company Name"
                     />
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between flex-wrap gap-y-4 max-sm:justify-end max-sm:flex-wrap-reverse">
                     <div>
-                        <Button variant={"destructive"}>Back</Button>
+                    <Link href={'/admin/dashboard'}><Button variant={"destructive"}>Back</Button></Link>
                     </div>
-                    <div className="flex gap-4">
-                        <Button>Create Product</Button>
-                        <Button variant={"outline"}>Add Variant</Button>
+                    <div className="flex gap-4 flex-wrap max-sm:justify-end">
+                        <Button>Create Variant</Button>
+                        <Link href="/admin/add/product">
+                            <Button variant={"outline"}>Add Product</Button>
+                        </Link>
                     </div>
                 </div>
             </div>

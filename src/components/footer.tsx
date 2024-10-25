@@ -49,7 +49,7 @@ export default function Footer() {
                             </p>
                         </div>
                     </div>
-                    <div className="mt-8 sm:mt-4 flex flex-wrap gap-2 sm:gap-10">
+                    <div className="mt-4 sm:mt-4 flex flex-wrap gap-2 sm:gap-10">
                         <div className="flex gap-4 items-center">
                             <p>Language</p>
                             <div className="flex gap-1">
