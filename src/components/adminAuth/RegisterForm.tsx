@@ -1,41 +1,31 @@
-'use client'
+"use client";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import axios from "axios";
 import Link from "next/link";
-import toast, { Toaster } from 'react-hot-toast';
+import register from "./register";
+import { Toaster } from "react-hot-toast";
 
 export default function RegisterForm() {
-
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const registerSubmit = async () => {
-        try {
-            if (!username || !email || !password || !confirmPassword) {
-                return toast.error('All fields are required', {className: 'text-sm'});
-            }
-            else if (password !== confirmPassword) {
-                return toast.error('Password and confirm password does not match', {className: 'text-sm'});
-            }
-            const myPromise = axios.post("/api/auth/login/admin", {
-                username,
-                email,
-                password
-            })
-            const response = await toast.promise(myPromise, {
-                loading: 'Loading',
-                success: 'Got the data',
-                error: 'Error when fetching',
-            })
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
+    const handleRegister = async () => {
+        const response = await register({
+            email,
+            username,
+            password,
+            confirmPassword,
+        });
+        if (response) {
+            setUsername("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
         }
     };
 
@@ -101,10 +91,21 @@ export default function RegisterForm() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </div>
-                <Button className="mt-8 w-full mb-2" variant={"secondary"} onClick={registerSubmit}>
+                <Button
+                    className="mt-8 w-full mb-2"
+                    variant={"secondary"}
+                    onClick={handleRegister}
+                >
                     Register
                 </Button>
-                <p className="text-white text-center font-light text-xs">Have an account? <Link href={'/admin'}><span className="underline font-semibold">Login here</span></Link></p>
+                <p className="text-white text-center font-light text-xs">
+                    Have an account?{" "}
+                    <Link href={"/admin"}>
+                        <span className="underline font-semibold">
+                            Login here
+                        </span>
+                    </Link>
+                </p>
             </div>
         </div>
     );
