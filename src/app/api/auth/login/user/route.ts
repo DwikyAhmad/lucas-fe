@@ -7,13 +7,17 @@ import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
     const { email, password } = await req.json();
     try {
-        const response = await axios.post(`${API_URL}/auth/login`, {
+        const response = await axios.post(`${API_URL}/auth/login/user`, {
             email: email,
             password: password,
         });
         cookies().set("accessToken", response.data.accessToken);
         return NextResponse.json(response.data);
     } catch (error) {
-        return NextResponse.error();
+        if (error instanceof axios.AxiosError) {
+            return NextResponse.json(error.response?.data);
+        } else {
+            return NextResponse.error();
+        }
     }
 }
