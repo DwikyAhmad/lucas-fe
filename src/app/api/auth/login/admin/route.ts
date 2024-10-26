@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
             email: email,
             password: password,
         });
-        cookies().set("accessToken", response.data.accessToken);
+        cookies().set("accessTokenAdmin", response.data.accessToken);
         return NextResponse.json(response.data);
     } catch (error) {
         if (error instanceof axios.AxiosError) {

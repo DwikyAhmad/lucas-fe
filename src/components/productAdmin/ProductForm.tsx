@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,8 +15,27 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ProductForm() {
+    const [name, setName] = useState("");
+    const [image, setImage] = useState<File>();
+    const [description, setDescription] = useState("");
+    const [packaging, setPackaging] = useState("");
+    const [stock, setStock] = useState("");
+    const [price, setPrice] = useState("");
+    const [composition, setComposition] = useState(["", ""]);
+    const [productBy, setProductBy] = useState("");
+    const [categoryId, setCategoryId] = useState([""]);
+
+    const handleCategoryChange = (category: string, isChecked: boolean) => {
+        if (isChecked) {
+            setCategoryId([...categoryId, category]);
+        } else {
+            setCategoryId(categoryId.filter(id => id !== category));
+        }
+    };
+
     return (
         <div className="text-black font-poppins min-h-screen pb-10 bg-darkRed flex flex-col items-center">
             <h1 className="text-white text-3xl font-semibold pt-8 text-center">
@@ -34,6 +55,29 @@ export default function ProductForm() {
                         id="productName"
                         name="productName"
                         placeholder="Product Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+                <div className="flex gap-5 justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap self-center font-semibold"
+                        htmlFor="productImage"
+                    >
+                        Product Image
+                    </Label>
+                    <Input
+                        className="w-[240px] sm:w-[450px] h-[32px]"
+                        type="file"
+                        id="productImage"
+                        name="productImage"
+                        placeholder="Product Name"
+                        onChange={(e) => {
+                            const files = e.target.files;
+                            if (files && files.length > 0) {
+                                setImage(files[0]);
+                            }
+                        }}
                     />
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
@@ -48,6 +92,8 @@ export default function ProductForm() {
                         className="w-[450px]"
                         name="description"
                         placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
@@ -55,38 +101,34 @@ export default function ProductForm() {
                         className="text-nowrap font-semibold self-center"
                         htmlFor="size"
                     >
-                        Size
+                        Packaging
                     </Label>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 w-[450px]">
                         <Input
                             id="size"
                             name="size"
-                            placeholder="Product Size"
+                            placeholder="Product Packaging (dus, ml, etc)"
+                            value={packaging}
+                            onChange={(e) => setPackaging(e.target.value)}
                         />
-                        <Select>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="ml" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>Fruits</SelectLabel>
-                                    <SelectItem value="apple">Apple</SelectItem>
-                                    <SelectItem value="banana">
-                                        Banana
-                                    </SelectItem>
-                                    <SelectItem value="blueberry">
-                                        Blueberry
-                                    </SelectItem>
-                                    <SelectItem value="grapes">
-                                        Grapes
-                                    </SelectItem>
-                                    <SelectItem value="pineapple">
-                                        Pineapple
-                                    </SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
                     </div>
+                </div>
+                <div className="flex gap-5 justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap font-semibold self-center"
+                        htmlFor="price"
+                    >
+                        Stock
+                    </Label>
+                    <Input
+                        id="Stock"
+                        name="Stock"
+                        className="w-[450px]"
+                        type="number"
+                        value={stock}
+                        placeholder="Product Stock"
+                        onChange={(e) => setStock(e.target.value)}
+                    />
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
@@ -115,6 +157,7 @@ export default function ProductForm() {
                             <Switch
                                 className="data-[state=checked]:bg-darkRed"
                                 id="general"
+                                onCheckedChange={(isChecked) => handleCategoryChange("general", isChecked)}
                             />
                             <Label htmlFor="general">General</Label>
                         </div>
@@ -148,12 +191,34 @@ export default function ProductForm() {
                     >
                         Composition
                     </Label>
-                    <Textarea
-                        id="composition"
-                        className="w-[450px]"
-                        name="composition"
-                        placeholder="Product Composition"
-                    />
+                    <div className="flex flex-col gap-y-2 items-end w-[450px]">
+                        {composition.map((item, index) => (
+                            <div key={index} className="flex gap-2 w-full">
+                                <Input
+                                    key={index}
+                                    className=""
+                                    type="text"
+                                    value={item}
+                                    placeholder="Product Composition"
+                                    onChange={(e) => {
+                                        const newComposition = [...composition];
+                                        newComposition[index] = e.target.value;
+                                        setComposition(newComposition);
+                                    }}
+                                />
+                                <Button onClick={
+                                    () => {
+                                        const newComposition = [...composition];
+                                        newComposition.splice(index, 1);
+                                        setComposition(newComposition);
+                                    }
+                                }>Delete</Button>
+                            </div>
+                        ))}
+                        <Button className="w-full" onClick={
+                            () => setComposition([...composition, ""])
+                        }>Add new composition</Button>
+                    </div>
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
@@ -169,20 +234,8 @@ export default function ProductForm() {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    <SelectLabel>Fruits</SelectLabel>
-                                    <SelectItem value="apple">Apple</SelectItem>
-                                    <SelectItem value="banana">
-                                        Banana
-                                    </SelectItem>
-                                    <SelectItem value="blueberry">
-                                        Blueberry
-                                    </SelectItem>
-                                    <SelectItem value="grapes">
-                                        Grapes
-                                    </SelectItem>
-                                    <SelectItem value="pineapple">
-                                        Pineapple
-                                    </SelectItem>
+                                    <SelectLabel>Harga</SelectLabel>
+                                    <SelectItem value="Rp">Rp</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -190,6 +243,9 @@ export default function ProductForm() {
                             id="price"
                             name="price"
                             placeholder="Product Price"
+                            type="number"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
                         />
                     </div>
                 </div>
@@ -206,11 +262,15 @@ export default function ProductForm() {
                         id="companyName"
                         name="companyName"
                         placeholder="Company Name"
+                        value={productBy}
+                        onChange={(e) => setProductBy(e.target.value)}
                     />
                 </div>
                 <div className="flex justify-between flex-wrap gap-y-4 max-sm:justify-end max-sm:flex-wrap-reverse">
                     <div>
-                        <Link href={'/admin/dashboard'}><Button variant={"destructive"}>Back</Button></Link>
+                        <Link href={"/admin/dashboard"}>
+                            <Button variant={"destructive"}>Back</Button>
+                        </Link>
                     </div>
                     <div className="flex gap-4 flex-wrap max-sm:justify-end">
                         <Button>Create Product</Button>
