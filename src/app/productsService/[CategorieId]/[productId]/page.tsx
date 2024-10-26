@@ -6,6 +6,8 @@ import Image from 'next/image';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import shopee from "@/assets/marketplace/shopee.svg";
 import tokopedia from "@/assets/marketplace/tokopedia.svg";
+import { useRouter } from 'next/navigation';
+
 
 
 
@@ -13,7 +15,9 @@ import Footer from '@/components/footer';
 
 type detailProps = {param?:{productId:string}}
 const ProductDetail = (props: detailProps) => {
-    
+
+    const router = useRouter()
+
     const {productId} = props.param || { productId: "Unknown Product Id" }
   
     return (
@@ -45,7 +49,7 @@ const ProductDetail = (props: detailProps) => {
 
                 
                 <div className="rightSide text-black">
-                    <div className="product-name border border-red-500">
+                    <div className="product-name border border-red-400">
                         <h1 className='text-poppins text-6xl font-bold'>Vitamin C Putih 50 mg</h1>
                         <div className="type">Tablet</div>
                     </div>
@@ -87,14 +91,15 @@ const ProductDetail = (props: detailProps) => {
 
                     </div>
 
-                    <div className="font-poppins text-md justify-end  border   flex mt-8">Available on</div>
-                    <div className="ctas flex justify-between ">
-                        <div className="cart-check border border-black flex gap-4">
-                            <button className="cart  border-black px-6 py-3 rounded-lg border-2 hover:bg-primaryYellow "><ShoppingCartTwoToneIcon className='scale-150'/></button>
-                            <div className="cart border border-black bg-primaryYellow font-josefinSans text-3xl px-8 py-3 justify-center align-middle flex items-center rounded-lg font-bold">CHECKOUT</div>
+                    <div className="font-poppins text-md justify-end     flex mt-8">Available on</div>
+                    <div className="ctas flex justify-between w-full">
+                        <div className="cart-check    flex gap-4 w-full mr-3">
+                            <button className="cart   px-6 py-3 rounded-lg  hover:bg-primaryYellow border border-black "><ShoppingCartTwoToneIcon className='scale-150'/></button>
+                            <button className="cart  bg-primaryYellow font-josefinSans text-3xl w-full border border-black px-10 py-3 justify-center align-middle flex items-center rounded-lg font-bold hover:scale-101 hover:bg-yellow-500" onClick={()=>router.push("/productsService/1/1/checkout")} >CHECKOUT</button>
                         </div>
-                        <div className="marketplace border border-black flex border-y-primaryBlack rounded-lg">
-                            <button className="tokped text-black border  flex items-center px-2   "><Image src={ tokopedia} alt={''} width={100} height={100}></Image></button>
+                        <div className="marketplace  flex rounded-lg gap-2 w-max ">
+                            <button className="tokped text-black border  border-black flex items-center px-2  rounded-lg hover:bg-gray-200 hover:scale-105 "><Image src={ tokopedia} alt={''} width={100} height={100} ></Image></button>
+                            <button className="tokped text-black border border-black  flex items-center px-2 rounded-lg h-full  py-2 hover:bg-gray-200 hover:scale-105 "><Image src={ shopee} alt={''} width={40} height={20} className='  scale-75 '></Image></button>
                         </div>
                     </div>
                 </div>

@@ -67,6 +67,8 @@ const config: Config = {
 				redBricks: '#8E2C2C',
 				primaryYellow: '#E7A600',
 				darkYellow: '#AC7E06',
+				greenTokopedia: "#83C569",
+				orangeShopee : '#EE4D2D'
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
