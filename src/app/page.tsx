@@ -17,7 +17,7 @@ export default function Home() {
             <Products />
             <Clients />
             <Qna />
-            <Footer />
+                <Footer />
         </>
     );
 }

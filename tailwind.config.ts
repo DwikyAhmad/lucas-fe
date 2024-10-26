@@ -65,6 +65,8 @@ const config: Config = {
 				orange: '#ED7200',
 				brightGreen: '#11A803',
 				redBricks: '#8E2C2C',
+				primaryYellow: '#E7A600',
+				darkYellow: '#AC7E06',
     		},
     		borderRadius: {
     			lg: 'var(--radius)',

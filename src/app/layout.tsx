@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Poppins, Mrs_Sheppards, Josefin_Sans, Istok_Web } from 'next/font/google'
 import "./globals.css";
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
