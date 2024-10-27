@@ -65,7 +65,7 @@ export default function LoginForm() {
                     <a href="#">Forgot Password?</a>
                     <p>
                         Don&apos;t have account yet?{" "}
-                        <a href="#" className="underline">
+                        <a href="/register" className="underline">
                             Sign Up Here
                         </a>
                     </p>

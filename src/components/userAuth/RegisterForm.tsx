@@ -13,10 +13,18 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import API_URL from "@/utils/utils";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 export default function RegisterForm() {
     const formSchema = z
         .object({
+            email: z
+                .string()
+                .email({ message: "Invalid email address." })
+                .min(2, { message: "Email must be at least 2 characters." })
+                .max(50),
             username: z
                 .string()
                 .min(2, { message: "Username must be at least 2 characters." })
@@ -24,6 +32,14 @@ export default function RegisterForm() {
             address: z
                 .string()
                 .min(2, { message: "Address must be at least 2 characters." })
+                .max(50),
+            firstName: z
+                .string()
+                .min(2, { message: "First Name must be at least 2 characters." })
+                .max(50),
+            lastName: z
+                .string()
+                .min(2, { message: "Last Name must be at least 2 characters." })
                 .max(50),
             password: z
                 .string()
@@ -40,16 +56,42 @@ export default function RegisterForm() {
         });
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: { username: "", address: "", password: "", confirmPassword: "" },
+        defaultValues: {
+            username: "",
+            address: "",
+            password: "",
+            confirmPassword: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+        },
     });
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
-        console.log("Submitted");
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const myPromise = axios.post(`${API_URL}/auth/register`, {
+                email: values.email,
+                username: values.username,
+                address: values.address,
+                name: values.firstName + " " + values.lastName,
+                password: values.password,
+            });
+            await toast.promise(myPromise, {
+                loading: "Registering...",
+                success: "Register success",
+                error: "Register failed",
+            });
+            
+        } catch (error) {
+            if (error instanceof axios.AxiosError) {
+                toast.error(error.response?.data.message);
+            }
+        }
     };
 
     return (
         <div className="bg-white w-full sm:w-[500px] px-4 rounded-lg min-h-screen flex flex-col justify-center">
+            <Toaster />
             <div className="flex justify-center mb-2">
                 <p
                     className="font-semibold text-white w-min text-nowrap px-16 py-2
@@ -63,6 +105,51 @@ export default function RegisterForm() {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="flex flex-col gap-y-2"
                 >
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Email" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <div className="flex gap-2">
+                        <div className="w-full">
+                            <FormField
+                                control={form.control}
+                                name="firstName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>First name</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="First name" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <div className="w-full">
+                            <FormField
+                                control={form.control}
+                                name="lastName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Last name</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Last name" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
                     <FormField
                         control={form.control}
                         name="username"
@@ -128,7 +215,10 @@ export default function RegisterForm() {
                             Create account
                         </Button>
                     </div>
-                    <p className="text-center text-sm">Already have an account? <span className="underline font-semibold">Sign in</span></p>
+                    <p className="text-center text-sm">
+                        Already have an account?{" "}
+                        <span className="underline font-semibold">Sign in</span>
+                    </p>
                 </form>
             </Form>
         </div>
