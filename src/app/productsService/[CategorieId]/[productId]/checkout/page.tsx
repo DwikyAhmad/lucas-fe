@@ -1,10 +1,14 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react'
 import Image from 'next/image';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import jne from "@/assets/kurir/jne.svg";
 
 
-const summary = () => {
+const Summary = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
+
   return (
     <div className='bg-primaryBlueNavy h-full w-full py-4 text-primaryBlack px-10'>
       <div className="summary-title font-poppins font-bold  border border-red-500 w-full flex items-center justify-center text-6xl pt-2 mb-4 text-white  ">SUMMARY ORDER</div>
@@ -38,13 +42,12 @@ const summary = () => {
         </div>
         <div className="right-content courier-address rounded-2xl border  w-fit">
           <div className="courier bg-white rounded-2xl ">
-            <div className="title font-poppins text-2xl rounded-2xl justify-center p-2 items-center align-middle flex bg-white text-primaryBlueNavy  font-semibold border-b-2 border-primaryBlueNavy">COURIER</div>
-            <div className="listCouries p-2 gap-2">
+            <div className="title font-poppins text-2xl roudned justify-center p-4 items-center align-middle flex bg-white text-primaryBlueNavy  font-semibold border-b-2 border-primaryBlueNavy">COURIER</div>
+            <div className="listCouries p-2 gap-2 flex flex-col items-center">
 
-              <div className="flex  flex-row gap-4 border border-black p-2 rounded-xl hover:bg-gray-200 " >
-                <input type="checkbox" />
-                <label className="value">
-                  <div className="logo">
+              <div className="flex  flex-row gap-4 border border-black p-2 rounded-xl hover:bg-gray-200  " style={{cursor: 'pointer'}} onClick={() => {setIsChecked(!isChecked)}} >
+                <label className="value peer-checked:font-bold " htmlFor="kurir" >
+                  <div className="logo" id="kurir">
                     <Image src={jne} alt={''} width={100} height={100} className='p-2'></Image>
                   </div>
                 </label>
@@ -52,10 +55,11 @@ const summary = () => {
                     <div className="title font-josefinSans font-semibold text-4xl ">JNE - Reguler</div>
                     <div className="ket font-poppins text-gray-400 font-thin">Pesanan akan sampai pada 12-15 Oktober 2024</div>
                   </div>
-                  <div className="price font-poppins">Rp 28.000</div>
+                  <div className="price font-poppins font-thin text-lg ">Rp 28.000</div>
+                <input type="checkbox" className='w-8 rounded-full' id='kurir' checked={isChecked}/>
               </div>
-            </div>
-            <div className="button bg-green-700"><button>Save</button></div>
+              <div className="button bg-green-700 rounded-2xl mt-4 p-2 flex items-center justify-center w-[80%]"><button className='font-poppins font-semibold text-2xl text-white'>Save</button></div>
+              </div>
             </div>
           <div className="address"></div>
         </div>
@@ -71,4 +75,4 @@ const summary = () => {
   )
 }
 
-export default summary
+export default Summary
