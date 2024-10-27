@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 
 
 
+
 import Footer from '@/components/footer';
 
 type detailProps = {param?:{productId:string}}
@@ -40,8 +41,8 @@ const ProductDetail = (props: detailProps) => {
                                 </div>
                                 <div className="flex justify-between align-middle items-center counter  ">
                                     <button className="inc bg-primaryBlueNavy w-5 h-5 text-xl font-bold justify-center align-middle flex items-center p-3 rounded-sm font-istokWeb">+</button>
-                                    <div className="display-number w-24 text-center text-md mx-2 rounded-sm h-auto text-primaryBlack text-bold font-poppins" >0</div>
-                                    <button className="dec bg-primaryBlueNavy w-5 h-5 text-xl font-bold justify-center align-middle flex items-center p-3 rounded-sm font-istokWeb">-</button>
+                                    <div className="display-number w-24 text-center text-md mx-2 rounded-sm h-auto text-primaryBlack text-bold font-poppins border border-black" >0</div>
+                                    <button className="dec bg-primaryBlueNavy w-5 h-5 text-xl font-bold justify-center align-middle flex items-center p-3 rounded-sm font-istokWeb ">-</button>
                                 </div>
                             </div>
                         </div>
