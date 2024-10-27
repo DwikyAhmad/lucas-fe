@@ -68,7 +68,9 @@ const config: Config = {
 				primaryYellow: '#E7A600',
 				darkYellow: '#AC7E06',
 				greenTokopedia: "#83C569",
-				orangeShopee : '#EE4D2D'
+				orangeShopee: '#EE4D2D',
+				lightGreen: '#03A88C',
+				lightGreenDark:'#058570'
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
