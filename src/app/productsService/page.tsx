@@ -13,7 +13,6 @@ const productService = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter();
     const toDetailPage = (id:string) => {
-      // Redirect ke halaman /dashboard saat button diklik
       router.push(`/productsService/${id}`);
     };
 
@@ -31,6 +30,7 @@ const productService = () => {
                 title="Generic Product"
                 description="Sejak tahun 2003, Lucas group adalah satu-satunya perusahaan swasta  swasta yang ditunjuk untuk mensuplai kebutuhan obat nasional, selain  selain tiga BUMN. Sampai dengan saat ini Lucas Group sudah  bergabung ke dalam Kimia Farma Group dan masih aktif mengi- kuti  tender e catalog untuk memasok kebutuhan obat obatan generic ke  seluruh wilayah Indonesia."
                 tags={['Generic', 'Antibiotik']}
+                 onClick={() => toDetailPage("1")}
                 
 />  
 

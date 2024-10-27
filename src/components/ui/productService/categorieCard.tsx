@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react'
 import Image from 'next/image';
 
 
-interface CategorieCardProps {
+interface CategorieCardProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string;
   alt: string;
   width?: number;
@@ -19,9 +19,9 @@ const CategorieCard = forwardRef<HTMLDivElement, CategorieCardProps>(
   ({ src, alt, width = 600, height = 600, title, description, tags, ...props }, ref) => {
 
       return (
-        <div className="flex flex-col align-top justify-center content-center items-center w-full p-4" ref={ref} {...props}    style={{ cursor: 'pointer' }} >
-          <div className="flex border-2 bg-white hover:bg-gray-200 w-[60%] justify-center text-black round-xl p-6 rounded-2xl items-center"  >
-            <div className="img-categoreis w-fit h-fit mr-10">
+        <div className="flex flex-col align-top justify-center content-center items-center w-full p-4" ref={ref} {...props}     >
+          <div className="flex border-2 bg-white hover:bg-gray-200 w-[60%] justify-center text-black round-xl p-6 rounded-2xl items-center" style={{ cursor: 'pointer' }} {...props} >
+            <div className="img-categoreis w-fit h-fit mr-10" >
               <Image
                 src={src}
                 alt={alt}
