@@ -24,20 +24,20 @@ const ProductDetail = (props: detailProps) => {
     return (
         <div className="bg-primaryBlueNavy w-full  ">
             <Navbar />
-            <div className="contentm  flex items-center flex-col h-full">
+            <div className="w-full contentm  flex items-center flex-col h-full ">
 
-                <div className="flex items-center justify-center gap-36 align-middle  h-full px-10 py-8 w-[80%] bg-white mt-8 mx-4 rounded-xl my-8">
-                    <div className="leftSide  flex flex-col justify-start items-start gap-4  ">
-                        <div className="product-image ml-4">
-                            <Image src={'https://i.pinimg.com/564x/d3/d7/c3/d3d7c3ff6bda3ac7a2d27537658300b6.jpg'} alt={`Product Image id-${productId}`} width={400} height={400} className='rounded-xl'></Image>
+                <div className="flex items-center justify-center xl:gap-36 align-middle h-full md:px-10  md:py-8 py-2 px-4 md:w-max lg:w-[80%]  w-min bg-white mt-8 mx-4 rounded-xl my-8  border border-red-500 md:flex-col lg:flex-row flex-col sm:w-min gap-8  ">
+                    <div className="leftSide  flex sm:flex-row md:justify-start md:items-start items-center gap-4 border-2 border-black sm:items-center w-fit  md:flex-col m-4">
+                        <div className="product-image ml-4 flex items-center justify-center md:w- ">
+                            <Image src={'https://i.pinimg.com/564x/d3/d7/c3/d3d7c3ff6bda3ac7a2d27537658300b6.jpg'} alt={`Product Image id-${productId}`} width={400} height={400} className='rounded-xl h-full w-full md:w-max md:h-max '></Image>
                         </div>
-                        <div className="variants">
-                            <div className="label text-white bg-orange rounded-full align-semibold items-center flex justify-center w-max px-3 py-1 text-md font-medium">Variants</div>
-                            <div className="variants-item  flex  gap-4 pl-4">
-                                <div className="item-name text-primaryBlack ">
+                        <div className="variants  ">
+                            <div className="label text-white bg-orange rounded-full align-semibold items-center flex justify-center w-max px-3 py-1 text-md font-medium " >Variants</div>
+                            <div className="variants-item  flex  gap-4 pl-4 lg:flex-col md:flex-col xl:flex-row flex-row sm:flex-row md:gap-2 ">
+                                <div className="item-name text-primaryBlack flex md:flex-row lg:w-max w-fit border border-red-500 flex-col text-wrap md:flex-wrap" >
                                     
                                     <input type="checkbox" id="variantA" className="w-3 h-3 m-2 peer" />
-                                    <label htmlFor="variantA"  className="text-md font-istokWeb peer-checked:font-bold ">Rp 20.000 (Variant A)</label>
+                                    <label htmlFor="variantA"  className="text-md font-istokWeb peer-checked:font-bold text-wrap ">Rp 20.000 (Variant A)</label>
                                 </div>
                                 <div className="flex justify-between align-middle items-center counter  ">
                                     <button className="inc bg-primaryBlueNavy w-5 h-5 text-xl font-bold justify-center align-middle flex items-center p-3 rounded-sm font-istokWeb">+</button>
@@ -53,7 +53,7 @@ const ProductDetail = (props: detailProps) => {
                     
                     <div className="rightSide text-black ">
                         <div className="product-name ">
-                            <h1 className='text-poppins text-6xl font-bold'>Vitamin C Putih 50 mg</h1>
+                            <h1 className='text-poppins xl:text-5xl md:text-4xl text-2xl font-bold'>Vitamin C Putih 50 mg</h1>
                             <div className="type text-sm font-light font-poppins">Tablet</div>
                         </div>
                         <div className="breaks w-full h-1 bg-black mb-4"></div>
@@ -61,8 +61,8 @@ const ProductDetail = (props: detailProps) => {
                         <div className="details p-4 flex gap-10 justify-between align-middle">
                             <div className="left flex flex-col gap-4 align-middle justify-between">
                                 <div className="compotition">
-                                    <label htmlFor="" className='font-medium text-3xl font-poppins mb-4 '>Compotition</label>
-                                    <div className=" text-md font-light p-2 text-xl font-josefinSans">
+                                    <label htmlFor="" className='font-bold md:text-3xl text-lg  font-poppins mb-4 '>Compotition</label>
+                                    <div className=" text-md font-light p-2 text-sm md:text-xl font-josefinSans">
                                         <p>Vitamin C Putih 50 mg</p>
                                         <p>Vitamin C Putih 50 mg</p>
                                         <p>Vitamin C Putih 50 mg</p>
@@ -70,8 +70,8 @@ const ProductDetail = (props: detailProps) => {
                                     </div>
                                 </div>
                                 <div className="packaging">
-                                    <label htmlFor="" className='font-medium text-3xl font-poppins mb-4 '>Compotition</label>
-                                    <div className=" text-md font-light p-2 text-xl font-josefinSans">
+                                    <label htmlFor="" className='font-bold md:text-3xl text-lg font-poppins mb-4 '>Compotition</label>
+                                    <div className=" text-md font-light p-2 text-sm md:text-xl font-josefinSans">
                                         <p>10 Strip @10 Tablet</p>
                                     </div>
                                 </div>
@@ -79,14 +79,14 @@ const ProductDetail = (props: detailProps) => {
 
                             <div className="right  flex flex-col gap-4 align-middle justify-between">
                                 <div className="produceBy">
-                                    <label htmlFor="" className='font-medium text-3xl font-poppins mb-4 '>Produce By</label>
-                                    <div className=" text-md font-light p-2 text-xl font-josefinSans">
+                                    <label htmlFor="" className='font-bold md:text-3xl text-lg font-poppins mb-4 '>Produce By</label>
+                                    <div className=" text-md font-light p-2 text-sm md:text-xl font-josefinSans">
                                         <p>PT MARLIN LIZA</p>
                                     </div>
                                 </div>
                                 <div className="category">
-                                <label htmlFor="" className='font-medium text-3xl font-poppins mb-4 '>Categorie</label>
-                                    <div className=" text-md font-light p-2 text-xl font-josefinSans">
+                                <label htmlFor="" className='font-bold md:text-3xl text-lg font-poppins mb-4 '>Categorie</label>
+                                    <div className=" text-md font-light p-2 text-sm md:text-xl font-josefinSans">
                                         <p>Vitamin & suplemen kesehatan</p>
                                     </div>
                                 </div>
