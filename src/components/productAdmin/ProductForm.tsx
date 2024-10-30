@@ -19,7 +19,7 @@ import { useState } from "react";
 
 export default function ProductForm() {
     const [name, setName] = useState("");
-    const [image, setImage] = useState<File>();
+    // const [image, setImage] = useState<File>();
     const [description, setDescription] = useState("");
     const [packaging, setPackaging] = useState("");
     const [stock, setStock] = useState("");
@@ -75,7 +75,7 @@ export default function ProductForm() {
                         onChange={(e) => {
                             const files = e.target.files;
                             if (files && files.length > 0) {
-                                setImage(files[0]);
+                                // setImage(files[0]);
                             }
                         }}
                     />

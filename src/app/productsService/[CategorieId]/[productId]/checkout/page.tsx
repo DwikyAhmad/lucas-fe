@@ -92,7 +92,7 @@ const Summary = () => {
             <div className="price-item text-xl font-bold font-poppins">Rp 15.000 </div>
           </div>
         </div>
-        <div className="caution px-2 py-2 w-full flex"><p className='text-primaryRed'>*</p>Metode pembayaran dapat dipilih setelah anda menekan tombol "PAYMENT”</div>
+        <div className="caution px-2 py-2 w-full flex"><p className='text-primaryRed'>*</p>Metode pembayaran dapat dipilih setelah anda menekan tombol &quot;PAYMENT&quot;</div>
         <div className="button w-full flex items-center align-middle justify-center my-2">
           <button className='w-[80%] hover:bg-primaryYellow bg-yellow-500 border border-primaryBlack px-4 py-2 rounded-lg font-bold text-xl drop-shadow-2xl'>PAYMENT</button>
         </div>
