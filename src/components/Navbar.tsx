@@ -4,13 +4,12 @@ import Image from "next/image";
 import icon from "@/app/icon.svg";
 import { HiOutlineMenu } from "react-icons/hi";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
+import Link from 'next/link'
 
 export default function Navbar() {
     
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-    const route = useRouter();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -46,11 +45,10 @@ export default function Navbar() {
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 About Us
                             </li>
-                            <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" onClick={() => {
-                            console.log("masuk")
-                            }}>
+                            <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
+                                <Link href="/productsService"> Product & Services</Link>
 
-                                Product & Services
+                              
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 News

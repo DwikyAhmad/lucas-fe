@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import Hero from "../components/homepage/hero";
 import Ceritificate from "../components/homepage/ceritificate";
 import Aboutus from "../components/homepage/aboutus";
