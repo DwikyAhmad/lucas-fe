@@ -6,20 +6,14 @@ import Image from 'next/image';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import shopee from "@/assets/marketplace/shopee.svg";
 import tokopedia from "@/assets/marketplace/tokopedia.svg";
-import { useRouter } from 'next/navigation';
-
-
-
-
-
+import { useParams, useRouter } from 'next/navigation';
 import Footer from '@/components/footer';
 
-type detailProps = {param?:{productId:string}}
-const ProductDetail = (props: detailProps) => {
+const ProductDetail = () => {
 
     const router = useRouter()
-
-    const {productId} = props.param ?? { productId: "Unknown Product Id" }
+    const params = useParams();
+    const productId = params.productId || 'Unknown Product Id';
   
     return (
         <div className="bg-primaryBlueNavy w-full  ">
