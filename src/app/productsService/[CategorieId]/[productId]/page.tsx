@@ -19,7 +19,7 @@ const ProductDetail = (props: detailProps) => {
 
     const router = useRouter()
 
-    const {productId} = props.param || { productId: "Unknown Product Id" }
+    const {productId} = props.param ?? { productId: "Unknown Product Id" }
   
     return (
         <div className="bg-primaryBlueNavy w-full  ">
