@@ -16,10 +16,19 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useState } from "react";
+import axios from "axios";
 
-export default function ProductForm() {
+interface Category {
+    id: string;
+    name: string;
+}
+interface ProductFormProps {
+    categories: Category[];
+}
+
+export default function ProductForm({ categories }: ProductFormProps) {
     const [name, setName] = useState("");
-    // const [image, setImage] = useState<File>();
+    const [image, setImage] = useState<File>();
     const [description, setDescription] = useState("");
     const [packaging, setPackaging] = useState("");
     const [stock, setStock] = useState("");
@@ -27,12 +36,37 @@ export default function ProductForm() {
     const [composition, setComposition] = useState(["", ""]);
     const [productBy, setProductBy] = useState("");
     const [categoryId, setCategoryId] = useState([""]);
+    const [type, setType] = useState("");
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
         if (isChecked) {
             setCategoryId([...categoryId, category]);
         } else {
-            setCategoryId(categoryId.filter(id => id !== category));
+            setCategoryId(categoryId.filter((id) => id !== category));
+        }
+    };
+
+    const handleSubmit = async () => {
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("price", price);
+        if (image) {
+            formData.append("image", image);
+        }
+        formData.append("type", type);
+        formData.append("composition", JSON.stringify(composition));
+        formData.append("stock", stock);
+        formData.append("productBy", productBy);
+        formData.append("packaging", packaging);
+        const filteredCategoryId = categoryId.filter((id) => id !== "");
+        formData.append("categoryId", JSON.stringify(filteredCategoryId));
+
+        try {
+            const response = await axios.post(`/api/product/create`, formData);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -75,7 +109,7 @@ export default function ProductForm() {
                         onChange={(e) => {
                             const files = e.target.files;
                             if (files && files.length > 0) {
-                                // setImage(files[0]);
+                                setImage(files[0]);
                             }
                         }}
                     />
@@ -143,45 +177,39 @@ export default function ProductForm() {
                         id="productType"
                         name="productType"
                         placeholder="Product Type"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
                     />
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
-                        className="text-nowrap font-semibold self-center"
+                        className="text-nowrap font-semibold "
                         htmlFor="categories"
                     >
                         Categories
                     </Label>
-                    <div className="flex gap-3 flex-wrap">
-                        <div className="flex items-center space-x-2">
-                            <Switch
-                                className="data-[state=checked]:bg-darkRed"
-                                id="general"
-                                onCheckedChange={(isChecked) => handleCategoryChange("general", isChecked)}
-                            />
-                            <Label htmlFor="general">General</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <Switch
-                                className="data-[state=checked]:bg-darkRed"
-                                id="TCO"
-                            />
-                            <Label htmlFor="TCO">TCO</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <Switch
-                                className="data-[state=checked]:bg-darkRed"
-                                id="Alergen"
-                            />
-                            <Label htmlFor="Alergen">Alergen</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <Switch
-                                className="data-[state=checked]:bg-darkRed"
-                                id="Salep"
-                            />
-                            <Label htmlFor="Salep">Salep</Label>
-                        </div>
+                    <div className="flex gap-3 flex-wrap justify-end w-[450px]">
+                        {categories &&
+                            categories.map((category, index) => (
+                                <div
+                                    key={index}
+                                    className="flex items-center space-x-2"
+                                >
+                                    <Switch
+                                        className="data-[state=checked]:bg-darkRed"
+                                        id={category.id}
+                                        onCheckedChange={(isChecked) =>
+                                            handleCategoryChange(
+                                                category.id,
+                                                isChecked
+                                            )
+                                        }
+                                    />
+                                    <Label htmlFor={category.id}>
+                                        {category.name}
+                                    </Label>
+                                </div>
+                            ))}
                     </div>
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
@@ -206,18 +234,23 @@ export default function ProductForm() {
                                         setComposition(newComposition);
                                     }}
                                 />
-                                <Button onClick={
-                                    () => {
+                                <Button
+                                    onClick={() => {
                                         const newComposition = [...composition];
                                         newComposition.splice(index, 1);
                                         setComposition(newComposition);
-                                    }
-                                }>Delete</Button>
+                                    }}
+                                >
+                                    Delete
+                                </Button>
                             </div>
                         ))}
-                        <Button className="w-full" onClick={
-                            () => setComposition([...composition, ""])
-                        }>Add new composition</Button>
+                        <Button
+                            className="w-full"
+                            onClick={() => setComposition([...composition, ""])}
+                        >
+                            Add new composition
+                        </Button>
                     </div>
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
@@ -273,7 +306,7 @@ export default function ProductForm() {
                         </Link>
                     </div>
                     <div className="flex gap-4 flex-wrap max-sm:justify-end">
-                        <Button>Create Product</Button>
+                        <Button onClick={handleSubmit}>Create Product</Button>
                         <Link href="/admin/add/variant">
                             <Button variant={"outline"}>Add Variant</Button>
                         </Link>
