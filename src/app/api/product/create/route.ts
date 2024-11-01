@@ -36,9 +36,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.error();
     }
 
-    console.log("SEBELUM UPLOAD");
     const url = await uploadFile(image, "product");
-    console.log(composition)
 
     try {
         const response = await axios.post(`${API_URL}/product/create`, {
@@ -57,10 +55,11 @@ export async function POST(request: NextRequest) {
                 Authorization: `Bearer ${accessToken.value}`,
             },
         });
-        console.log(response.data);
         return NextResponse.json(response.data);
     } catch (error) {
-        console.log(error);
+        if (error instanceof axios.AxiosError) {
+            return NextResponse.json(error.response?.data);
+        }
         return NextResponse.error();
     }
 }

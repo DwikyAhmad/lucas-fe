@@ -15,8 +15,9 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 interface Category {
     id: string;
@@ -37,6 +38,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
     const [productBy, setProductBy] = useState("");
     const [categoryId, setCategoryId] = useState([""]);
     const [type, setType] = useState("");
+    const inputFile = useRef<HTMLInputElement>(null);
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
         if (isChecked) {
@@ -55,7 +57,8 @@ export default function ProductForm({ categories }: ProductFormProps) {
             formData.append("image", image);
         }
         formData.append("type", type);
-        formData.append("composition", JSON.stringify(composition));
+        const filteredComposition = composition.filter((item) => item !== "");
+        formData.append("composition", JSON.stringify(filteredComposition));
         formData.append("stock", stock);
         formData.append("productBy", productBy);
         formData.append("packaging", packaging);
@@ -63,8 +66,31 @@ export default function ProductForm({ categories }: ProductFormProps) {
         formData.append("categoryId", JSON.stringify(filteredCategoryId));
 
         try {
-            const response = await axios.post(`/api/product/create`, formData);
-            console.log(response.data);
+            const myPromise = axios.post(`/api/product/create`, formData);
+            await toast.promise(myPromise, {
+                loading: "Creating product...",
+                success: (res) => {
+                    if (res.status === 200) {
+                        return "Product created successfully";
+                    } else {
+                        throw new Error(res.data.message);
+                    }
+                },
+                error: (err) => err.message,
+            });
+            setName("");
+            setImage(undefined);
+            setDescription("");
+            setPackaging("");
+            setStock("");
+            setPrice("");
+            setComposition(["", ""]);
+            setProductBy("");
+            setCategoryId([""]);
+            setType("");
+            if (inputFile.current) {
+                inputFile.current.value = "";
+            }
         } catch (error) {
             console.log(error);
         }
@@ -72,6 +98,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
 
     return (
         <div className="text-black font-poppins min-h-screen pb-10 bg-darkRed flex flex-col items-center">
+            <Toaster />
             <h1 className="text-white text-3xl font-semibold pt-8 text-center">
                 ADD PRODUCT
             </h1>
@@ -106,6 +133,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
                         id="productImage"
                         name="productImage"
                         placeholder="Product Name"
+                        ref={inputFile}
                         onChange={(e) => {
                             const files = e.target.files;
                             if (files && files.length > 0) {
@@ -198,6 +226,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
                                     <Switch
                                         className="data-[state=checked]:bg-darkRed"
                                         id={category.id}
+                                        checked={categoryId.includes(category.id)}
                                         onCheckedChange={(isChecked) =>
                                             handleCategoryChange(
                                                 category.id,
