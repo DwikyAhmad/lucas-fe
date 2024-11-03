@@ -70,6 +70,16 @@ export default function VariantForm({
         }
     };
 
+    const handleCategoryChange = (category: Category, isChecked: boolean) => {
+        if (isChecked) {
+            setCategoryId([...categoryId, category.id]);
+            setParentProductCategory([...parentProductCategory, category.name]);
+        } else {
+            setCategoryId(categoryId.filter((id) => id !== category.id));
+            setParentProductCategory(parentProductCategory.filter((name) => name !== category.name));
+        }
+    };
+
     const handleSubmit = async () => {
         const formData = new FormData();
         formData.append("productId", productId);
@@ -277,7 +287,12 @@ export default function VariantForm({
                                         checked={parentProductCategory.includes(
                                             category.name
                                         )}
-                                        disabled={true}
+                                        onCheckedChange={(isChecked) =>
+                                            handleCategoryChange(
+                                                category,
+                                                isChecked
+                                            )
+                                        }
                                     />
                                     <Label htmlFor={category.id}>
                                         {category.name}
