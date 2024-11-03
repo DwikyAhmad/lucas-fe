@@ -4,7 +4,7 @@ import Image from "next/image";
 import icon from "@/app/icon.svg";
 import { HiOutlineMenu } from "react-icons/hi";
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Navbar() {
     
@@ -39,51 +39,52 @@ export default function Navbar() {
                 {isOpen && (
                     <div>
                         <ul className="absolute top-full right-0 w-[200px] z-50 bg-darkRed2 text-white p-2 rounded-lg text-sm">
-                            <Link href={'/'}>
-                                <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                                    Home
-                                </li>
-                            </Link>
+                            <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
+                                <Link href="/">Home </Link>
+                    
+                            </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 About Us
                             </li>
-                            <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                                <a href="productsService">
-
+                            <li>
+                            <Link href="http://localhost:3000/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
                                 Product & Services
-                                </a>
+                              
+                            </Link>
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 News
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                                LucaShop
+                                <Link href={{
+                                            pathname: '/products',
+                                            query: { filter: 'Generic' },
+                                        }}>LucaShop</Link>
                             </li>
                         </ul>
                     </div>
                 )}
             </div>
             <ul className="hidden md:flex gap-2 font-light">
-                <Link href={'/'}>
-                    <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                        Home
-                    </li>
-                </Link>
-                <Link href={'/#aboutus'}>
-                    <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                        About Us
-                    </li>
-                </Link>
-                <Link href={'/productsService'}>
-                    <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                        Product & Services
-                    </li>
-                </Link>
+                <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
+                    <Link href="/">Home </Link>
+                </li>
+                <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
+                    About Us
+                </li>
+                <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
+                    <Link href="http://localhost:3000/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
+                                Product & Services
+                    </Link>
+                </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                     News
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                    LucaShop
+                    <Link href={{
+                                pathname: '/products',
+                                query: { filter: 'kontol' },
+                            }}>LucaShop</Link>
                 </li>
             </ul>
             <Link href={'/login'}>
