@@ -6,12 +6,7 @@ import Image from 'next/image';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import shopee from "@/assets/marketplace/shopee.svg";
 import tokopedia from "@/assets/marketplace/tokopedia.svg";
-import { useRouter } from 'next/navigation';
-
-
-
-
-
+import {  useRouter } from 'next/navigation';
 import Footer from '@/components/footer';
 
 interface detailProps {params:{productId:string}}
@@ -19,7 +14,7 @@ const ProductDetail = (props: detailProps) => {
 
     const router = useRouter()
     const {productId} = props.params || { productId: "Unknown Product Id" }
-  
+
     return (
         <div className="bg-primaryBlueNavy w-full  ">
             <Navbar />

@@ -24,7 +24,7 @@ export default function Hero() {
                     <h1 className="font-poppins font-bold text-center text-3xl sm:text-6xl">
                         SELAMAT DATANG
                     </h1>
-                    <p className="text-center font-josefinSans font-light text-md sm:text-xl tracking-wide">
+                    <p className="text-center font-light text-md sm:text-lg tracking-wide">
                         Penuhi kebutuhan kesehatanmu disini
                     </p>
                 </div>

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Image from 'next/image';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import jne from "@/assets/kurir/jne.svg";
+import Navbar from '@/components/Navbar';
 
 
 const Summary = () => {
@@ -11,6 +12,7 @@ const Summary = () => {
 
   return (
     <div className='bg-primaryBlueNavy h-full w-full py-4 text-primaryBlack px-10 '>
+      <Navbar />
       <div className="summary-title font-poppins font-bold w-full flex  flex-row items-center justify-center xl:text-6xl text-2xl pt-2 mb-4 text-white  ">SUMMARY ORDER</div>
       <div className="content  flex justify-between gap-2 md:flex-row flex-col items-center md:items-start">
         <div className="left-content items-detail  w-min">
@@ -58,7 +60,7 @@ const Summary = () => {
                   <div className="price font-poppins font-thin text-lg md:text-lg text-primaryBlueNavy  h-min w-max whitespace-nowrap ">Rp 28.000</div>
                 <input type="checkbox" className='w-8 rounded-full' id='kurir' checked={isChecked}/>
               </div>
-              <div className="button bg-green-700 hover:bg-green-600 rounded-2xl mt-4 p-2 flex items-center justify-center w-[80%] shadow-xl shadow"><button className='font-poppins font-semibold text-2xl text-white shadow-xl'>Save</button></div>
+              <div className="button bg-green-700 hover:bg-green-600 rounded-2xl mt-4 p-2 flex items-center justify-center w-[80%] shadow-xl "><button className='font-poppins font-semibold text-2xl text-white shadow-xl'>Save</button></div>
               </div>
             </div>
             <div className="address  font-medium font-poppins bg-white rounded-xl mt-2 px-8 py-2 flex   flex-col items-center align-middle justify-center">

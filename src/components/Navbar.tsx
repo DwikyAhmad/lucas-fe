@@ -28,7 +28,7 @@ export default function Navbar() {
     }, []);
 
     return (
-        <div className="flex font-poppins bg-darkRed justify-between px-4 py-2 items-center">
+        <div className="flex font-poppins bg-darkRed justify-between px-4 py-2 items-center sticky top-0 z-20">
             <Image className="w-[25px]" src={icon} alt="LucasDjaja Logo" />
             <div
                 className="flex md:hidden text-xl relative p-2 hover:cursor-pointer hover:bg-darkRed2 rounded-lg duration-200"
@@ -58,7 +58,7 @@ export default function Navbar() {
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 <Link href={{
                                             pathname: '/products',
-                                            query: { filter: 'kontol' },
+                                            query: { filter: 'Generic' },
                                         }}>LucaShop</Link>
                             </li>
                         </ul>
@@ -87,9 +87,11 @@ export default function Navbar() {
                             }}>LucaShop</Link>
                 </li>
             </ul>
-            <button className="bg-white hidden md:block text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">
-                Login
-            </button>
+            <Link href={'/login'}>
+                <button className="bg-white hidden md:block text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">
+                    Login
+                </button>
+            </Link>
         </div>
     );
 }

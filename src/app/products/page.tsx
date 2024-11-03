@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { IoCart } from 'react-icons/io5';
 import Footer from '@/components/footer';
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import {  useRouter, useSearchParams } from 'next/navigation'
 import Navbar from '@/components/Navbar';
 
 
@@ -26,12 +26,12 @@ const ProductDetails = () => {
         
       }
     
-    },[filter, search])
+    },[filter])
   return (
     <div className=' h-full w-full   bg-white  gap-4 '>
       <Navbar />
 
-      <HeaderProduct pageTitle="ALL PRODUCTS" className='text-primaryBlueNavy flex flex-col  border border-black w-full pt-4 items-center ' />     
+      <HeaderProduct pageTitle="ALL PRODUCTS" className='text-primaryBlueNavy flex flex-col   w-full pt-4 items-center ' />     
       <HeaderCategories title={'GENERIC PRODUCT'} />
       <div className="flex lg:flex-row sm:flex-col flex-col items-center justify-start align-middle w-full px-6 mt-2 gap-8">
         <div className="filter text-white bg-redBricks h-full lg:w-max w-full lg:rounded-xl rounded-full px-4 py-2 gap-2 lg:pt-5 lg:px-10 lg:pb-20 border flex lg:flex-col lg:items-start items-center align-middle justify-center " >
