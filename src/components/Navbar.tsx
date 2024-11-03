@@ -40,21 +40,26 @@ export default function Navbar() {
                     <div>
                         <ul className="absolute top-full right-0 w-[200px] z-50 bg-darkRed2 text-white p-2 rounded-lg text-sm">
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                                Home
+                                <Link href="/">Home </Link>
+                    
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 About Us
                             </li>
-                            <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
-                                <Link href="/productsService"> Product & Services</Link>
-
+                            <li>
+                            <Link href="http://localhost:3000/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
+                                Product & Services
                               
+                            </Link>
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 News
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                                LucaShop
+                                <Link href={{
+                                            pathname: '/products',
+                                            query: { filter: 'kontol' },
+                                        }}>LucaShop</Link>
                             </li>
                         </ul>
                     </div>
@@ -62,19 +67,24 @@ export default function Navbar() {
             </div>
             <ul className="hidden md:flex gap-2 font-light">
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                    Home
+                    <Link href="/">Home </Link>
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                     About Us
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                    Product & Services
+                    <Link href="http://localhost:3000/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
+                                Product & Services
+                    </Link>
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                     News
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                    LucaShop
+                    <Link href={{
+                                pathname: '/products',
+                                query: { filter: 'kontol' },
+                            }}>LucaShop</Link>
                 </li>
             </ul>
             <button className="bg-white hidden md:block text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">

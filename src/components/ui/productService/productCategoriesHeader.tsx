@@ -15,17 +15,17 @@ const HeaderProduct = forwardRef<HTMLDivElement, headerProps>((props, ref) => {
     <div>
       
       <div className="bg-primaryBlueNavy w-full  py-4 flex flex-col justify-center align-middle " ref={ref}  {...restProps}>
-                <div className='header flex mb-10'>
+                <div className='header flex md:mb-6 mb-2'>
                     <div className="flex flex-col w-full align-middle  items-center space-x-2 justify-center g-4 ">
                         <div className="flex flex-col items-center justify-center align-middle title w-max   " {...restProps}>
-                          <h2 className='text-6xl font-black ' >{pageTitle}</h2>
-                          <div className=" w-[50%] mb-11  h-1 mt-4 bg-primaryRed">
+                          <h2 className='md:text-4xl font-black  sm:text-2xl text-xl  ' >{pageTitle}</h2>
+                          <div className=" xl:w-[50%] w-full mb-6  h-1 mt-4 bg-primaryRed">
                             <br />
                           </div>
                         </div>
-                        <div className="searchbar w-6/12 flex">
-                            <Input type="input" placeholder="Search here... " className='text-primaryBlueNavy border-b-primaryBlack border-4 bg-white font-poppins mx-2 h-12' />
-                            <Button type="submit" className='h-full'>Search</Button>
+                        <div className="searchbar md:w-96 w-full   flex">
+                            <Input type="input" placeholder="Search here... " className='text-primaryBlueNavy border-b-primaryBlack border-4 bg-white font-poppins mx-2 h-12 rounded-xl' />
+                            <Button type="submit" className='h-full rounded-xl hover:brightness-75 shadow-lg sm:w-min sm:p-2'>Search</Button>
                         </div>
                     </div>
                 </div>

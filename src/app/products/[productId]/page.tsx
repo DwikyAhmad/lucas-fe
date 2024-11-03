@@ -97,7 +97,7 @@ const ProductDetail = (props: detailProps) => {
                         <div className="ctas flex justify-between w-full ">
                             <div className="cart-check     flex gap-2 md:gap-4 md:w-full  w-full mr-3  ">
                                 <button className="cart     md:px-6 md:py-3 p-2 rounded-lg  hover:bg-primaryYellow border border-black  transition-all duration-300 hover:scale-105"><ShoppingCartTwoToneIcon className='md:scale-150 sm:scale-100 scale-90'/></button>
-                                <button className="cart  bg-primaryYellow font-josefinSans md:text-3xl  border  sm:w-min text-sm  md:w-full w-full border-black md:px-10 md:py-3 justify-center align-middle flex items-center rounded-lg font-bold hover:scale-101 hover:bg-yellow-500 transition-all duration-100 hover:scale-105 sm:text-sm " onClick={()=>router.push("/productsService/1/1/checkout")}  >CHECKOUT</button>
+                                <button className="cart  bg-primaryYellow font-josefinSans md:text-3xl  border  sm:w-min text-sm  md:w-full w-full border-black md:px-10 md:py-3 justify-center align-middle flex items-center rounded-lg font-bold hover:scale-101 hover:bg-yellow-500 transition-all duration-100 hover:scale-105 sm:text-sm " onClick={()=>router.push("/products/1/checkout")}  >CHECKOUT</button>
                             </div>
                             <div className="marketplace  flex rounded-lg gap-2 w-max ">
                                 <button className="tokped text-black border  border-black flex items-center px-2  rounded-lg hover:bg-gray-200 hover:scale-105 "><Image src={ tokopedia} alt={''} width={100} height={100} ></Image></button>
