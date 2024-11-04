@@ -47,7 +47,7 @@ export default function Navbar() {
                                 About Us
                             </li>
                             <li>
-                            <Link href="http://localhost:3000/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
+                            <Link href="/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
                                 Product & Services
                               
                             </Link>
@@ -73,7 +73,7 @@ export default function Navbar() {
                     About Us
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                    <Link href="http://localhost:3000/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
+                    <Link href="/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
                                 Product & Services
                     </Link>
                 </li>
