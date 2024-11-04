@@ -7,6 +7,7 @@ import { IoCart } from 'react-icons/io5';
 import Footer from '@/components/footer';
 import {  useRouter, useSearchParams } from 'next/navigation'
 import Navbar from '@/components/Navbar';
+import { Suspense } from 'react';
 
 
 // type detailProductTypeProps ={ params: { filter: string } }
@@ -28,7 +29,9 @@ const ProductDetails = () => {
     
     },[filter])
   return (
-    <div className=' h-full w-full   bg-white  gap-4 '>
+  <Suspense fallback={<div>Loading...</div>}>
+      
+      <div className=' h-full w-full   bg-white  gap-4 '>
       <Navbar />
 
       <HeaderProduct pageTitle="ALL PRODUCTS" className='text-primaryBlueNavy flex flex-col   w-full pt-4 items-center ' />     
@@ -92,6 +95,10 @@ const ProductDetails = () => {
 
       <Footer />
     </div>
+
+
+  </Suspense>
+    
   )
 }
 
