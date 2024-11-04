@@ -36,7 +36,7 @@ const ProductDetails = () => {
       <div className="flex lg:flex-row sm:flex-col flex-col items-center justify-start align-middle w-full px-6 mt-2 gap-8">
         <div className="filter text-white bg-redBricks h-full lg:w-max w-full lg:rounded-xl rounded-full px-4 py-2 gap-2 lg:pt-5 lg:px-10 lg:pb-20 border flex lg:flex-col lg:items-start items-center align-middle justify-center " >
           <h2 className='md:text-2xl text-xl mb-5 font-semibold lg:flex  hidden'>FILTER</h2>
-          <div className=" filter-item flex lg:flex-col align-middle justify-start  flex-row border border-black items-start  gap-2  lg:overflow-hidden overflow-y-auto lg:w-full w-min  scroll-smooth">
+          <div className=" filter-item flex lg:flex-col align-middle justify-start  flex-row  items-start  gap-2  lg:overflow-hidden overflow-y-auto lg:w-full w-min  scroll-smooth">
 
             <div className="items flex flex-row  items-center align-middle justify-center gap-4">
               <input type="checkbox" id="myCheckbox" className="w-5 h-5 " />
@@ -65,7 +65,7 @@ const ProductDetails = () => {
         <div className="products-container-500 w-full h-full flex gap-4 mb-8 ">
           <div className="text-black border md:w-max w-min flex items-center  flex-col border-black border-opacity-20 hover:shadow-xl text-3xl rounded-2xl transition-transform duration-10 ease-in-out  lg:py-1 py-0 pb-2   " style={{cursor:"pointer;"}} onClick={() => router?.push(`/products/1`)}>
             <div className="product-image border    rounded-xl drop-shadow-2xl border-black border-opacity-20 flex items-center justify-center align-middle w-auto h-max mb-2 scale-75 md:scale-100  ">
-                <Image src={'https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg'} className=' rounded-xl w-max  border border-black ' alt={''} width={150} height={100}></Image>
+                <Image src={'https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg'} className=' rounded-xl w-max  border border-black ' onClick={() => router?.push(`/products/1`)} alt={''} width={150} height={100}></Image>
             </div>
             <div className="metadata md:px-4 px-2 ">
               <div className="desc md:mx-4  ">
