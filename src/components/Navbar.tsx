@@ -87,8 +87,8 @@ export default function Navbar() {
                             }}>LucaShop</Link>
                 </li>
             </ul>
-            <Link href={'/login'}>
-                <button className="bg-white hidden md:block text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">
+            <Link href={'/login'} className="hidden md:block">
+                <button className="bg-white text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">
                     Login
                 </button>
             </Link>
