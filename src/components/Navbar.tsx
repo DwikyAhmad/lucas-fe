@@ -83,7 +83,7 @@ export default function Navbar() {
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                     <Link href={{
                                 pathname: '/products',
-                                query: { filter: 'kontol' },
+                                query: { filter: 'Generic' },
                             }}>LucaShop</Link>
                 </li>
             </ul>
