@@ -28,7 +28,7 @@ interface ProductFormProps {
     categories: Category[];
 }
 
-export default function ProductForm({ categories }: ProductFormProps) {
+export default function EditProductForm({ categories }: ProductFormProps) {
     const [name, setName] = useState("");
     const [image, setImage] = useState<File>();
     const [description, setDescription] = useState("");
