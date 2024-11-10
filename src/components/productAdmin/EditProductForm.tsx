@@ -18,27 +18,58 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Image from "next/image";
 
 interface Category {
     id: string;
     name: string;
 }
-interface ProductFormProps {
-    categories: Category[];
+
+interface product {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    composition: string[];
+    image: string;
+    type: string;
+    productBy: string;
+    packaging: string;
+    categoryNames: string[];
 }
 
-export default function EditProductForm({ categories }: ProductFormProps) {
-    const [name, setName] = useState("");
+interface ProductFormProps {
+    categories: Category[];
+    product: product;
+}
+
+export default function EditProductForm({
+    categories,
+    product,
+}: ProductFormProps) {
+    const getCategoryId = (categoryName: string) => {
+        const category = categories.find(
+            (category) => category.name === categoryName
+        );
+        return category ? category.id : "";
+    };
+
+    const categoryIdList = product.categoryNames.map((categoryName) =>
+        getCategoryId(categoryName)
+    );
+
+    const [name, setName] = useState(product.name);
     const [image, setImage] = useState<File>();
-    const [description, setDescription] = useState("");
-    const [packaging, setPackaging] = useState("");
-    const [stock, setStock] = useState("");
-    const [price, setPrice] = useState("");
-    const [composition, setComposition] = useState(["", ""]);
-    const [productBy, setProductBy] = useState("");
-    const [categoryId, setCategoryId] = useState([""]);
-    const [type, setType] = useState("");
+    const [description, setDescription] = useState(product.description);
+    const [packaging, setPackaging] = useState(product.packaging);
+    const [stock, setStock] = useState(product.stock.toString());
+    const [price, setPrice] = useState(product.price.toString());
+    const [composition, setComposition] = useState(product.composition);
+    const [productBy, setProductBy] = useState(product.productBy);
+    const [categoryId, setCategoryId] = useState(categoryIdList);
+    const [type, setType] = useState(product.type);
     const inputFile = useRef<HTMLInputElement>(null);
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
@@ -121,15 +152,30 @@ export default function EditProductForm({ categories }: ProductFormProps) {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </div>
+                <div className="flex justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap font-semibold"
+                        htmlFor="previewImage"
+                    >
+                        Image Preview
+                    </Label>
+                    <Image
+                        src={product.image}
+                        alt="Product Image Not Found"
+                        className="text-sm"
+                        width={300}
+                        height={200}
+                    />
+                </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
-                        className="text-nowrap self-center font-semibold"
+                        className="text-nowrap self-center font-semibold sm:leading-5"
                         htmlFor="productImage"
                     >
-                        Product Image
+                        Product Image <br className="hidden sm:flex"/>(Optional)
                     </Label>
                     <Input
-                        className="w-[240px] sm:w-[450px] h-[32px]"
+                        className="w-[240px] sm:w-[450px] h-[32px] self-center"
                         type="file"
                         id="productImage"
                         name="productImage"
@@ -228,7 +274,9 @@ export default function EditProductForm({ categories }: ProductFormProps) {
                                         <Switch
                                             className="data-[state=checked]:bg-darkRed"
                                             id={category.id}
-                                            checked={categoryId.includes(category.id)}
+                                            checked={categoryId.includes(
+                                                category.id
+                                            )}
                                             onCheckedChange={(isChecked) =>
                                                 handleCategoryChange(
                                                     category.id,
@@ -236,7 +284,10 @@ export default function EditProductForm({ categories }: ProductFormProps) {
                                                 )
                                             }
                                         />
-                                        <Label htmlFor={category.id} className="cursor-pointer">
+                                        <Label
+                                            htmlFor={category.id}
+                                            className="cursor-pointer"
+                                        >
                                             {category.name}
                                         </Label>
                                     </div>

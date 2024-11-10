@@ -15,7 +15,6 @@ import {
 
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "./DataTable";
-import { useRouter } from "next/navigation";
 
 interface product {
     id: string;
@@ -33,7 +32,6 @@ interface PropData {
 }
 
 export default function ListProducts({ products }: PropData) {
-    const router = useRouter();
     const columns: ColumnDef<product>[] = [
         {
             accessorKey: "name",
@@ -72,7 +70,7 @@ export default function ListProducts({ products }: PropData) {
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem
                                 onClick={() =>
-                                    router.push(`/admin/edit/product/${product.id}`)
+                                    window.open(`/admin/edit/product/${product.id}`)
                                 }
                             >
                                 Edit Product
