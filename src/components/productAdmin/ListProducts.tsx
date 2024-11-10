@@ -1,216 +1,111 @@
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { Input } from "../ui/input";
+"use client";
+
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-export default function ListProducts() {
+import { MoreHorizontal } from "lucide-react";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "./DataTable";
+
+interface product {
+    id: string;
+    name: string;
+    price: number;
+    stock: number;
+    type: string;
+    composition: string[];
+    image: string;
+    categoryName: string[];
+}
+
+interface PropData {
+    products: product[];
+}
+
+export default function ListProducts({ products }: PropData) {
+    const columns: ColumnDef<product>[] = [
+        {
+            accessorKey: "name",
+            header: "Product Name",
+        },
+        {
+            accessorKey: "type",
+            header: "Type",
+        },
+        {
+            accessorKey: "categoryName",
+            header: "Categories",
+        },
+        {
+            accessorKey: "price",
+            header: "Price",
+            cell: ({ row }) => {
+                const price: number = row.getValue("price");
+                return <div>Rp{price}</div>;
+            },
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => {
+                const product = row.original;
+
+                return (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    navigator.clipboard.writeText(product.id)
+                                }
+                            >
+                                Edit Product
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    navigator.clipboard.writeText(product.id)
+                                }
+                            >
+                                Delete Product
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Manage Variant</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                );
+            },
+        },
+    ];
+
     return (
         <div className="font-poppins bg-darkRed px-4 min-h-screen">
-            <h1 className="text-center font-semibold text-2xl py-4">
+            <h1 className="text-center font-semibold text-2xl pt-4 pb-6 sm:pb-4">
                 LIST PRODUCT
             </h1>
             <div className="flex gap-2 flex-wrap text-black sm:justify-center">
-                <div className="w-full sm:w-[200px]">
-                    <Select>
-                        <SelectTrigger className="w-full bg-white">
-                            <SelectValue placeholder="Theme" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="light">Light</SelectItem>
-                            <SelectItem value="dark">Dark</SelectItem>
-                            <SelectItem value="system">System</SelectItem>
-                        </SelectContent>
-                    </Select>
+                <div className="w-full sm:w-min flex justify-end absolute right-4 top-14 sm:top-4">
+                    <Button variant={"destructive"}>
+                        <Link href={"/admin/dashboard"}>Back to dashboard</Link>
+                    </Button>
                 </div>
-                <Input className="bg-white sm:w-[300px] lg:w-[400px]" type="text" placeholder="Generik" />
-                <Button className="max-sm:w-full">Search</Button>
-                <Link href={"/admin/dashboard"} className="w-full sm:w-min flex justify-end">
-                    <Button variant={"destructive"}>Back to dashboard</Button>
-                </Link>
             </div>
-            <div className="mt-4">
-                <div className="md:flex justify-around w-3/4 mb-4 hidden">
-                    <p className="hidden md:flex">Product Name</p>
-                    <p className="hidden md:flex">Type</p>
-                    <p className="hidden md:flex">Categories</p>
-                    <p className="hidden md:flex">Price</p>
-                </div>
-
-                <div className="flex flex-col gap-4">
-                    <div className="bg-white p-2 rounded-lg text-black text-sm md:flex md:justify-around md:items-center">
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Product Name:</p>
-                            <p>Paracetamol</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Type:</p>
-                            <p>Tablet</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Categories:</p>
-                            <p>Generic - Antibiotik</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Price:</p>
-                            <p>Rp 35.000</p>
-                        </div>
-                        <div className="flex gap-2 mt-3 md:mt-0">
-                            <Button className="w-1/2">Edit</Button>
-                            <Button variant={"destructive"} className="w-1/2">
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg text-black text-sm md:flex md:justify-around md:items-center">
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Product Name:</p>
-                            <p>Paracetamol</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Type:</p>
-                            <p>Tablet</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Categories:</p>
-                            <p>Generic - Antibiotik</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Price:</p>
-                            <p>Rp 35.000</p>
-                        </div>
-                        <div className="flex gap-2 mt-3 md:mt-0">
-                            <Button className="w-1/2">Edit</Button>
-                            <Button variant={"destructive"} className="w-1/2">
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg text-black text-sm md:flex md:justify-around md:items-center">
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Product Name:</p>
-                            <p>Paracetamol</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Type:</p>
-                            <p>Tablet</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Categories:</p>
-                            <p>Generic - Antibiotik</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Price:</p>
-                            <p>Rp 35.000</p>
-                        </div>
-                        <div className="flex gap-2 mt-3 md:mt-0">
-                            <Button className="w-1/2">Edit</Button>
-                            <Button variant={"destructive"} className="w-1/2">
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg text-black text-sm md:flex md:justify-around md:items-center">
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Product Name:</p>
-                            <p>Paracetamol</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Type:</p>
-                            <p>Tablet</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Categories:</p>
-                            <p>Generic - Antibiotik</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Price:</p>
-                            <p>Rp 35.000</p>
-                        </div>
-                        <div className="flex gap-2 mt-3 md:mt-0">
-                            <Button className="w-1/2">Edit</Button>
-                            <Button variant={"destructive"} className="w-1/2">
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg text-black text-sm md:flex md:justify-around md:items-center">
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Product Name:</p>
-                            <p>Paracetamol</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Type:</p>
-                            <p>Tablet</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Categories:</p>
-                            <p>Generic - Antibiotik</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Price:</p>
-                            <p>Rp 35.000</p>
-                        </div>
-                        <div className="flex gap-2 mt-3 md:mt-0">
-                            <Button className="w-1/2">Edit</Button>
-                            <Button variant={"destructive"} className="w-1/2">
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg text-black text-sm md:flex md:justify-around md:items-center">
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Product Name:</p>
-                            <p>Paracetamol</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Type:</p>
-                            <p>Tablet</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Categories:</p>
-                            <p>Generic - Antibiotik</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Price:</p>
-                            <p>Rp 35.000</p>
-                        </div>
-                        <div className="flex gap-2 mt-3 md:mt-0">
-                            <Button className="w-1/2">Edit</Button>
-                            <Button variant={"destructive"} className="w-1/2">
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="bg-white p-2 rounded-lg text-black text-sm md:flex md:justify-around md:items-center">
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Product Name:</p>
-                            <p>Paracetamol</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Type:</p>
-                            <p>Tablet</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Categories:</p>
-                            <p>Generic - Antibiotik</p>
-                        </div>
-                        <div className="flex justify-between">
-                            <p className="md:hidden">Price:</p>
-                            <p>Rp 35.000</p>
-                        </div>
-                        <div className="flex gap-2 mt-3 md:mt-0">
-                            <Button className="w-1/2">Edit</Button>
-                            <Button variant={"destructive"} className="w-1/2">
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
+            <div className="mt-4 lg:mt-0 flex justify-center">
+                <div className="flex flex-col gap-4 w-full lg:w-[900px]">
+                    <DataTable columns={columns} data={products} />
                 </div>
             </div>
         </div>
