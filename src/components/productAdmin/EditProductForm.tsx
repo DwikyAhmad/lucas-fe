@@ -87,7 +87,10 @@ export default function EditProductForm({
         formData.append("price", price);
         if (image) {
             formData.append("image", image);
+        } else {
+            formData.append("image", "");
         }
+        formData.append("imageUrl", product.image);
         formData.append("type", type);
         const filteredComposition = composition.filter((item) => item !== "");
         formData.append("composition", JSON.stringify(filteredComposition));
@@ -98,31 +101,18 @@ export default function EditProductForm({
         formData.append("categoryId", JSON.stringify(filteredCategoryId));
 
         try {
-            const myPromise = axios.post(`/api/product/create`, formData);
+            const myPromise = axios.put(`/api/product/update/${product.id}`, formData);
             await toast.promise(myPromise, {
-                loading: "Creating product...",
+                loading: "Updating product...",
                 success: (res) => {
-                    if (res.status === 200) {
-                        return "Product created successfully";
+                    if (res.data.code === 200) {
+                        return "Product updated successfully";
                     } else {
                         throw new Error(res.data.message);
                     }
                 },
                 error: (err) => err.message,
             });
-            setName("");
-            setImage(undefined);
-            setDescription("");
-            setPackaging("");
-            setStock("");
-            setPrice("");
-            setComposition(["", ""]);
-            setProductBy("");
-            setCategoryId([""]);
-            setType("");
-            if (inputFile.current) {
-                inputFile.current.value = "";
-            }
         } catch (error) {
             console.log(error);
         }
