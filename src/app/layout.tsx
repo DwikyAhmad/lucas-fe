@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Poppins, Mrs_Sheppards, Josefin_Sans, Istok_Web } from 'next/font/google'
 import "./globals.css";
-
+import NextTopLoader from 'nextjs-toploader';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -55,6 +55,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} 
         ${mrsSheppards.variable} ${josefinSans.variable} ${istokWeb.variable} antialiased bg-white`}
       >
+        <NextTopLoader
+          showSpinner={false}
+        />
         {children}
       </body>
     </html>

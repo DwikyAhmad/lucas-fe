@@ -20,6 +20,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Category {
     id: string;
@@ -49,6 +50,8 @@ export default function EditProductForm({
     categories,
     product,
 }: ProductFormProps) {
+
+    const router = useRouter();
     const getCategoryId = (categoryName: string) => {
         const category = categories.find(
             (category) => category.name === categoryName
@@ -113,6 +116,7 @@ export default function EditProductForm({
                 },
                 error: (err) => err.message,
             });
+            router.refresh();
         } catch (error) {
             console.log(error);
         }
@@ -122,7 +126,7 @@ export default function EditProductForm({
         <div className="text-black font-poppins min-h-screen pb-10 bg-darkRed flex flex-col items-center">
             <Toaster />
             <h1 className="text-white text-3xl font-semibold pt-8 text-center">
-                ADD PRODUCT
+                EDIT PRODUCT
             </h1>
             <div className="bg-white w-[280px] sm:w-[630px] p-5 mt-8 rounded-lg flex flex-col gap-5">
                 <div className="flex gap-5 justify-between flex-wrap">
@@ -374,15 +378,12 @@ export default function EditProductForm({
                 </div>
                 <div className="flex justify-between flex-wrap gap-y-4 max-sm:justify-end max-sm:flex-wrap-reverse">
                     <div>
-                        <Link href={"/admin/dashboard"}>
+                        <Link href={"/admin/products"}>
                             <Button variant={"destructive"}>Back</Button>
                         </Link>
                     </div>
                     <div className="flex gap-4 flex-wrap max-sm:justify-end">
-                        <Button onClick={handleSubmit}>Create Product</Button>
-                        <Link href="/admin/add/variant">
-                            <Button variant={"outline"}>Add Variant</Button>
-                        </Link>
+                        <Button onClick={handleSubmit}>Save Changes</Button>
                     </div>
                 </div>
             </div>
