@@ -27,7 +27,7 @@ export const uploadFile = async (file, folder) => {
 };
 
 export const extractFilePathFromUrl = (url) => {
-  const match = url.match(/\/o\/(.*?)\?alt=media/);
+  const match = url.match(/\/([^\/?]+\/[^\/?]+)\?/);
   if (match && match[1]) {
     return decodeURIComponent(match[1]);
   }

@@ -18,27 +18,61 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Category {
     id: string;
     name: string;
 }
-interface ProductFormProps {
-    categories: Category[];
+
+interface product {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    composition: string[];
+    image: string;
+    type: string;
+    productBy: string;
+    packaging: string;
+    categoryNames: string[];
 }
 
-export default function ProductForm({ categories }: ProductFormProps) {
-    const [name, setName] = useState("");
+interface ProductFormProps {
+    categories: Category[];
+    product: product;
+}
+
+export default function EditProductForm({
+    categories,
+    product,
+}: ProductFormProps) {
+
+    const router = useRouter();
+    const getCategoryId = (categoryName: string) => {
+        const category = categories.find(
+            (category) => category.name === categoryName
+        );
+        return category ? category.id : "";
+    };
+
+    const categoryIdList = product.categoryNames.map((categoryName) =>
+        getCategoryId(categoryName)
+    );
+
+    const [name, setName] = useState(product.name);
     const [image, setImage] = useState<File>();
-    const [description, setDescription] = useState("");
-    const [packaging, setPackaging] = useState("");
-    const [stock, setStock] = useState("");
-    const [price, setPrice] = useState("");
-    const [composition, setComposition] = useState(["", ""]);
-    const [productBy, setProductBy] = useState("");
-    const [categoryId, setCategoryId] = useState([""]);
-    const [type, setType] = useState("");
+    const [description, setDescription] = useState(product.description);
+    const [packaging, setPackaging] = useState(product.packaging);
+    const [stock, setStock] = useState(product.stock.toString());
+    const [price, setPrice] = useState(product.price.toString());
+    const [composition, setComposition] = useState(product.composition);
+    const [productBy, setProductBy] = useState(product.productBy);
+    const [categoryId, setCategoryId] = useState(categoryIdList);
+    const [type, setType] = useState(product.type);
     const inputFile = useRef<HTMLInputElement>(null);
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
@@ -56,7 +90,10 @@ export default function ProductForm({ categories }: ProductFormProps) {
         formData.append("price", price);
         if (image) {
             formData.append("image", image);
+        } else {
+            formData.append("image", "");
         }
+        formData.append("imageUrl", product.image);
         formData.append("type", type);
         const filteredComposition = composition.filter((item) => item !== "");
         formData.append("composition", JSON.stringify(filteredComposition));
@@ -67,31 +104,19 @@ export default function ProductForm({ categories }: ProductFormProps) {
         formData.append("categoryId", JSON.stringify(filteredCategoryId));
 
         try {
-            const myPromise = axios.post(`/api/product/create`, formData);
+            const myPromise = axios.put(`/api/product/update/${product.id}`, formData);
             await toast.promise(myPromise, {
-                loading: "Creating product...",
+                loading: "Updating product...",
                 success: (res) => {
-                    if (res.status === 200) {
-                        return "Product created successfully";
+                    if (res.data.code === 200) {
+                        return "Product updated successfully";
                     } else {
                         throw new Error(res.data.message);
                     }
                 },
                 error: (err) => err.message,
             });
-            setName("");
-            setImage(undefined);
-            setDescription("");
-            setPackaging("");
-            setStock("");
-            setPrice("");
-            setComposition(["", ""]);
-            setProductBy("");
-            setCategoryId([""]);
-            setType("");
-            if (inputFile.current) {
-                inputFile.current.value = "";
-            }
+            router.refresh();
         } catch (error) {
             console.log(error);
         }
@@ -101,7 +126,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
         <div className="text-black font-poppins min-h-screen pb-10 bg-darkRed flex flex-col items-center">
             <Toaster />
             <h1 className="text-white text-3xl font-semibold pt-8 text-center">
-                ADD PRODUCT
+                EDIT PRODUCT
             </h1>
             <div className="bg-white w-[280px] sm:w-[630px] p-5 mt-8 rounded-lg flex flex-col gap-5">
                 <div className="flex gap-5 justify-between flex-wrap">
@@ -121,15 +146,30 @@ export default function ProductForm({ categories }: ProductFormProps) {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </div>
+                <div className="flex justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap font-semibold"
+                        htmlFor="previewImage"
+                    >
+                        Image Preview
+                    </Label>
+                    <Image
+                        src={product.image}
+                        alt="Product Image Not Found"
+                        className="text-sm"
+                        width={300}
+                        height={200}
+                    />
+                </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
-                        className="text-nowrap self-center font-semibold"
+                        className="text-nowrap self-center font-semibold sm:leading-5"
                         htmlFor="productImage"
                     >
-                        Product Image
+                        Product Image <br className="hidden sm:flex"/>(Optional)
                     </Label>
                     <Input
-                        className="w-[240px] sm:w-[450px] h-[32px]"
+                        className="w-[240px] sm:w-[450px] h-[32px] self-center"
                         type="file"
                         id="productImage"
                         name="productImage"
@@ -228,7 +268,9 @@ export default function ProductForm({ categories }: ProductFormProps) {
                                         <Switch
                                             className="data-[state=checked]:bg-darkRed"
                                             id={category.id}
-                                            checked={categoryId.includes(category.id)}
+                                            checked={categoryId.includes(
+                                                category.id
+                                            )}
                                             onCheckedChange={(isChecked) =>
                                                 handleCategoryChange(
                                                     category.id,
@@ -236,7 +278,10 @@ export default function ProductForm({ categories }: ProductFormProps) {
                                                 )
                                             }
                                         />
-                                        <Label htmlFor={category.id} className="cursor-pointer">
+                                        <Label
+                                            htmlFor={category.id}
+                                            className="cursor-pointer"
+                                        >
                                             {category.name}
                                         </Label>
                                     </div>
@@ -333,15 +378,12 @@ export default function ProductForm({ categories }: ProductFormProps) {
                 </div>
                 <div className="flex justify-between flex-wrap gap-y-4 max-sm:justify-end max-sm:flex-wrap-reverse">
                     <div>
-                        <Link href={"/admin/dashboard"}>
+                        <Link href={"/admin/products"}>
                             <Button variant={"destructive"}>Back</Button>
                         </Link>
                     </div>
                     <div className="flex gap-4 flex-wrap max-sm:justify-end">
-                        <Button onClick={handleSubmit}>Create Product</Button>
-                        <Link href="/admin/add/variant">
-                            <Button variant={"outline"}>Add Variant</Button>
-                        </Link>
+                        <Button onClick={handleSubmit}>Save Changes</Button>
                     </div>
                 </div>
             </div>

@@ -16,9 +16,11 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "./DataTable";
 
-interface product {
+interface Variant {
     id: string;
     name: string;
+    productName: string;
+    productId: string;
     price: number;
     stock: number;
     type: string;
@@ -28,11 +30,11 @@ interface product {
 }
 
 interface PropData {
-    products: product[];
-}
+    variants: Variant[];
+ }
 
-export default function ListProducts({ products }: PropData) {
-    const columns: ColumnDef<product>[] = [
+export default function ListVariants({ variants } : PropData) {
+    const columns: ColumnDef<Variant>[] = [
         {
             accessorKey: "name",
             header: "Product Name",
@@ -56,7 +58,7 @@ export default function ListProducts({ products }: PropData) {
         {
             id: "actions",
             cell: ({ row }) => {
-                const product = row.original;
+                const variant = row.original;
 
                 return (
                     <DropdownMenu>
@@ -68,33 +70,25 @@ export default function ListProducts({ products }: PropData) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem
-                                className="cursor-pointer"
-                                asChild
-                            >
+                            <DropdownMenuItem className="cursor-pointer">
                                 <Link
-                                    href={`/admin/edit/product/${product.id}`}
+                                    href={`/admin/edit/product/${variant.id}`}
                                 >
                                     Edit Product
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                                asChild
                                 className="cursor-pointer"
+                                onClick={() =>
+                                    navigator.clipboard.writeText(variant.id)
+                                }
                             >
-                                <Link
-                                    href={`/admin/edit/product/${product.id}`}
-                                >
-                                    Delete Product
-                                </Link>
+                                Delete Product
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                                className="cursor-pointer"
-                                asChild
-                            >
+                            <DropdownMenuItem className="cursor-pointer">
                                 <Link
-                                    href={`/admin/products/${product.id}/variants`}
+                                    href={`/admin/products/${variant.id}/variants`}
                                 >
                                     Manage Variant
                                 </Link>
@@ -109,18 +103,18 @@ export default function ListProducts({ products }: PropData) {
     return (
         <div className="font-poppins bg-darkRed px-4 min-h-screen">
             <h1 className="text-center font-semibold text-2xl pt-4 pb-6 sm:pb-4">
-                LIST PRODUCT
+                LIST VARIANT
             </h1>
             <div className="flex gap-2 flex-wrap text-black sm:justify-center">
                 <div className="w-full sm:w-min flex justify-end absolute right-4 top-14 sm:top-4">
                     <Button variant={"destructive"} asChild>
-                        <Link href={"/admin/dashboard"}>Back to dashboard</Link>
+                        <Link href={"/admin/products"}>Back to Products</Link>
                     </Button>
                 </div>
             </div>
             <div className="mt-4 lg:mt-0 flex justify-center">
                 <div className="flex flex-col gap-4 w-full lg:w-[900px]">
-                    <DataTable columns={columns} data={products} />
+                    <DataTable columns={columns} data={variants} />
                 </div>
             </div>
         </div>
