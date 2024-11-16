@@ -22,13 +22,23 @@ interface   Category {
   description: string;
   // add other fields here if there are any, like `description`, `imageUrl`, etc.
 }
+interface   Product {
+  id: string;
+  name: string;
+  price: number;
+  stock: number;
+  type: string;
+  composition: string[];
+  image: string;
+  categoryName: string[]
+}
 const ProductDetails = async () => {
   const router = useRouter()
   const param = useSearchParams()
   const filter = (param.get("filter")) || ""
   const [search, setSearch] = useState("")
   const [categories,setCategories] = useState<Category[]>([]);
-  const [listProduct,setListProduct] = useState<Category[]>([]);
+  const [listProduct,setListProduct] = useState<Product[]>([]);
   const [listFilter, setListFilter] = useState<string[]>([]);
   // const listFilter = new Array()
   // const [isChecked, setIsChecked] = useState(false);
@@ -72,9 +82,9 @@ const ProductDetails = async () => {
       try {
           const response = await axios.get(`${API_URL}/product`);
         const products = response.data.products;
-        console.log("INI PRODUCTTS : ", products)
         listProduct.push(products)
-        setListProduct([...listProduct,products])
+        setListProduct((prevListProduct) => [...prevListProduct, ...products])
+        console.log("INI PRODUCTTS : ", listProduct)
       } catch (error) {
           console.error(error);
       }
@@ -98,24 +108,25 @@ const ProductDetails = async () => {
         <h2 className='md:text-2xl text-xl mb-5 font-semibold lg:flex  hidden'>FILTER</h2>
           
           {categories.map((category,index) => (
-            <CardFilter  key= {index} name={category.name} isChecked={false}  value={category.name} onFilterClick={(e) => selectFilter(category.name)}/>
+            <CardFilter  key= {index} name={category.name} isChecked={false}  value={category.name} onFilterClick={(value)=>selectFilter(value)}/>
           ))}
       </div>
 
 
         {/* card Product */}
-        <div className="products-container-500 w-full h-full flex gap-4 mb-8 ">
-          <div className="text-black border md:w-max w-min flex items-center  flex-col border-black border-opacity-20 hover:shadow-xl text-3xl rounded-2xl transition-transform duration-10 ease-in-out  lg:py-1 py-0 pb-2   " style={{ cursor: "pointer;" }} onClick={() => router?.push(`/products/1`)}>
+          {listProduct.map((product,index)=>(
+            <div className="products-container-500 w-full h-full flex gap-4 mb-8  " key={index}>
+          <div className="text-black border md:w-max w-min flex items-center  flex-col border-black border-opacity-20 hover:shadow-xl text-3xl rounded-2xl transition-transform duration-10 ease-in-out  lg:py-1 py-0 pb-2   " style={{ cursor: "pointer;" }} onClick={() => router?.push(`/products/${product.id}`)}>
             <div className="product-image border    rounded-xl drop-shadow-2xl border-black border-opacity-20 flex items-center justify-center align-middle w-auto h-max mb-2 scale-75 md:scale-100  ">
-              <Image src={'https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg'} className=' rounded-xl w-max  border border-black ' onClick={() => router?.push(`/products/1`)} alt={''} width={150} height={100}></Image>
+              <Image src={'https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg'} className=' rounded-xl w-max  border border-black ' onClick={() => router?.push(`/products/${product.id}`)} alt={''} width={150} height={100}></Image>
             </div>
             <div className="metadata md:px-4 px-2 ">
               <div className="desc md:mx-4  ">
-                <div className="title font-semibold font-poppins lg:text-2xl text-xl text-primaryBlueNavy">Vitamin B-16</div>
-                <div className="title text-xs font-medium text-black text-opacity-30">Generic Product</div>
+                    <div className="title font-semibold font-poppins lg:text-2xl text-xl text-primaryBlueNavy">{product.name}</div>
+                    <div className="title text-xs font-medium text-black text-opacity-30">{ product.type}</div>
               </div>
               <div className="price flex justify-between  md:mt-8 mt-4  md:gap-4 gap-2">
-                <p className="border  border-primaryBlack md:rounded-xl px-1 md:py-1 py-1 lg:text-xl text-lg text-nowrap font-semibold hover:bg-primaryBlack hover:text-white transition-transform duration-300 ease-in-out hover:scale-105 drop-shadow-2xl md:w-full h-max w-max items-center align-middle  justify-center content-center flex rounded-full" style={{ cursor: "pointer;" }} onClick={() => router?.push('/products/1')} >Rp 20.000</p>
+                    <p className="border  border-primaryBlack md:rounded-xl px-1 md:py-1 py-1 lg:text-xl text-lg text-nowrap font-semibold hover:bg-primaryBlack hover:text-white transition-transform duration-300 ease-in-out hover:scale-105 drop-shadow-2xl md:w-full h-max w-max items-center align-middle  justify-center content-center flex rounded-full" style={{ cursor: "pointer;" }} onClick={() => router?.push('/products/1')} >Rp { product.price}</p>
                 <div className="marketplace">
                   <div className="border border-primaryBlack rounded-xl px-2 py-1 text-2xl font-semibold h-full items-center flex bg-primaryYellow text-white transition-transform duration-300 ease-in-out hover:scale-105 md:scale-100 scale-75drop-shadow-2xl hover:bg-darkYellow " style={{ cursor: "pointer;" }}> <IoCart />
                   </div>
@@ -129,6 +140,15 @@ const ProductDetails = async () => {
 
 
         </div>
+
+
+
+            
+          ))
+
+          
+          }
+        
 
 
       </div>
