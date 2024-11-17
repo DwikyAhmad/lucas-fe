@@ -4,4 +4,9 @@ if (!API_URL) {
     API_URL = 'http://127.0.0.1:5000';
 } 
 
+export const formatRupiah = (price) => {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' , minimumFractionDigits: 0, // Tidak menampilkan angka di belakang koma
+      maximumFractionDigits: 0,  }).format(price);
+  };  
+
 export default API_URL;

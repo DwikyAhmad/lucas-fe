@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from 'next/link'
 
 export default function Navbar() {
-    
+
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -41,25 +41,25 @@ export default function Navbar() {
                         <ul className="absolute top-full right-0 w-[200px] z-50 bg-darkRed2 text-white p-2 rounded-lg text-sm">
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 <Link href="/">Home </Link>
-                    
+
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 About Us
                             </li>
                             <li>
-                            <Link href="/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
-                                Product & Services
-                              
-                            </Link>
+                                <Link href="/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
+                                    Product & Services
+
+                                </Link>
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 News
                             </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 <Link href={{
-                                            pathname: '/products',
-                                            query: { filter: 'Generic' },
-                                        }}>LucaShop</Link>
+                                    pathname: '/products',
+                                    query: { filter: 'Generic' },
+                                }}>LucaShop</Link>
                             </li>
                         </ul>
                     </div>
@@ -74,7 +74,7 @@ export default function Navbar() {
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                     <Link href="/category" className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer" >
-                                Product & Services
+                        Product & Services
                     </Link>
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
@@ -82,9 +82,9 @@ export default function Navbar() {
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                     <Link href={{
-                                pathname: '/products',
-                                query: { filter: 'Generic' },
-                            }}>LucaShop</Link>
+                        pathname: '/products',
+                        query: { filter: 'Generic' },
+                    }}>LucaShop</Link>
                 </li>
             </ul>
             <Link href={'/login'} className="hidden md:block">

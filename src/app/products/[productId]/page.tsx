@@ -1,17 +1,64 @@
 'use client';
 
 import Navbar from '@/components/Navbar'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import shopee from "@/assets/marketplace/shopee.svg";
 import tokopedia from "@/assets/marketplace/tokopedia.svg";
 import {  useRouter } from 'next/navigation';
 import Footer from '@/components/footer';
+import API_URL, { formatRupiah } from '@/utils/utils';
+import axios from 'axios';
 
-interface detailProps {params:{productId:string}}
+
+
+interface   Product {
+    id: string;
+    name: string;
+    price: number;
+    stock: number;
+    type: string;
+    composition: string[];
+    image: string;
+    categoryNames: string[];
+    packaging : string;
+    productBy: string;
+  }
+interface detailProps { params: { productId: string } }
 const ProductDetail = (props: detailProps) => {
+    const [product ,setProduct] = useState<Product>()
+    const getProductById = async () => {
+        try {
+        const {productId } = props.params
+          const response = await axios.get(`${API_URL}/product/${productId}`);
+            const result: Product = response.data.product
+            setProduct(result)
+          return result
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
+    useEffect(() => {
+        const fetchProduct = async () => {
+            console.log("ID :", props.params.productId);
+            const fetchedProduct: Product | undefined = await getProductById();
+            
+            if (fetchedProduct) {
+                setProduct(fetchedProduct);
+                console.log("Fetched Product:", fetchedProduct);
+            } else {
+                setProduct(undefined);
+                console.log("Product not found or error occurred");
+            }
+        };
+        fetchProduct();
+    }, [props.params.productId]);  // Memastikan effect dipanggil ulang saat productId berubah
+
+    useEffect(() => {
+        console.log("Updated product:", product);  // Memantau perubahan product
+    }, [product]);
     const router = useRouter()
     const {productId} = props.params || { productId: "Unknown Product Id" }
 
@@ -31,7 +78,7 @@ const ProductDetail = (props: detailProps) => {
                                 <div className="item-name text-primaryBlack flex md:flex-row lg:w-max w-fit  flex-col text-wrap md:flex-wrap" >
                                     
                                     <input type="checkbox" id="variantA" className="w-3 h-3 m-2 peer" />
-                                    <label htmlFor="variantA"  className="text-md font-istokWeb peer-checked:font-bold text-wrap text-sm ">Rp 20.000 (Variant A)</label>
+                                    <label htmlFor="variantA"  className="text-md font-istokWeb peer-checked:font-bold text-wrap text-sm ">{product ? formatRupiah(product?.price)  : "Loading.."}</label>
                                 </div>
                                 <div className="flex justify-between align-middle items-center counter  ">
                                     <button className="inc bg-primaryBlueNavy w-5 h-5 text-xl font-bold justify-center align-middle flex items-center p-3 rounded-sm font-istokWeb">+</button>
@@ -47,8 +94,8 @@ const ProductDetail = (props: detailProps) => {
                     
                     <div className="rightSide text-black flex flex-col w-full  ">
                         <div className="product-name ">
-                            <h1 className='text-poppins xl:text-5xl md:text-4xl text-2xl font-bold'>Vitamin C Putih 50 mg</h1>
-                            <div className="type text-sm font-light font-poppins">Tablet</div>
+                            <h1 className='text-poppins xl:text-5xl md:text-4xl text-2xl font-bold'>{ product ? (product.name):("Loading..")}</h1>
+                            <div className="type text-sm font-light font-poppins">{ product ? (product.type):("Loading..")}</div>
                         </div>
                         <div className="breaks w-full h-1 bg-black mb-4"></div>
 
@@ -57,16 +104,18 @@ const ProductDetail = (props: detailProps) => {
                                 <div className="compotition">
                                     <label htmlFor="" className='font-bold md:text-3xl text-lg  font-poppins mb-4 '>Compotition</label>
                                     <div className=" text-md w-full font-light p-2 text-sm md:text-xl font-josefinSans">
-                                        <p className='text-nowrap sm:text-wrap'> Vitamin C Putih 50 mg</p>
-                                        <p>Vitamin C Putih 50 mg</p>
-                                        <p>Vitamin C Putih 50 mg</p>
-                                        <p>Vitamin C Putih 50 mg</p>
+                                        {product?.composition?.map((composition,index) => (
+                                            <p className='text-nowrap sm:text-wrap' key={index}>{composition}</p>
+                                        ))}
+                                     
                                     </div>
                                 </div>
                                 <div className="packaging ">
-                                    <label htmlFor="" className='font-bold md:text-3xl text-lg font-poppins mb-4 '>Compotition</label>
-                                    <div className=" text-md font-light p-2 text-sm md:text-xl font-josefinSans">
-                                        <p>10 Strip @10 Tablet</p>
+                                    <label htmlFor="" className='font-bold md:text-3xl text-lg font-poppins mb-4 '>Package</label>
+                                        <div className=" text-md font-light p-2 text-sm md:text-xl font-josefinSans">
+
+                                            <p >{product?.packaging}</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -75,13 +124,16 @@ const ProductDetail = (props: detailProps) => {
                                 <div className="produceBy w-full  ">
                                     <label htmlFor="" className='font-bold md:text-3xl text-lg font-poppins mb-4 '>Produce By</label>
                                     <div className=" text-md font-light p-2 text-sm md:text-xl sm:text-sm font-josefinSans">
-                                        <p>PT MARLIN LIZA</p>
+                                        <p>{product ? (product?.productBy):("...")}A</p>
                                     </div>
                                 </div>
                                 <div className="category  w-min ">
                                 <label htmlFor="" className='font-bold md:text-3xl text-lg font-poppins mb-4 '>Categories</label>
                                     <div className=" text-md font-light p-2 text-sm md:text-xl font-josefinSans">
-                                        <p>Vitamin & suplemen kesehatan</p>
+                                      {  product ? (product?.categoryNames.map((category,index)=>(
+                                        
+                                        <p key={index}>{category}</p>
+                                        ))):("...")}
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +144,7 @@ const ProductDetail = (props: detailProps) => {
                         <div className="ctas flex justify-between w-full ">
                             <div className="cart-check     flex gap-2 md:gap-4 md:w-full  w-full mr-3  ">
                                 <button className="cart     md:px-6 md:py-3 p-2 rounded-lg  hover:bg-primaryYellow border border-black  transition-all duration-300 hover:scale-105"><ShoppingCartTwoToneIcon className='md:scale-150 sm:scale-100 scale-90'/></button>
-                                <button className="cart  bg-primaryYellow font-josefinSans md:text-3xl  border  sm:w-min text-sm  md:w-full w-full border-black md:px-10 md:py-3 justify-center align-middle flex items-center rounded-lg font-bold hover:scale-101 hover:bg-yellow-500 transition-all duration-100 hover:scale-105 sm:text-sm " onClick={()=>router.push("/products/1/checkout")}  >CHECKOUT</button>
+                                <button className="cart  bg-primaryYellow font-josefinSans md:text-3xl  border  sm:w-min text-sm  md:w-full w-full border-black md:px-10 md:py-3 justify-center align-middle flex items-center rounded-lg font-bold hover:scale-101 hover:bg-yellow-500 transition-all duration-100 hover:scale-105 sm:text-sm " onClick={()=>router.push(`/products/${product?.id}/checkout`)}  >CHECKOUT</button>
                             </div>
                             <div className="marketplace  flex rounded-lg gap-2 w-max ">
                                 <button className="tokped text-black border  border-black flex items-center px-2  rounded-lg hover:bg-gray-200 hover:scale-105 "><Image src={ tokopedia} alt={''} width={100} height={100} ></Image></button>
