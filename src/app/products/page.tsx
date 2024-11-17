@@ -40,8 +40,7 @@ const Products =  () => {
   const [categories,setCategories] = useState<Category[]>([]);
   const [listProduct,setListProduct] = useState<Product[]>([]);
   const [listFilter, setListFilter] = useState<string[]>([]);
-  // const listFilter = new Array()
-  // const [isChecked, setIsChecked] = useState(false);
+
 
 
 
@@ -50,7 +49,6 @@ const Products =  () => {
       const response = await axios.get(`${API_URL}/category`);
       const productsResponse = response.data.categories
       setCategories(productsResponse)
-      console.log(productsResponse)
     } catch (error) {
         console.error(error);
     }
@@ -63,7 +61,6 @@ const Products =  () => {
 
   const handleSearch = (searchTerm: string) => {
     setSearch(searchTerm);
-    console.log("SEARCH TERM : " ,searchTerm)
   };
 
   
@@ -80,14 +77,12 @@ const Products =  () => {
           const response = await axios.get(`${API_URL}/product`);
         const products = response.data.products;
         setListProduct((prevListProduct) => [...prevListProduct, ...products])
-        console.log("INI PRODUCTTS : ", listProduct)
       } catch (error) {
           console.error(error);
       }
     }
     getProducts();
     getCategories()
-    console.log("LIST FILTER BAWAH : " ,listFilter)
 
   }, [search])
   return (
