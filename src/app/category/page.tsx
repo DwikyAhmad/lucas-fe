@@ -27,26 +27,21 @@ const ProductService = () => {
         // add other fields here if there are any, like `description`, `imageUrl`, etc.
       }
 
-    const [categories,setCategories] = useState<Category[]>([]);
-    const [products,setProducts] = useState<Product[]>([]);
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [categoryCount, setCategoryCount] = useState<{ [key: string]: number }>({});
-    const newCategoryCount: { [key: string]: number } = {};
-    const getCategories = async () => {
-
-
+      const [categories,setCategories] = useState<Category[]>([]);
+      const [products,setProducts] = useState<Product[]>([]);
+      const [isLoading, setLoading] = useState<boolean>(true);
+      const [categoryCount, setCategoryCount] = useState<{ [key: string]: number }>({});
+      const newCategoryCount: { [key: string]: number } = {};
+      const [search, setSearch] = useState("")
+      const handleSearch = (searchTerm: string) => {
+        setSearch(searchTerm);
+      };
+    
+  const getCategories = async () => {
         try {
-        
           const responseProduct = await axios.get(`${API_URL}/product`);
           const productsResponse = responseProduct.data.products
           setProducts(productsResponse);
-         
-          
-        
-
-
-            
-            
           setLoading(false);
         } catch (error) {
             console.error(error);
@@ -71,18 +66,16 @@ const ProductService = () => {
       getCategories();
       countCategoryItems();
     },[])
-    const router = useRouter();
-    const toDetailPage = (filter: string) => {
-        router.push(`/products?filter=${filter}`);
-  };
+      const router = useRouter();
+      const toDetailPage = (filter: string) => {
+          router.push(`/products?filter=${filter}`);
+    };
 
     return (
         <>
         <Navbar />
-        <HeaderProduct pageTitle={'PRODUCTS CATEGORIES'} />
+        <HeaderProduct pageTitle={'PRODUCTS CATEGORIES'} search={search} onSearch={handleSearch }/>
         {isLoading ? (
-        
-
               <div className = "animate-pulse" >
               <ProductCard
                 src="https://i.pinimg.com/enabled_lo/564x/36/a1/ce/36a1ceede11c2234f40147d17c4d031c.jpg"
@@ -94,8 +87,6 @@ const ProductService = () => {
                 amount={0}
               />
               </div>
-
-                          
         ):(  <div className="bg-primaryBlueNavy h-full" >
             {categories.map((cat) => (
               <div key={cat.id} onClick={() => toDetailPage(cat.name)}>
