@@ -70,7 +70,8 @@ const config: Config = {
 				greenTokopedia: "#83C569",
 				orangeShopee: '#EE4D2D',
 				lightGreen: '#03A88C',
-				lightGreenDark:'#058570'
+				lightGreenDark:'#058570',
+				lightBlue:'#00C3B3'
     		},
     		borderRadius: {
     			lg: 'var(--radius)',

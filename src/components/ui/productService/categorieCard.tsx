@@ -10,17 +10,17 @@ interface CategorieCardProps extends React.HTMLAttributes<HTMLDivElement> {
   height?: number;
   title: string;
   description: string;
-  tags: string[];
+  amount: number;
 }
 
 
 
 const CategorieCard = forwardRef<HTMLDivElement, CategorieCardProps>(
-  ({ src, alt, width = 600, height = 600, title, description, tags, ...props }, ref) => {
+  ({ src, alt, width = 600, height = 600, title, description, amount, ...props }, ref) => {
 
       return (
         <div className="flex flex-col align-top justify-center content-center items-center w-full p-4" ref={ref} {...props}     >
-          <div className="flex flex-row hover:Lshadow-lg hover:border-red-600 border-2 bg-white hover:bg-gray-100 xl:w-[70%]  w-full align-middle justify-around text-black round-xl p-6 rounded-2xl items-center lg:display-none " style={{ cursor: 'pointer' }} {...props} >
+          <div className="flex flex-row hover:Lshadow-lg hover:border-slate-400 hover:scale-10 border-2 bg-white hover:bg-gray-100 xl:w-[70%]  w-full align-middle justify-around text-black round-xl p-6 rounded-2xl items-center lg:display-none " style={{ cursor: 'pointer' }} {...props} >
             <div className="img-categoreis w-fit h-fit mr-10 hidden sm:flex " >
               <Image
                 src={src}
@@ -36,19 +36,11 @@ const CategorieCard = forwardRef<HTMLDivElement, CategorieCardProps>(
               <div className="desc font-poppins lg:text-lg text-pretty text-sm text-justify w-full pr-8 ">
                 {description}
               </div>
-              <div className="cateogryTag flex md:flex-row  gap-3 lg:mt-4 lg:p-2 mt-2 p-0">
-                {tags.map((tag, index) => (
-                  <div
-                    key={index}
-                    className={`lg:text-lg font-poppins p-2 rounded-full font-medium text-sm ${
-                      tag === 'Generic'
-                        ? 'bg-orange'
-                        : 'bg-primaryBlueNavy text-white'
-                    }`}
-                  >
-                    {tag}
-                  </div>
-                ))}
+              <div className="cateogryTag flex md:flex-row  gap-3 lg:mt-4 lg:p-2 mt-2 p-0 ">
+                <div className='lg:text-lg font-poppins p-2 px-4 rounded-full font-medium text-sm bg-primaryYellow'>
+
+                {amount} Items
+                </div>
               </div>
             </div>
           </div>

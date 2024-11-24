@@ -1,16 +1,28 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 
-interface headerProps   extends React.HTMLAttributes<HTMLDivElement> {
-  pageTitle: string
+interface headerProps extends React.HTMLAttributes<HTMLDivElement> {
+  pageTitle: string;
+  search: string;
+  onSearch: (searchTerm: string) => void;
+
   
 }
 
 
 const HeaderProduct = forwardRef<HTMLDivElement, headerProps>((props, ref) => {
-  const { pageTitle,...restProps} = props
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }
+
+  const handleSearchSubmit = () => {
+    onSearch(searchTerm);  // Call the callback function passed from parent with the search term
+  }
+  const { pageTitle,onSearch,...restProps} = props
   return (
     <div>
       
@@ -24,8 +36,9 @@ const HeaderProduct = forwardRef<HTMLDivElement, headerProps>((props, ref) => {
                           </div>
                         </div>
                         <div className="searchbar md:w-96 w-full   flex">
-                            <Input type="input" placeholder="Search here... " className='text-primaryBlueNavy border-b-primaryBlack border-4 bg-white font-poppins mx-2 h-12 rounded-xl' />
-                            <Button type="submit" className='h-full rounded-xl hover:brightness-75 shadow-lg sm:w-min sm:p-2'>Search</Button>
+              <Input type="input" placeholder="Search here... "  value={searchTerm}
+                onChange={handleSearchChange} className='text-primaryBlueNavy border-b-primaryBlack border-4 bg-white font-poppins mx-2 h-12 rounded-xl' />
+                            <Button type="submit" className='h-full rounded-xl hover:brightness-75 shadow-lg sm:w-min sm:p-2'onClick={handleSearchSubmit}>Search</Button>
                         </div>
                     </div>
                 </div>
