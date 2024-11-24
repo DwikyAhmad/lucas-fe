@@ -9,12 +9,27 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "./DataTable";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 interface Variant {
     id: string;
@@ -33,7 +48,30 @@ interface PropData {
     variants: Variant[];
  }
 
-export default function ListVariants({ variants } : PropData) {
+export default function ListVariants({ variants }: PropData) {
+    const router = useRouter();
+
+    const handleDelete = async (id: string) => {
+        try {
+            const myPromise = axios.delete(`/api/variant/delete/${id}`);
+            await toast.promise(myPromise, {
+                loading: "Deleting variant...",
+                success: (res) => {
+                    if (res.data.code === 200) {
+                        return "Variant deleted successfully";
+                    } else {
+                        console.log(res.data)
+                        throw new Error(res.data.message);
+                    }
+                },
+                error: (err) => err.message,
+            });
+            router.refresh();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const columns: ColumnDef<Variant>[] = [
         {
             accessorKey: "name",
@@ -72,27 +110,45 @@ export default function ListVariants({ variants } : PropData) {
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem className="cursor-pointer">
                                 <Link
-                                    href={`/admin/edit/product/${variant.id}`}
+                                    href={`/admin/edit/variant/${variant.id}`}
                                 >
-                                    Edit Product
+                                    Edit Variant
                                 </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() =>
-                                    navigator.clipboard.writeText(variant.id)
-                                }
-                            >
-                                Delete Product
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="cursor-pointer">
-                                <Link
-                                    href={`/admin/products/${variant.id}/variants`}
-                                >
-                                    Manage Variant
-                                </Link>
-                            </DropdownMenuItem>
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button
+                                        className="px-2 py-1.5 w-full justify-start"
+                                        variant={"ghost"}
+                                    >
+                                        Delete Variant
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent className="bg-white">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle className="text-black">
+                                            Are you absolutely sure?
+                                        </AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This action cannot be undone. This
+                                            will permanently delete your variant
+                                            data from our servers.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel className="text-black">
+                                            Cancel
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction
+                                            onClick={() =>
+                                                handleDelete(variant.id)
+                                            }
+                                        >
+                                            Delete
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 );
@@ -102,6 +158,7 @@ export default function ListVariants({ variants } : PropData) {
 
     return (
         <div className="font-poppins bg-darkRed px-4 min-h-screen">
+            <Toaster />
             <h1 className="text-center font-semibold text-2xl pt-4 pb-6 sm:pb-4">
                 LIST VARIANT
             </h1>

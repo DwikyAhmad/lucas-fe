@@ -1,15 +1,17 @@
 import API_URL from "@/utils/utils";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
-import { uploadFile } from "@/firebase/storage";
+import { uploadFile, deleteFile } from "@/firebase/storage";
 
-export async function POST(request: NextRequest) {
-    const data = await request.formData()
-
+export async function PUT(request: NextRequest) {
+    const data = await request.formData();
+    const siteUrl = new URL(request.url);
+    const id = siteUrl.pathname.split("/").pop();
     const name = data.get("name");
     const description = data.get("description");
     const price = data.get("price");
     const image = data.get("image");
+    const imageUrl = data.get("imageUrl");
     const type = data.get("type");
     const composition = JSON.parse(data.get("composition") as string);
     const stock = data.get("stock");
@@ -37,26 +39,43 @@ export async function POST(request: NextRequest) {
         return NextResponse.error();
     }
 
-    const url = await uploadFile(image, "variant");
+    let url;
+    console.log("IMAGE URL: ", imageUrl);
+    if (image instanceof File) {
+
+        try {
+            await deleteFile(imageUrl);
+        } catch (error) {
+            // do nothing
+        }
+
+        url = await uploadFile(image, "variant");
+    } else {
+        url = imageUrl;
+    }
 
     try {
-        const response = await axios.post(`${API_URL}/variant/create`, {
-            name,
-            description,
-            price: parseFloat(price as string),
-            image: url,
-            type,
-            composition,
-            stock: parseInt(stock as string),
-            productBy,
-            packaging,
-            categoryId,
-            productId,
-        }, {
-            headers: {
-                Authorization: `Bearer ${accessToken.value}`,
+        const response = await axios.put(
+            `${API_URL}/variant/update/${id}`,
+            {
+                name,
+                description,
+                price: parseFloat(price as string),
+                image: url,
+                type,
+                composition,
+                stock: parseInt(stock as string),
+                productBy,
+                packaging,
+                categoryId,
+                productId,
             },
-        });
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken.value}`,
+                },
+            }
+        );
         return NextResponse.json(response.data);
     } catch (error) {
         if (error instanceof axios.AxiosError) {

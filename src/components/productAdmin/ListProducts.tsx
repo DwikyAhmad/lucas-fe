@@ -13,8 +13,23 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "./DataTable";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 interface product {
     id: string;
@@ -32,6 +47,29 @@ interface PropData {
 }
 
 export default function ListProducts({ products }: PropData) {
+    const router = useRouter();
+
+    const handleDelete = async (id: string) => {
+        try {
+            const myPromise = axios.delete(`/api/product/delete/${id}`);
+            await toast.promise(myPromise, {
+                loading: "Deleting product...",
+                success: (res) => {
+                    if (res.data.code === 200) {
+                        return "Product deleted successfully";
+                    } else {
+                        console.log(res.data)
+                        throw new Error(res.data.message);
+                    }
+                },
+                error: (err) => err.message,
+            });
+            router.refresh();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const columns: ColumnDef<product>[] = [
         {
             accessorKey: "name",
@@ -78,16 +116,40 @@ export default function ListProducts({ products }: PropData) {
                                     Edit Product
                                 </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem
-                                asChild
-                                className="cursor-pointer"
-                            >
-                                <Link
-                                    href={`/admin/edit/product/${product.id}`}
-                                >
-                                    Delete Product
-                                </Link>
-                            </DropdownMenuItem>
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button
+                                        className="px-2 py-1.5 w-full justify-start"
+                                        variant={"ghost"}
+                                    >
+                                        Delete Product
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent className="bg-white">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle className="text-black">
+                                            Are you absolutely sure?
+                                        </AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This action cannot be undone. This
+                                            will permanently delete your product
+                                            data from our servers.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel className="text-black">
+                                            Cancel
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction
+                                            onClick={() =>
+                                                handleDelete(product.id)
+                                            }
+                                        >
+                                            Delete
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
                                 className="cursor-pointer"
@@ -108,6 +170,7 @@ export default function ListProducts({ products }: PropData) {
 
     return (
         <div className="font-poppins bg-darkRed px-4 min-h-screen">
+            <Toaster />
             <h1 className="text-center font-semibold text-2xl pt-4 pb-6 sm:pb-4">
                 LIST PRODUCT
             </h1>

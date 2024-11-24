@@ -9,7 +9,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     try {
         const response = await axios.get(`${API_URL}/variant/all/${id}`);
-        variants = response.data;
+        variants = response.data.variants;
     } catch { 
         console.error("error");
      }

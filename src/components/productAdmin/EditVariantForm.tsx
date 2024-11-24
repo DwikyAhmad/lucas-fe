@@ -18,78 +18,84 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { ScrollArea } from "@/components/ui/scroll-area"
-
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-    type: string;
-    stock: number;
-    composition: string[];
-    image: string;
-    categoryName: string[];
-}
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Category {
     id: string;
     name: string;
 }
-interface ProductFormProps {
-    products: Product[];
-    categories: Category[];
+
+interface variant {
+    id: string;
+    name: string;
+    productName: string;
+    productId: string;
+    description: string;
+    price: number;
+    stock: number;
+    composition: string[];
+    image: string;
+    type: string;
+    productBy: string;
+    packaging: string;
+    categoryNames: string[];
 }
 
-export default function VariantForm({
-    categories,
-    products,
-}: ProductFormProps) {
-    const [productId, setProductId] = useState("");
-    const [parentProductCategory, setParentProductCategory] = useState([""]);
-    const [name, setName] = useState("");
-    const [image, setImage] = useState<File>();
-    const [description, setDescription] = useState("");
-    const [packaging, setPackaging] = useState("");
-    const [stock, setStock] = useState("");
-    const [price, setPrice] = useState("");
-    const [composition, setComposition] = useState(["", ""]);
-    const [productBy, setProductBy] = useState("");
-    const [categoryId, setCategoryId] = useState([""]);
-    const [type, setType] = useState("");
-    const inputFile = useRef<HTMLInputElement>(null);
-    const [selectedProduct, setSelectedProduct] = useState("");
+interface VariantFormProps {
+    categories: Category[];
+    variant: variant;
+}
 
-    const handleValueChange = (value: string) => {
-        setSelectedProduct(value);
-        const selectedProduct = products.find(
-            (product) => product.id === value
+export default function EditVariantForm({
+    categories,
+    variant,
+}: VariantFormProps) {
+
+    const router = useRouter();
+    const getCategoryId = (categoryName: string) => {
+        const category = categories.find(
+            (category) => category.name === categoryName
         );
-        if (selectedProduct) {
-            setParentProductCategory(selectedProduct.categoryName);
-            setProductId(value);
-            setCategoryId(categories.filter((category) => selectedProduct.categoryName.includes(category.name)).map((category) => category.id));
-        }
+        return category ? category.id : "";
     };
 
-    const handleCategoryChange = (category: Category, isChecked: boolean) => {
+    const categoryIdList = variant.categoryNames.map((categoryName) =>
+        getCategoryId(categoryName)
+    );
+
+    const [name, setName] = useState(variant.name);
+    const [description, setDescription] = useState(variant.description);
+    const [packaging, setPackaging] = useState(variant.packaging);
+    const [price, setPrice] = useState(variant.price.toString());
+    const [stock, setStock] = useState(variant.stock.toString());
+    const [image, setImage] = useState<File>();
+    const [composition, setComposition] = useState(variant.composition);
+    const [productBy, setProductBy] = useState(variant.productBy);
+    const [categoryId, setCategoryId] = useState(categoryIdList);
+    const [type, setType] = useState(variant.type);
+    const inputFile = useRef<HTMLInputElement>(null);
+
+    const handleCategoryChange = (category: string, isChecked: boolean) => {
         if (isChecked) {
-            setCategoryId([...categoryId, category.id]);
-            setParentProductCategory([...parentProductCategory, category.name]);
+            setCategoryId([...categoryId, category]);
         } else {
-            setCategoryId(categoryId.filter((id) => id !== category.id));
-            setParentProductCategory(parentProductCategory.filter((name) => name !== category.name));
+            setCategoryId(categoryId.filter((id) => id !== category));
         }
     };
 
     const handleSubmit = async () => {
         const formData = new FormData();
-        formData.append("productId", productId);
         formData.append("name", name);
         formData.append("description", description);
         formData.append("price", price);
         if (image) {
             formData.append("image", image);
+        } else {
+            formData.append("image", "");
         }
+        formData.append("imageUrl", variant.image);
         formData.append("type", type);
         const filteredComposition = composition.filter((item) => item !== "");
         formData.append("composition", JSON.stringify(filteredComposition));
@@ -98,36 +104,22 @@ export default function VariantForm({
         formData.append("packaging", packaging);
         const filteredCategoryId = categoryId.filter((id) => id !== "");
         formData.append("categoryId", JSON.stringify(filteredCategoryId));
+        formData.append("productId", variant.productId);
 
         try {
-            const myPromise = axios.post(`/api/variant/create`, formData);
+            const myPromise = axios.put(`/api/variant/update/${variant.id}`, formData);
             await toast.promise(myPromise, {
-                loading: "Creating variant...",
+                loading: "Updating variant...",
                 success: (res) => {
-                    if (res.status === 200) {
-                        return "Variant created successfully";
+                    if (res.data.code === 200) {
+                        return "variant updated successfully";
                     } else {
                         throw new Error(res.data.message);
                     }
                 },
                 error: (err) => err.message,
             });
-            setName("");
-            setImage(undefined);
-            setDescription("");
-            setPackaging("");
-            setStock("");
-            setPrice("");
-            setComposition(["", ""]);
-            setProductBy("");
-            setCategoryId([""]);
-            setType("");
-            setParentProductCategory([""]);
-            setProductId("");
-            setSelectedProduct("");
-            if (inputFile.current) {
-                inputFile.current.value = "";
-            }
+            router.refresh();
         } catch (error) {
             console.log(error);
         }
@@ -137,35 +129,30 @@ export default function VariantForm({
         <div className="text-black font-poppins min-h-screen pb-10 bg-darkRed flex flex-col items-center">
             <Toaster />
             <h1 className="text-white text-3xl font-semibold pt-8 text-center">
-                ADD VARIANT
+                EDIT VARIANT
             </h1>
             <div className="bg-white w-[280px] sm:w-[630px] p-5 mt-8 rounded-lg flex flex-col gap-5">
-                <div className="flex flex-col gap-2">
-                    <Label className="font-semibold">Parent Product</Label>
-                    <Select value={selectedProduct} onValueChange={handleValueChange}>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Parent Product" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>Parent Product</SelectLabel>
-                                {products &&
-                                    products.map((product, index) => (
-                                        <SelectItem
-                                            key={index}
-                                            value={product.id}
-                                        >
-                                            {product.name}
-                                        </SelectItem>
-                                    ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                <div className="flex gap-5 justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap self-center font-semibold"
+                        htmlFor="variantName"
+                    >
+                        Product Name
+                    </Label>
+                    <Input
+                        className="w-[450px]"
+                        type="text"
+                        id="ProductName"
+                        name="ProductName"
+                        placeholder="Product Name"
+                        value={variant.productName}
+                        disabled
+                    />
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap self-center font-semibold"
-                        htmlFor="productName"
+                        htmlFor="variantName"
                     >
                         Variant Name
                     </Label>
@@ -174,24 +161,39 @@ export default function VariantForm({
                         type="text"
                         id="variantName"
                         name="variantName"
-                        placeholder="Variant Name"
+                        placeholder="variant Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
                 </div>
+                <div className="flex justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap font-semibold"
+                        htmlFor="previewImage"
+                    >
+                        Image Preview
+                    </Label>
+                    <Image
+                        src={variant.image}
+                        alt="variant Image Not Found"
+                        className="text-sm"
+                        width={300}
+                        height={200}
+                    />
+                </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
-                        className="text-nowrap self-center font-semibold"
-                        htmlFor="productImage"
+                        className="text-nowrap self-center font-semibold sm:leading-5"
+                        htmlFor="variantImage"
                     >
-                        Variant Image
+                        Variant Image <br className="hidden sm:flex"/>(Optional)
                     </Label>
                     <Input
-                        className="w-[240px] sm:w-[450px] h-[32px]"
+                        className="w-[240px] sm:w-[450px] h-[32px] self-center"
                         type="file"
                         id="variantImage"
                         name="variantImage"
-                        placeholder="Variant Name"
+                        placeholder="variant Name"
                         ref={inputFile}
                         onChange={(e) => {
                             const files = e.target.files;
@@ -228,7 +230,7 @@ export default function VariantForm({
                         <Input
                             id="size"
                             name="size"
-                            placeholder="Variant Packaging (dus, ml, etc)"
+                            placeholder="variant Packaging (dus, ml, etc)"
                             value={packaging}
                             onChange={(e) => setPackaging(e.target.value)}
                         />
@@ -247,23 +249,23 @@ export default function VariantForm({
                         className="w-[450px]"
                         type="number"
                         value={stock}
-                        placeholder="Product Stock"
+                        placeholder="variant Stock"
                         onChange={(e) => setStock(e.target.value)}
                     />
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
                         className="text-nowrap self-center font-semibold"
-                        htmlFor="productType"
+                        htmlFor="variantType"
                     >
-                        Variant Type
+                        variant Type
                     </Label>
                     <Input
                         className="w-[450px]"
                         type="text"
                         id="variantType"
                         name="variantType"
-                        placeholder="Variant Type"
+                        placeholder="variant Type"
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                     />
@@ -286,15 +288,20 @@ export default function VariantForm({
                                         <Switch
                                             className="data-[state=checked]:bg-darkRed"
                                             id={category.id}
-                                            checked={categoryId.includes(category.id)}
+                                            checked={categoryId.includes(
+                                                category.id
+                                            )}
                                             onCheckedChange={(isChecked) =>
                                                 handleCategoryChange(
-                                                    category,
+                                                    category.id,
                                                     isChecked
                                                 )
                                             }
                                         />
-                                        <Label htmlFor={category.id} className="cursor-pointer">
+                                        <Label
+                                            htmlFor={category.id}
+                                            className="cursor-pointer"
+                                        >
                                             {category.name}
                                         </Label>
                                     </div>
@@ -317,7 +324,7 @@ export default function VariantForm({
                                     className=""
                                     type="text"
                                     value={item}
-                                    placeholder="Product Composition"
+                                    placeholder="variant Composition"
                                     onChange={(e) => {
                                         const newComposition = [...composition];
                                         newComposition[index] = e.target.value;
@@ -365,7 +372,7 @@ export default function VariantForm({
                         <Input
                             id="price"
                             name="price"
-                            placeholder="Product Price"
+                            placeholder="variant Price"
                             type="number"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
@@ -391,15 +398,12 @@ export default function VariantForm({
                 </div>
                 <div className="flex justify-between flex-wrap gap-y-4 max-sm:justify-end max-sm:flex-wrap-reverse">
                     <div>
-                        <Link href={"/admin/dashboard"}>
+                        <Link href={`/admin/products/${variant.productId}/variants`}>
                             <Button variant={"destructive"}>Back</Button>
                         </Link>
                     </div>
                     <div className="flex gap-4 flex-wrap max-sm:justify-end">
-                        <Button onClick={handleSubmit}>Create Variant</Button>
-                        <Link href="/admin/add/product">
-                            <Button variant={"outline"}>Add Product</Button>
-                        </Link>
+                        <Button onClick={handleSubmit}>Save Changes</Button>
                     </div>
                 </div>
             </div>
