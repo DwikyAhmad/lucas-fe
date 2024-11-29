@@ -7,7 +7,7 @@ import bagan from "@/assets/homepage/bagan.svg";
 export default function Aboutus() {
     return (
         <div className="bg-white py-8 font-poppins" id="aboutus">
-            <div className=" py-8">
+            <div className="bg-red-100 py-8">
                 <h1 className="text-primaryBlueNavy text-center text-3xl sm:text-5xl font-semibold ">
                     ABOUT <span className="text-primaryRed">US</span>
                 </h1>

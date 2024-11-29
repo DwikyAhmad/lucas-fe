@@ -38,7 +38,7 @@ export default function ProductCategories({
     return (
         <>
             <Navbar />
-            <div className="min-h-screen bg-primaryBlueNavy">
+            <div className="min-h-screen bg-primaryBlueNavy font-poppins">
                 <div
                     className="bg-primaryBlueNavy w-full py-3 flex flex-col justify-center align-middle"
                 >
@@ -85,7 +85,7 @@ export default function ProductCategories({
                             />
                         </div>
                     )) : (
-                        <div className="flex justify-center items-center ">
+                        <div className="flex justify-center items-center bg-black/15 py-2">
                             <h1 className="text-white">No Categories Found</h1>
                         </div>
                     )}
