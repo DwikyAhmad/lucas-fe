@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { IoSearch } from "react-icons/io5";
@@ -10,16 +10,7 @@ interface headerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const HeaderProduct = forwardRef<HTMLDivElement, headerProps>((props, ref) => {
-    const [searchTerm, setSearchTerm] = useState("");
-
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
-    };
-
-    const handleSearchSubmit = () => {
-        onSearch(searchTerm);
-    };
-    const { pageTitle, onSearch, ...restProps } = props;
+    const { pageTitle, onSearch, search, ...restProps } = props;
     return (
         <div>
             <div
@@ -44,14 +35,13 @@ const HeaderProduct = forwardRef<HTMLDivElement, headerProps>((props, ref) => {
                             <Input
                                 type="input"
                                 placeholder="Search here... "
-                                value={searchTerm}
-                                onChange={handleSearchChange}
+                                value={search}
+                                onChange={(e) => onSearch(e.target.value)}
                                 className="text-primaryBlueNavy bg-white font-poppins"
                             />
                             <Button
                                 type="submit"
                                 className="h-full rounded-xl hover:brightness-75 shadow-lg sm:w-min sm:p-2"
-                                onClick={handleSearchSubmit}
                             >
                                 <IoSearch className="mx-1" />
                             </Button>

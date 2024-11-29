@@ -62,7 +62,7 @@ export default function LucaShop({
                 pageTitle="ALL PRODUCTS"
                 className="text-primaryBlueNavy flex flex-col w-full pt-4 items-center"
                 search={search}
-                onSearch={(value) => setSearch(value)}
+                onSearch={setSearch}
             />
             <div className="flex lg:flex-row flex-col items-center lg:items-start justify-start align-middle w-full px-6 mt-2 gap-8">
                 <div className="filter text-white bg-redBricks lg:h-full w-max rounded-md lg:rounded-xl px-4 py-4 gap-2 lg:pt-5 lg:px-10 lg:pb-20 flex lg:flex-col lg:items-start items-center align-middle justify-center">
@@ -109,7 +109,7 @@ export default function LucaShop({
                                 {productsPerCategory[filter] ? (
                                     <div className="w-full flex-wrap flex flex-row items-center align-top justify-start gap-6 px-4">
                                         {productsPerCategory[filter].map(
-                                            (product, index) => (
+                                            (product, index) => product.name.toLowerCase().includes(search.toLowerCase()) && (
                                                 <Link key={index} href={`/products/${product.id}`}>
                                                     <div
                                                         className="text-black border flex items-center

@@ -7,15 +7,22 @@ type CategoryCount = {
 };
 
 export default async function page() {
-	const products = (await axios.get(`${API_URL}/product`)).data.products;
-	const categories = (await axios.get(`${API_URL}/category`)).data.categories;
+    const products = (await axios.get(`${API_URL}/product`)).data.products;
+    const categories = (await axios.get(`${API_URL}/category`)).data.categories;
     const categoryCount: CategoryCount = {};
 
     for (const product of products) {
         for (const category of product.categoryName) {
             categoryCount[category] = (categoryCount[category] || 0) + 1;
         }
-	}
+    }
 
-	return <ProductCategories categories={categories} categoryCount={categoryCount}/>;
+    return (
+        <div>
+            <ProductCategories
+                categories={categories}
+                categoryCount={categoryCount}
+            />
+        </div>
+    );
 }

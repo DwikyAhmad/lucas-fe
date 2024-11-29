@@ -35,10 +35,10 @@ export default async function page() {
 	}
 
     return (
-        <>
+        <div>
             <Navbar />
             <LucaShop productsPerCategory={productsPerCategory} categories={categories} />
             <Footer />
-        </>
+        </div>
     );
 }
