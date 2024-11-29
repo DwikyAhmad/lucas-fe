@@ -49,7 +49,7 @@ export default function LucaShop({
 
     const handleCheckboxChange = (categoryName: string, isChecked: boolean) => {
         if (isChecked) {
-            setListFilter([...listFilter, categoryName]);
+            setListFilter([categoryName, ...listFilter]);
         } else {
             setListFilter(listFilter.filter((name) => name !== categoryName));
         }
@@ -126,11 +126,6 @@ export default function LucaShop({
                                                                 "https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg"
                                                             }
                                                             className=" rounded-xl border border-black "
-                                                            onClick={() =>
-                                                                router?.push(
-                                                                    `/products/${product.id}`
-                                                                )
-                                                            }
                                                             alt={""}
                                                             width={150}
                                                             height={100}
@@ -155,14 +150,6 @@ export default function LucaShop({
                                                                 hover:text-white transition-transform duration-300 ease-in-out hover:scale-105 
                                                                 drop-shadow-2xl md:w-full w-full items-center align-middle 
                                                                 justify-center content-center flex rounded-full"
-                                                                style={{
-                                                                    cursor: "pointer",
-                                                                }}
-                                                                onClick={() =>
-                                                                    router?.push(
-                                                                        "/products/1"
-                                                                    )
-                                                                }
                                                             >
                                                                 {formatRupiah(
                                                                     product.price
@@ -178,7 +165,6 @@ export default function LucaShop({
                                                                         cursor: "pointer",
                                                                     }}
                                                                 >
-                                                                    {" "}
                                                                     <IoCart />
                                                                 </div>
                                                             </div>
