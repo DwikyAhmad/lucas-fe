@@ -4,10 +4,10 @@ import Navbar from "@/components/Navbar";
 import React, { useState } from "react";
 import ProductCard from "@/components/productService/categorieCard";
 import Footer from "@/components/footer";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { IoSearch } from "react-icons/io5";
+import Link from "next/link";
 
 interface Category {
     id: string;
@@ -27,10 +27,6 @@ export default function ProductCategories({
     categoryCount,
 }: Props) {
     const [search, setSearch] = useState("");
-    const router = useRouter();
-    const toDetailPage = (filter: string) => {
-        router.push(`/products?filter=${filter}`);
-    };
     const filteredCategories = categories.filter((cat) =>
         cat.name.toLowerCase().includes(search.toLowerCase())
     );
@@ -73,17 +69,19 @@ export default function ProductCategories({
                 </div>
                 <div className="bg-primaryBlueNavy h-full">
                     {filteredCategories.length > 0 ? filteredCategories.map((cat) => (
-                        <div key={cat.id} onClick={() => toDetailPage(cat.name)}>
-                            <ProductCard
-                                src="https://i.pinimg.com/enabled_lo/564x/36/a1/ce/36a1ceede11c2234f40147d17c4d031c.jpg"
-                                alt="Deskripsi gambar"
-                                width={500}
-                                height={500}
-                                title={cat.name}
-                                description="Sejak tahun 2003, Lucas group adalah satu-satunya perusahaan swasta  swasta yang ditunjuk untuk mensuplai kebutuhan obat nasional, selain  selain tiga BUMN. Sampai dengan saat ini Lucas Group sudah  bergabung ke dalam Kimia Farma Group dan masih aktif mengi- kuti  tender e catalog untuk memasok kebutuhan obat obatan generic ke  seluruh wilayah Indonesia."
-                                amount={categoryCount[cat.name] ?? 0}
-                            />
-                        </div>
+                        <Link key={cat.id} href={`/products?filter=${cat.name}`}>
+                            <div >
+                                <ProductCard
+                                    src="https://i.pinimg.com/enabled_lo/564x/36/a1/ce/36a1ceede11c2234f40147d17c4d031c.jpg"
+                                    alt="Deskripsi gambar"
+                                    width={500}
+                                    height={500}
+                                    title={cat.name}
+                                    description="Sejak tahun 2003, Lucas group adalah satu-satunya perusahaan swasta  swasta yang ditunjuk untuk mensuplai kebutuhan obat nasional, selain  selain tiga BUMN. Sampai dengan saat ini Lucas Group sudah  bergabung ke dalam Kimia Farma Group dan masih aktif mengi- kuti  tender e catalog untuk memasok kebutuhan obat obatan generic ke  seluruh wilayah Indonesia."
+                                    amount={categoryCount[cat.name] ?? 0}
+                                />
+                            </div>
+                        </Link>
                     )) : (
                         <div className="flex justify-center items-center bg-black/15 py-2">
                             <h1 className="text-white">No Categories Found</h1>

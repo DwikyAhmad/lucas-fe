@@ -5,10 +5,11 @@ import HeaderProduct from "@/components/productService/productCategoriesHeader";
 import React, { useState } from "react";
 import Image from "next/image";
 import { IoCart } from "react-icons/io5";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatRupiah } from "@/utils/utils";
 import { ScrollArea } from "../ui/scroll-area";
+import Link from "next/link";
 
 interface Category {
     id: string;
@@ -40,7 +41,6 @@ export default function LucaShop({
     categories,
     productsPerCategory,
 }: CompProps) {
-    const router = useRouter();
     const param = useSearchParams();
     const filter = param.get("filter") || "";
     const [listFilter, setListFilter] = useState<string[]>([
@@ -110,72 +110,68 @@ export default function LucaShop({
                                     <div className="w-full flex-wrap flex flex-row items-center align-top justify-start gap-6 px-4">
                                         {productsPerCategory[filter].map(
                                             (product, index) => (
-                                                <div
-                                                    className="text-black border flex items-center 
-                                                    flex-col justify-evenly border-black border-opacity-20 hover:scale-105 text-3xl rounded-2xl 
-                                                    transition-all duration-200 ease-in-out lg:py-1 py-0 pb-2 h-[380px] w-[300px] cursor-pointer"
-                                                    onClick={() =>
-                                                        router?.push(
-                                                            `/products/${product.id}`
-                                                        )
-                                                    }
-                                                    key={index}
-                                                >
+                                                <Link key={index} href={`/products/${product.id}`}>
                                                     <div
-                                                        className="product-image border rounded-xl drop-shadow-2xl border-black 
-                                                    border-opacity-20 flex items-center justify-center align-middle
-                                                    mb-2 mt-4"
+                                                        className="text-black border flex items-center
+                                                        flex-col justify-evenly border-black border-opacity-20 hover:scale-105 text-3xl rounded-2xl
+                                                        transition-all duration-200 ease-in-out lg:py-1 py-0 pb-2 h-[380px] w-[300px] cursor-pointer"
                                                     >
-                                                        <Image
-                                                            src={
-                                                                "https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg"
-                                                            }
-                                                            className=" rounded-xl border border-black "
-                                                            alt={""}
-                                                            width={150}
-                                                            height={100}
-                                                        ></Image>
-                                                    </div>
-                                                    <div className="md:px-4 px-2 flex flex-col items-center w-full mt-auto mb-4">
-                                                        <div className="md:mx-4 w-full">
-                                                            <div
-                                                                className="font-semibold font-poppins lg:text-2xl text-xl 
-                                                            text-primaryBlueNavy"
-                                                            >
-                                                                {product.name}
-                                                            </div>
-                                                            <div className="title text-xs font-medium text-black text-opacity-30">
-                                                                {product.type}
-                                                            </div>
+                                                        <div
+                                                            className="product-image border rounded-xl drop-shadow-2xl border-black
+                                                        border-opacity-20 flex items-center justify-center align-middle
+                                                        mb-2 mt-4"
+                                                        >
+                                                            <Image
+                                                                src={
+                                                                    "https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg"
+                                                                }
+                                                                className=" rounded-xl border border-black "
+                                                                alt={""}
+                                                                width={150}
+                                                                height={100}
+                                                            ></Image>
                                                         </div>
-                                                        <div className="flex justify-between md:mt-8 mt-4 md:gap-4 gap-2 w-full">
-                                                            <p
-                                                                className="border border-primaryBlack md:rounded-xl px-5 md:py-1 py-1 
-                                                                lg:text-xl text-lg text-nowrap font-semibold hover:bg-primaryBlack 
-                                                                hover:text-white transition-transform duration-300 ease-in-out hover:scale-105 
-                                                                drop-shadow-2xl md:w-full w-full items-center align-middle 
-                                                                justify-center content-center flex rounded-full"
-                                                            >
-                                                                {formatRupiah(
-                                                                    product.price
-                                                                )}
-                                                            </p>
-                                                            <div className="marketplace">
+                                                        <div className="md:px-4 px-2 flex flex-col items-center w-full mt-auto mb-4">
+                                                            <div className="md:mx-4 w-full">
                                                                 <div
-                                                                    className="border border-primaryBlack rounded-xl px-2 py-1 
-                                                                    text-2xl font-semibold h-full items-center flex bg-primaryYellow 
-                                                                    text-white transition-transform duration-300 ease-in-out hover:scale-105 
-                                                                    md:scale-100 scale-75drop-shadow-2xl hover:bg-darkYellow "
-                                                                    style={{
-                                                                        cursor: "pointer",
-                                                                    }}
+                                                                    className="font-semibold font-poppins lg:text-2xl text-xl
+                                                                text-primaryBlueNavy"
                                                                 >
-                                                                    <IoCart />
+                                                                    {product.name}
+                                                                </div>
+                                                                <div className="title text-xs font-medium text-black text-opacity-30">
+                                                                    {product.type}
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex justify-between md:mt-8 mt-4 md:gap-4 gap-2 w-full">
+                                                                <p
+                                                                    className="border border-primaryBlack md:rounded-xl px-5 md:py-1 py-1
+                                                                    lg:text-xl text-lg text-nowrap font-semibold hover:bg-primaryBlack
+                                                                    hover:text-white transition-transform duration-300 ease-in-out hover:scale-105
+                                                                    drop-shadow-2xl md:w-full w-full items-center align-middle
+                                                                    justify-center content-center flex rounded-full"
+                                                                >
+                                                                    {formatRupiah(
+                                                                        product.price
+                                                                    )}
+                                                                </p>
+                                                                <div className="marketplace">
+                                                                    <div
+                                                                        className="border border-primaryBlack rounded-xl px-2 py-1
+                                                                        text-2xl font-semibold h-full items-center flex bg-primaryYellow
+                                                                        text-white transition-transform duration-300 ease-in-out hover:scale-105
+                                                                        md:scale-100 scale-75drop-shadow-2xl hover:bg-darkYellow "
+                                                                        style={{
+                                                                            cursor: "pointer",
+                                                                        }}
+                                                                    >
+                                                                        <IoCart />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </Link>
                                             )
                                         )}
                                     </div>
