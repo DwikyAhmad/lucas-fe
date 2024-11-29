@@ -8,6 +8,7 @@ import { IoCart } from "react-icons/io5";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatRupiah } from "@/utils/utils";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface Category {
     id: string;
@@ -63,35 +64,39 @@ export default function LucaShop({
                 search={search}
                 onSearch={(value) => setSearch(value)}
             />
-            <div className="flex lg:flex-row sm:flex-col flex-col items-centter justify-start align-middle w-full px-6 mt-2 gap-8">
-                <div className="filter text-white bg-redBricks h-full lg:w-max w-full lg:rounded-xl rounded-full px-4 py-2 gap-2 lg:pt-5 lg:px-10 lg:pb-20 border flex lg:flex-col lg:items-start items-center align-middle justify-center ">
+            <div className="flex lg:flex-row flex-col items-center lg:items-start justify-start align-middle w-full px-6 mt-2 gap-8">
+                <div className="filter text-white bg-redBricks lg:h-full w-max rounded-md lg:rounded-xl px-4 py-4 gap-2 lg:pt-5 lg:px-10 lg:pb-20 flex lg:flex-col lg:items-start items-center align-middle justify-center">
                     <h2 className="md:text-2xl text-xl mb-5 font-semibold lg:flex hidden">
                         FILTER
                     </h2>
-                    <div className="flex flex-col gap-4">
-                        {categories.map((category, index) => (
-                            <div key={index} className="flex space-x-2">
-                                <Checkbox
-                                    id={category.id}
-                                    checked={listFilter.includes(category.name)}
-                                    onCheckedChange={(isChecked) =>
-                                        handleCheckboxChange(
-                                            category.name,
-                                            !!isChecked
-                                        )
-                                    }
-                                />
-                                <div className="grid gap-1.5 leading-none">
-                                    <label
-                                        htmlFor={category.id}
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {category.name}
-                                    </label>
+                    <ScrollArea className="max-lg:w-[230px] max-lg:h-[200px] h-[400px]">
+                        <div className="flex flex-col gap-4">
+                            {categories.map((category, index) => (
+                                <div key={index} className="flex space-x-2">
+                                    <Checkbox
+                                        id={category.id}
+                                        checked={listFilter.includes(
+                                            category.name
+                                        )}
+                                        onCheckedChange={(isChecked) =>
+                                            handleCheckboxChange(
+                                                category.name,
+                                                !!isChecked
+                                            )
+                                        }
+                                    />
+                                    <div className="grid gap-1.5 leading-none">
+                                        <label
+                                            htmlFor={category.id}
+                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        >
+                                            {category.name}
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    </ScrollArea>
                 </div>
                 <div className="w-full flex flex-col items-center align-top justify-start border rounded-lg">
                     {listFilter.length > 0 ? (
