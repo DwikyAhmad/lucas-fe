@@ -3,6 +3,8 @@ import download from "@/assets/miscellaneous/Download.svg";
 import downloadRed from "@/assets/miscellaneous/DownloadRed.svg";
 import Image from "next/image";
 import bagan from "@/assets/homepage/bagan.svg";
+import visi from '@/assets/homepage/visi.svg';
+import misi from '@/assets/homepage/MISI.svg';
 
 export default function Aboutus() {
     return (
@@ -76,10 +78,19 @@ export default function Aboutus() {
                 </div>
             </div>
             <div className="flex mt-10 justify-evenly text-primaryBlueNavy flex-wrap gap-y-6 px-2">
-                <div className="w-[500px] border-4 px-6 py-4 h-[300px] rounded-xl border-black">
-                    <h2 className="text-center mb-2 text-4xl font-bold tracking-wide">VISI</h2>
-                    <div className="flex items-center h-[170px] px-5 text-justify font-medium">
-                        <p className="font-medium text-md lg:text-lg">
+                <div className="sm:w-[75%] flex flex-col md:flex-row items-center border-4 h-[300px] rounded-2xl 
+                border-black overflow-hidden">
+                    <div className="bg-primaryRed px-14 w-full md:w-[176px] md:h-full justify-center flex relative">
+                        <h2 className="text-center py-2 text-4xl font-bold tracking-wide text-white
+                        md:mt-8">VISI</h2>
+                        <Image
+                            src={visi}
+                            alt="visi"
+                            className="absolute right-0 bottom-0 hidden md:flex"
+                        />
+                    </div>
+                    <div className="flex items-center justify-center w-full h-[170px] text-justify font-medium">
+                        <p className="font-medium text-md lg:text-lg px-8 lg:px-16">
                             A trusted pharmaceutical company that produce health
                             care and cosmetics products in order to <span className="text-primaryRed">
                                 improve
@@ -88,9 +99,18 @@ export default function Aboutus() {
                         </p>
                     </div>
                 </div>
-                <div className="w-[500px] border-4 px-10 py-4 sm:h-[300px] rounded-xl border-black">
-                    <h2 className="text-center mb-2 text-4xl font-bold tracking-wide">MISI</h2>
-                    <ul className="list-disc ">
+                <div className="sm:w-[75%] flex flex-col md:flex-row items-center md:gap-10
+                 border-4 overflow-hidden md:h-[380px] rounded-2xl border-black">
+                    <div className="bg-primaryRed h-full w-full md:w-fit px-12 relative">
+                        <h2 className="text-center py-2 text-4xl font-bold tracking-wide text-white
+                        md:mt-8">MISI</h2>
+                        <Image
+                            src={misi}
+                            alt="misi"
+                            className="absolute right-0 bottom-0 hidden md:flex"
+                        />
+                    </div>
+                    <ul className="list-disc px-10 py-4 space-y-4">
                         <li>
                             Providing affordable pharmaceutical and health care
                             products through continuous improvement
