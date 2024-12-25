@@ -55,6 +55,14 @@ export default function Navbar() {
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 News
                             </li>
+                            <li>
+                                <Link
+                                    href="/complaint"
+                                    className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                                >
+                                    Complaint
+                                </Link>
+                            </li>
                             <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                                 <Link
                                     href={{
@@ -91,6 +99,14 @@ export default function Navbar() {
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
                     News
+                </li>
+                <li>
+                    <Link
+                        href="/complaint"
+                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                    >
+                        Complaint
+                    </Link>
                 </li>
                 <li>
                     <Link
