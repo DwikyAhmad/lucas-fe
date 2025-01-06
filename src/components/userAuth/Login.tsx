@@ -17,7 +17,9 @@ export default function Login() {
                 <div className="mx-auto hidden sm:flex flex-col justify-center gap-24 text-white items-center text-center">
                     <div>
                         <p>WELCOME TO</p>
-                        <p className="text-4xl font-semibold">LUCAS DJAJA</p>
+                        <Link href={'/'}>
+                            <p className="text-4xl font-semibold">LUCAS DJAJA</p>
+                        </Link>
                         <p className="w-[300px] text-sm font-light">
                             Providing high-quality pharmaceutical solutions with
                             GMP standards and halal certification for better

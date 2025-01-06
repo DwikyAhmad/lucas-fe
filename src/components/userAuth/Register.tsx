@@ -18,15 +18,29 @@ export default function Register() {
                 <div className="mx-auto hidden sm:flex flex-col justify-center gap-24 text-white items-center text-center">
                     <div>
                         <p>WELCOME TO</p>
-                        <p className="text-4xl font-semibold">LUCAS DJAJA</p>
+                        <Link href={"/"}>
+                            <p className="text-4xl font-semibold">
+                                LUCAS DJAJA
+                            </p>
+                        </Link>
                         <p className="w-[300px] text-sm font-light">
-                            Providing high-quality pharmaceutical solutions with GMP
-                            standards and halal certification for better health.
+                            Providing high-quality pharmaceutical solutions with
+                            GMP standards and halal certification for better
+                            health.
                         </p>
                     </div>
                     <div>
-                        <p className="font-light text-sm">Already have an account?</p>
-                        <Link href={'/login'}><Button className="text-md font-semibold mt-2" variant={"secondary"}>Sign in</Button></Link>
+                        <p className="font-light text-sm">
+                            Already have an account?
+                        </p>
+                        <Link href={"/login"}>
+                            <Button
+                                className="text-md font-semibold mt-2"
+                                variant={"secondary"}
+                            >
+                                Sign in
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
