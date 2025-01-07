@@ -35,8 +35,7 @@ export default function Navbar() {
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {
-                const isAuthenticated = await getUser();
-                console.log(isAuthenticated);
+                await getUser();
                 setIsAuthenticated(true);
             } catch (error) {
                 setIsAuthenticated(false);

@@ -4,6 +4,7 @@ import axios from "axios";
 
 export async function GET(request: NextRequest) {
     const accessToken = request.cookies.get("accessTokenUser");
+
     if (!accessToken) {
         return NextResponse.error();
     }
