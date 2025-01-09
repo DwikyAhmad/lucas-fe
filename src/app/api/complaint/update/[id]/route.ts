@@ -37,11 +37,9 @@ export async function PATCH(request: NextRequest) {
                 },
             }
         );
-        console.log(response);
         return NextResponse.json(response.data);
     } catch (error) {
         if (error instanceof axios.AxiosError) {
-            console.log(error.response?.data);
             return NextResponse.json(error.response?.data);
         }
         return NextResponse.error();

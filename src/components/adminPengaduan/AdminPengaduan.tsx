@@ -15,6 +15,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type complaints = {
     id: string;
@@ -118,10 +119,10 @@ export default function AdminPengaduan({ complaints, categories }: props) {
     return (
         <div className="font-poppins bg-primaryBlueNavy py-4 min-h-screen">
             <Toaster />
-            <h1 className="text-center font-semibold text-5xl">
+            <h1 className="text-center font-semibold text-2xl lg:text-5xl">
                 PUSAT PENGADUAN
             </h1>
-            <div className="flex gap-4 justify-center mt-4">
+            <div className="flex gap-4 justify-center mt-4 lg:flex-row flex-col items-center">
                 <div>
                     <Label htmlFor="category" className="text-white">
                         Filter by Category
@@ -131,7 +132,7 @@ export default function AdminPengaduan({ complaints, categories }: props) {
                         onValueChange={(value) => setSelectedCategory(value)}
                     >
                         <SelectTrigger
-                            className="w-[180px] bg-white text-black"
+                            className="w-[280px] lg:w-[180px] bg-white text-black"
                             id="category"
                         >
                             <SelectValue placeholder="" />
@@ -161,7 +162,7 @@ export default function AdminPengaduan({ complaints, categories }: props) {
                         onValueChange={(value) => setSelectedStatus(value)}
                     >
                         <SelectTrigger
-                            className="w-[180px] bg-white text-black"
+                            className="w-[280px] lg:w-[180px] bg-white text-black"
                             id="stage"
                         >
                             <SelectValue placeholder="" />
@@ -183,7 +184,7 @@ export default function AdminPengaduan({ complaints, categories }: props) {
                     </Label>
                     <Input
                         id="name"
-                        className="w-[300px] bg-white text-black"
+                        className="w-[280px] lg:w-[300px] bg-white text-black"
                         placeholder="Cari pengaduan"
                         value={keyword}
                         onChange={(e) => setKeyword(e.target.value)}
@@ -194,10 +195,10 @@ export default function AdminPengaduan({ complaints, categories }: props) {
                 {complaints &&
                     filterComplaints().map((complaint, index) => (
                         <div
-                            className="bg-white rounded-lg p-4 mt-4 w-[800px]"
+                            className="bg-white rounded-lg p-4 mt-4 w-full lg:w-[800px]"
                             key={index}
                         >
-                            <div className="font-semibold flex justify-between w-full">
+                            <div className="font-semibold flex justify-between w-full flex-col lg:flex-row gap-2">
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 bg-gray-500 rounded-full"></div>
                                     <div>
@@ -217,7 +218,7 @@ export default function AdminPengaduan({ complaints, categories }: props) {
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-red-500 text-end">
+                                    <p className="text-red-500 lg:text-end">
                                         {complaint.category.join(", ")}
                                     </p>
                                     <p
@@ -225,13 +226,13 @@ export default function AdminPengaduan({ complaints, categories }: props) {
                                             complaint.status === "Solved"
                                                 ? "bg-green-700"
                                                 : "bg-darkRed"
-                                        } text-white text-center rounded-xl py-1 text-xs font-normal w-max px-3 ml-auto`}
+                                        } text-white text-center rounded-xl py-1 text-xs font-normal w-max px-3 lg:ml-auto`}
                                     >
                                         {complaint.status}
                                     </p>
                                 </div>
                             </div>
-                            <p className="mt-4">{complaint.description}</p>
+                            <p className="mt-4 break-words">{complaint.description}</p>
                             <div className="mt-4 flex justify-end">
                                 {complaint.status === "Wait for response" && (
                                     <Button
@@ -249,6 +250,11 @@ export default function AdminPengaduan({ complaints, categories }: props) {
                 {filterComplaints().length === 0 && (
                     <p className="text-white mt-12">No complaints found</p>
                 )}
+            </div>
+            <div className="w-full sm:w-min flex justify-end bottom-5 right-5 lg:right-4 lg:top-14 fixed">
+                <Button variant={"destructive"} asChild>
+                    <Link href={"/admin/dashboard"}>Back to dashboard</Link>
+                </Button>
             </div>
         </div>
     );

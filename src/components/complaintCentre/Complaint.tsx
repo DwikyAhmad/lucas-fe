@@ -92,14 +92,14 @@ export default function Complaint({ products }: props) {
         <div className="min-h-[calc(100vh-365px)] font-poppins text-[#292929]">
             <Toaster />
             <div>
-                <h1 className="font-bold text-5xl text-center mt-10">
-                    SIDE EFFECT COMPLAINT CENTRE
+                <h1 className="font-bold text-2xl lg:text-5xl text-center mt-10">
+                    SIDE EFFECT <br className="lg:hidden"/> COMPLAINT CENTRE
                 </h1>
-                <div className="w-full flex justify-center mt-2">
-                    <div className="bg-primaryRed w-[400px] h-1"></div>
+                <div className="w-full flex justify-center mt-2 px-12">
+                    <div className="bg-primaryRed w-[200px] lg:w-[400px] h-1"></div>
                 </div>
             </div>
-            <div className="px-8 mt-10 mb-10 w-[800px] mx-auto">
+            <div className="px-4 md:px-8 mt-10 mb-10 w-full lg:w-[800px] mx-auto">
                 <div className="border-2 rounded-lg border-[#292929] w-full h-min-[300px] p-5">
                     <Form {...form}>
                         <form

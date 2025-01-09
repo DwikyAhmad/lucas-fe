@@ -17,6 +17,7 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { redirectPage } from "./authServerAction";
 
 export default function LoginForm() {
     const formSchema = z.object({
@@ -59,7 +60,7 @@ export default function LoginForm() {
                 error: (error) => error.message,
             });
             if ((await myPromise).data.code === 200) {
-                router.push("/");
+                redirectPage();
             }
         } catch (error) {
             toast.error("Unknown error occured");

@@ -37,7 +37,6 @@ export async function middleware(request: NextRequest) {
 
     if (pathname.startsWith("/complaint")) {
         const accessToken = request.cookies.get("accessTokenUser");
-        console.log(accessToken)
         if (!accessToken) {
             return NextResponse.redirect(new URL("/login", request.url));
         }
