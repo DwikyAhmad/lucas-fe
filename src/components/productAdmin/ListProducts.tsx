@@ -40,6 +40,7 @@ interface product {
     composition: string[];
     image: string;
     categoryName: string[];
+    prescription: boolean;
 }
 
 interface PropData {

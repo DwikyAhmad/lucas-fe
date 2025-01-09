@@ -15,6 +15,7 @@ export default function Navbar() {
     const menuRef = useRef<HTMLDivElement>(null);
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isOpenProfile, setIsOpenProfile] = useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -145,12 +146,36 @@ export default function Navbar() {
             )}
             {isAuthenticated && !loading && (
                 <div className="items-center hidden lg:flex">
-                    <div className="bg-primaryBlack rounded-xl flex justify-between items-center py-2 w-[85px] px-4 text-xl relative">
+                    <div
+                        className="relative flex items-center"
+                    >
                         <div className="mr-2 bg-primaryBlack rounded-full p-2 absolute -left-12">
                             <FaCartShopping />
                         </div>
-                        <CgProfile />
-                        <MdOutlineKeyboardArrowDown />
+                        <div
+                            className="bg-primaryBlack rounded-xl flex justify-between items-center py-2 w-[85px] px-4 text-xl relative
+                            hover:cursor-pointer hover:brightness-75 duration-200"
+                            onClick={() => setIsOpenProfile((prev) => !prev)}
+                        >
+                            <CgProfile />
+                            <MdOutlineKeyboardArrowDown />
+                        </div>
+                        {isOpenProfile && (
+                            <ul
+                                className="absolute top-[40px] bg-white text-black w-max right-0 rounded-xl text-base py-2 flex flex-col gap-2
+                            border"
+                            >
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer">
+                                    Edit Profile
+                                </li>
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer">
+                                    Cart
+                                </li>
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer">
+                                    Wishlist
+                                </li>
+                            </ul>
+                        )}
                     </div>
                 </div>
             )}
