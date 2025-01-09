@@ -9,6 +9,7 @@ import { getUser } from "@/utils/utils";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
+import { handleLogout, redirectPage } from "./userAuth/authServerAction";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +47,13 @@ export default function Navbar() {
 
         checkAuthStatus();
     }, []);
+
+    const handleLogoutSubmit = async () => { 
+        const success = await handleLogout();
+        if (success) {
+            window.location.href = '/';
+        }
+    }
 
     return (
         <div className="flex font-poppins bg-darkRed justify-between px-4 py-2 items-center sticky top-0 z-20">
@@ -173,6 +181,10 @@ export default function Navbar() {
                                 </li>
                                 <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer">
                                     Wishlist
+                                </li>
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer"
+                                onClick={() => handleLogoutSubmit()}>
+                                    Logout
                                 </li>
                             </ul>
                         )}

@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
     const accessToken = request.cookies.get("accessTokenUser");
 
     if (!accessToken) {
-        return NextResponse.error();
+        return NextResponse.json({ message: "User not logged in" }, { status: 401 });
     }
 
     try {
