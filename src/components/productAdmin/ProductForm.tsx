@@ -18,7 +18,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Category {
     id: string;
@@ -39,6 +39,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
     const [productBy, setProductBy] = useState("");
     const [categoryId, setCategoryId] = useState([""]);
     const [type, setType] = useState("");
+    const [needPrescription, setNeedPrescription] = useState(false);
     const inputFile = useRef<HTMLInputElement>(null);
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
@@ -65,6 +66,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
         formData.append("packaging", packaging);
         const filteredCategoryId = categoryId.filter((id) => id !== "");
         formData.append("categoryId", JSON.stringify(filteredCategoryId));
+        formData.append("prescription", needPrescription.toString());
 
         try {
             const myPromise = axios.post(`/api/product/create`, formData);
@@ -89,6 +91,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
             setProductBy("");
             setCategoryId([""]);
             setType("");
+            setNeedPrescription(false);
             if (inputFile.current) {
                 inputFile.current.value = "";
             }
@@ -212,6 +215,22 @@ export default function ProductForm({ categories }: ProductFormProps) {
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label
+                        className="text-nowrap self-center font-semibold"
+                        htmlFor="prescription"
+                    >
+                        Prescription
+                    </Label>
+                    <div className="w-[450px] flex items-center">
+                        <Switch
+                            className="data-[state=checked]:bg-darkRed"
+                            id="prescription"
+                            checked={needPrescription}
+                            onCheckedChange={(isChecked) => setNeedPrescription(isChecked)}
+                        />
+                    </div>
+                </div>
+                <div className="flex gap-5 justify-between flex-wrap">
+                    <Label
                         className="text-nowrap font-semibold "
                         htmlFor="categories"
                     >
@@ -228,7 +247,9 @@ export default function ProductForm({ categories }: ProductFormProps) {
                                         <Switch
                                             className="data-[state=checked]:bg-darkRed"
                                             id={category.id}
-                                            checked={categoryId.includes(category.id)}
+                                            checked={categoryId.includes(
+                                                category.id
+                                            )}
                                             onCheckedChange={(isChecked) =>
                                                 handleCategoryChange(
                                                     category.id,
@@ -236,7 +257,10 @@ export default function ProductForm({ categories }: ProductFormProps) {
                                                 )
                                             }
                                         />
-                                        <Label htmlFor={category.id} className="cursor-pointer">
+                                        <Label
+                                            htmlFor={category.id}
+                                            className="cursor-pointer"
+                                        >
                                             {category.name}
                                         </Label>
                                     </div>

@@ -16,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { redirectPage } from "./authServerAction";
 
 export default function LoginForm() {
@@ -39,8 +38,6 @@ export default function LoginForm() {
             password: "",
         },
     });
-
-    const router = useRouter();
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {

@@ -39,6 +39,7 @@ interface product {
     productBy: string;
     packaging: string;
     categoryNames: string[];
+    prescription: boolean;
 }
 
 interface ProductFormProps {
@@ -74,6 +75,7 @@ export default function EditProductForm({
     const [categoryId, setCategoryId] = useState(categoryIdList);
     const [type, setType] = useState(product.type);
     const inputFile = useRef<HTMLInputElement>(null);
+    const [needPrescription, setNeedPrescription] = useState(product.prescription);
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
         if (isChecked) {
@@ -102,6 +104,7 @@ export default function EditProductForm({
         formData.append("packaging", packaging);
         const filteredCategoryId = categoryId.filter((id) => id !== "");
         formData.append("categoryId", JSON.stringify(filteredCategoryId));
+        formData.append("prescription", needPrescription.toString());
 
         try {
             const myPromise = axios.put(`/api/product/update/${product.id}`, formData);
@@ -249,6 +252,22 @@ export default function EditProductForm({
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                     />
+                </div>
+                <div className="flex gap-5 justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap self-center font-semibold"
+                        htmlFor="prescription"
+                    >
+                        Prescription
+                    </Label>
+                    <div className="w-[450px] flex items-center">
+                        <Switch
+                            className="data-[state=checked]:bg-darkRed"
+                            id="prescription"
+                            checked={needPrescription}
+                            onCheckedChange={(isChecked) => setNeedPrescription(isChecked)}
+                        />
+                    </div>
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label

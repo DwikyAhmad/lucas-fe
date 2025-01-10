@@ -19,6 +19,7 @@ export async function PUT(request: NextRequest) {
     const packaging = data.get("packaging");
     const categoryId = JSON.parse(data.get("categoryId") as string);
     const productId = data.get("productId");
+    const prescription = data.get("prescription") === "true";
 
     const accessToken = request.cookies.get("accessTokenAdmin");
     if (!accessToken) {
@@ -69,6 +70,7 @@ export async function PUT(request: NextRequest) {
                 packaging,
                 categoryId,
                 productId,
+                prescription,
             },
             {
                 headers: {

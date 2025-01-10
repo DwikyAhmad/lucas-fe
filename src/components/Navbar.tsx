@@ -9,7 +9,7 @@ import { getUser } from "@/utils/utils";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
-import { handleLogout, redirectPage } from "./userAuth/authServerAction";
+import { handleLogout } from "./userAuth/authServerAction";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);

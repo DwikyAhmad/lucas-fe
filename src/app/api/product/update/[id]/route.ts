@@ -18,6 +18,7 @@ export async function PUT(request: NextRequest) {
     const productBy = data.get("productBy");
     const packaging = data.get("packaging");
     const categoryId = JSON.parse(data.get("categoryId") as string);
+    const prescription = data.get("prescription") === "true";
 
     const accessToken = request.cookies.get("accessTokenAdmin");
     if (!accessToken) {
@@ -67,6 +68,7 @@ export async function PUT(request: NextRequest) {
                 productBy,
                 packaging,
                 categoryId,
+                prescription,
             },
             {
                 headers: {
@@ -77,6 +79,7 @@ export async function PUT(request: NextRequest) {
         return NextResponse.json(response.data);
     } catch (error) {
         if (error instanceof axios.AxiosError) {
+            console.log(error.response?.data);
             return NextResponse.json(error.response?.data);
         }
         return NextResponse.error();
