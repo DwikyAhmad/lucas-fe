@@ -41,6 +41,7 @@ interface variant {
     productBy: string;
     packaging: string;
     categoryNames: string[];
+    prescription: boolean;
 }
 
 interface VariantFormProps {
@@ -76,6 +77,7 @@ export default function EditVariantForm({
     const [categoryId, setCategoryId] = useState(categoryIdList);
     const [type, setType] = useState(variant.type);
     const inputFile = useRef<HTMLInputElement>(null);
+    const [needPrescription, setNeedPrescription] = useState(variant.prescription);
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
         if (isChecked) {
@@ -105,6 +107,7 @@ export default function EditVariantForm({
         const filteredCategoryId = categoryId.filter((id) => id !== "");
         formData.append("categoryId", JSON.stringify(filteredCategoryId));
         formData.append("productId", variant.productId);
+        formData.append("prescription", needPrescription.toString());
 
         try {
             const myPromise = axios.put(`/api/variant/update/${variant.id}`, formData);
@@ -269,6 +272,22 @@ export default function EditVariantForm({
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                     />
+                </div>
+                <div className="flex gap-5 justify-between flex-wrap">
+                    <Label
+                        className="text-nowrap self-center font-semibold"
+                        htmlFor="prescription"
+                    >
+                        Prescription
+                    </Label>
+                    <div className="w-[450px] flex items-center">
+                        <Switch
+                            className="data-[state=checked]:bg-darkRed"
+                            id="prescription"
+                            checked={needPrescription}
+                            onCheckedChange={(isChecked) => setNeedPrescription(isChecked)}
+                        />
+                    </div>
                 </div>
                 <div className="flex gap-5 justify-between flex-wrap">
                     <Label

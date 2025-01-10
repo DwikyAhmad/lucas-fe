@@ -16,22 +16,21 @@ import { Input } from "@/components/ui/input";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirectPage } from "./authServerAction";
 
 export default function LoginForm() {
-    const formSchema = z
-        .object({
-            email: z
-                .string()
-                .email({ message: "Invalid email address." })
-                .min(2, { message: "Email must be at least 2 characters." })
-                .max(50),
-            password: z
-                .string()
-                .min(8, { message: "Password must be at least 8 characters." })
-                .max(50),
-        })
-    
+    const formSchema = z.object({
+        email: z
+            .string()
+            .email({ message: "Invalid email address." })
+            .min(2, { message: "Email must be at least 2 characters." })
+            .max(50),
+        password: z
+            .string()
+            .min(8, { message: "Password must be at least 8 characters." })
+            .max(50),
+    });
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -39,8 +38,6 @@ export default function LoginForm() {
             password: "",
         },
     });
-
-    const router = useRouter();
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -50,7 +47,7 @@ export default function LoginForm() {
             });
             await toast.promise(myPromise, {
                 loading: "Signing in...",
-                success: (response) => { 
+                success: (response) => {
                     if (response.data.code === 200) {
                         return "Login successful";
                     } else {
@@ -59,7 +56,9 @@ export default function LoginForm() {
                 },
                 error: (error) => error.message,
             });
-            router.push("/");
+            if ((await myPromise).data.code === 200) {
+                redirectPage();
+            }
         } catch (error) {
             toast.error("Unknown error occured");
         }
@@ -118,7 +117,11 @@ export default function LoginForm() {
                     </div>
                     <p className="text-center text-sm">
                         Don&apos;t have an account?{" "}
-                        <Link href="/register"><span className="underline font-semibold">Register</span></Link>
+                        <Link href="/register">
+                            <span className="underline font-semibold">
+                                Register
+                            </span>
+                        </Link>
                     </p>
                 </form>
             </Form>

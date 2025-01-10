@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
     const productBy = data.get("productBy");
     const packaging = data.get("packaging");
     const categoryId = JSON.parse(data.get("categoryId") as string);
+    const prescription = data.get("prescription") === "true";
 
     const accessToken = request.cookies.get("accessTokenAdmin");
     if (!accessToken) {
@@ -50,6 +51,7 @@ export async function POST(request: NextRequest) {
             productBy,
             packaging,
             categoryId,
+            prescription,
         }, {
             headers: {
                 Authorization: `Bearer ${accessToken.value}`,

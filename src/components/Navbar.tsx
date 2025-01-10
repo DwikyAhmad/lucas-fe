@@ -5,10 +5,18 @@ import icon from "@/app/icon.svg";
 import { HiOutlineMenu } from "react-icons/hi";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { getUser } from "@/utils/utils";
+import { CgProfile } from "react-icons/cg";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { FaCartShopping } from "react-icons/fa6";
+import { handleLogout } from "./userAuth/authServerAction";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isOpenProfile, setIsOpenProfile] = useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -26,11 +34,32 @@ export default function Navbar() {
         };
     }, []);
 
+    useEffect(() => {
+        const checkAuthStatus = async () => {
+            try {
+                await getUser();
+                setIsAuthenticated(true);
+            } catch (error) {
+                setIsAuthenticated(false);
+            }
+            setLoading(false);
+        };
+
+        checkAuthStatus();
+    }, []);
+
+    const handleLogoutSubmit = async () => { 
+        const success = await handleLogout();
+        if (success) {
+            window.location.href = '/';
+        }
+    }
+
     return (
         <div className="flex font-poppins bg-darkRed justify-between px-4 py-2 items-center sticky top-0 z-20">
             <Image className="w-[25px]" src={icon} alt="LucasDjaja Logo" />
             <div
-                className="flex md:hidden text-xl relative p-2 hover:cursor-pointer hover:bg-darkRed2 rounded-lg duration-200"
+                className="flex lg:hidden text-xl relative p-2 hover:cursor-pointer hover:bg-darkRed2 rounded-lg duration-200"
                 onClick={() => setIsOpen((prev) => !prev)}
                 ref={menuRef}
             >
@@ -77,7 +106,7 @@ export default function Navbar() {
                     </div>
                 )}
             </div>
-            <ul className="hidden md:flex gap-2 font-light items-center">
+            <ul className="hidden lg:flex gap-2 font-light items-center">
                 <li>
                     <Link
                         href="/"
@@ -120,11 +149,55 @@ export default function Navbar() {
                     </Link>
                 </li>
             </ul>
-            <Link href={"/login"} className="hidden md:block">
-                <button className="bg-white text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">
-                    Login
-                </button>
-            </Link>
+            {loading && (
+                <div className="bg-primaryBlack rounded-xl justify-between items-center py-2 w-[85px] h-[36px] px-4 text-xl hidden md:flex"></div>
+            )}
+            {isAuthenticated && !loading && (
+                <div className="items-center hidden lg:flex">
+                    <div
+                        className="relative flex items-center"
+                    >
+                        <div className="mr-2 bg-primaryBlack rounded-full p-2 absolute -left-12">
+                            <FaCartShopping />
+                        </div>
+                        <div
+                            className="bg-primaryBlack rounded-xl flex justify-between items-center py-2 w-[85px] px-4 text-xl relative
+                            hover:cursor-pointer hover:brightness-75 duration-200"
+                            onClick={() => setIsOpenProfile((prev) => !prev)}
+                        >
+                            <CgProfile />
+                            <MdOutlineKeyboardArrowDown />
+                        </div>
+                        {isOpenProfile && (
+                            <ul
+                                className="absolute top-[40px] bg-white text-black w-max right-0 rounded-xl text-base py-2 flex flex-col gap-2
+                            border"
+                            >
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer">
+                                    Edit Profile
+                                </li>
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer">
+                                    Cart
+                                </li>
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer">
+                                    Wishlist
+                                </li>
+                                <li className="hover:bg-slate-300 duration-200 px-4 hover:cursor-pointer"
+                                onClick={() => handleLogoutSubmit()}>
+                                    Logout
+                                </li>
+                            </ul>
+                        )}
+                    </div>
+                </div>
+            )}
+            {!isAuthenticated && !loading && (
+                <Link href={"/login"} className="hidden lg:block">
+                    <button className="bg-white text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">
+                        Login
+                    </button>
+                </Link>
+            )}
         </div>
     );
 }

@@ -9,8 +9,6 @@ export async function GET(request: NextRequest) {
         return NextResponse.error();
     }
     try { 
-        console.log("fetching")
-        console.log(accessToken)
         const response = await axios.get(`${API_URL}/auth/logout/admin`, {
             headers: {
                 Authorization: `Bearer ${accessToken.value}`,
