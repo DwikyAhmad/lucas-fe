@@ -27,12 +27,18 @@ interface   Product {
   }
 interface detailProps { params: { productId: string } }
 const ProductDetail = (props: detailProps) => {
-    const [product ,setProduct] = useState<Product>()
+    const [product, setProduct] = useState<Product>()
+    const [isAllowed, setisAllowed] = useState(false)
+    const restrictedCategory = ["EKSPEKTORAN & MUKOLITIK","LARUTAN ANTISEPTIK","ANTI FUNGI - ANTISEPTIK TOPIKAL","VITAMIN DAN SUPLEMEN KESEHATAN","ANTIDIARE","ANTASID","ANTIPIRETIK"]
     const getProductById = async () => {
         try {
         const {productId } = props.params
           const response = await axios.get(`${API_URL}/product/${productId}`);
             const result: Product = response.data.product
+            if (!product?.categoryNames.some((category) => restrictedCategory.includes(category))) {
+                setisAllowed(true)
+                console.log(isAllowed)
+            }
             setProduct(result)
           return result
         } catch (error) {
