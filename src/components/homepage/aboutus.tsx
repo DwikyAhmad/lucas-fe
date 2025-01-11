@@ -9,7 +9,7 @@ import misi from '@/assets/homepage/MISI.svg';
 export default function Aboutus() {
     return (
         <div className="bg-white py-8 font-poppins" id="aboutus">
-            <div className="bg-red-100 py-8">
+            <div className="py-8">
                 <h1 className="text-primaryBlueNavy text-center text-3xl sm:text-5xl font-semibold ">
                     ABOUT <span className="text-primaryRed">US</span>
                 </h1>
@@ -90,7 +90,7 @@ export default function Aboutus() {
                         />
                     </div>
                     <div className="flex items-center justify-center w-full h-[170px] text-justify font-medium">
-                        <p className="font-medium text-md lg:text-lg px-8 lg:px-16">
+                        <p className="font-medium text-md lg:text-2xl px-8 lg:px-16">
                             A trusted pharmaceutical company that produce health
                             care and cosmetics products in order to <span className="text-primaryRed">
                                 improve
@@ -110,7 +110,7 @@ export default function Aboutus() {
                             className="absolute right-0 bottom-0 hidden md:flex"
                         />
                     </div>
-                    <ul className="list-disc px-10 py-4 space-y-4">
+                    <ul className="list-disc px-10 py-4 space-y-4 text-md lg:text-2xl ">
                         <li>
                             Providing affordable pharmaceutical and health care
                             products through continuous improvement

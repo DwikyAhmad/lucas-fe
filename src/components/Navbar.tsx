@@ -127,7 +127,12 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                    News
+                <Link
+                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                        href="/news"
+                    >
+                       News
+                    </Link>
                 </li>
                 <li>
                     <Link

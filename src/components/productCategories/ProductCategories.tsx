@@ -77,7 +77,7 @@ export default function ProductCategories({
                                     width={500}
                                     height={500}
                                     title={cat.name}
-                                    description="Sejak tahun 2003, Lucas group adalah satu-satunya perusahaan swasta  swasta yang ditunjuk untuk mensuplai kebutuhan obat nasional, selain  selain tiga BUMN. Sampai dengan saat ini Lucas Group sudah  bergabung ke dalam Kimia Farma Group dan masih aktif mengi- kuti  tender e catalog untuk memasok kebutuhan obat obatan generic ke  seluruh wilayah Indonesia."
+                                    description={cat.description}
                                     amount={categoryCount[cat.name] ?? 0}
                                 />
                             </div>
