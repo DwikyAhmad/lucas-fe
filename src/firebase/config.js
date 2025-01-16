@@ -16,7 +16,6 @@ import { getStorage } from 'firebase-admin/storage';
 // };
 
 if (!admin.apps.length) {
-  console.log('oqwqwq')
   admin.initializeApp({
     credential: admin.credential.cert({
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,

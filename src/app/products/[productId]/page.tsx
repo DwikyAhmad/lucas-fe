@@ -79,7 +79,7 @@ const ProductDetail = (props: detailProps) => {
                             <Image src={'https://i.pinimg.com/564x/d3/d7/c3/d3d7c3ff6bda3ac7a2d27537658300b6.jpg'} alt={`Product Image id-${productId}`} width={400} height={400} className='md:rounded-xl rounded-sm h-full w-full md:w-max md:h-max  '></Image>
                         </div>
                         <div className="variants  ">
-                            <div className="label text-white bg-orange rounded-full align-semibold items-center flex justify-center w-max px-3 py-1 text-md font-medium " >Variants</div>
+                            <div className="label text-white bg-orange rounded-full align-semibold items-center flex justify-center w-max px-3 py-1 text-md font-medium " >Qty :</div>
                             <div className="variants-item  flex  gap-4 pl-4 lg:flex-col md:flex-col xl:flex-row flex-row sm:flex-row md:gap-2 ">
                                 <div className="item-name text-primaryBlack flex md:flex-row lg:w-max w-fit  flex-col text-wrap md:flex-wrap" >
                                     
@@ -150,11 +150,15 @@ const ProductDetail = (props: detailProps) => {
                         <div className="ctas flex justify-between w-full ">
                             <div className="cart-check     flex gap-2 md:gap-4 md:w-full  w-full mr-3  ">
                                 <button className="cart     md:px-6 md:py-3 p-2 rounded-lg  hover:bg-primaryYellow border border-black  transition-all duration-300 hover:scale-105"><ShoppingCartTwoToneIcon className='md:scale-150 sm:scale-100 scale-90'/></button>
-                                <button className="cart  bg-primaryYellow font-josefinSans md:text-3xl  border  sm:w-min text-sm  md:w-full w-full border-black md:px-10 md:py-3 justify-center align-middle flex items-center rounded-lg font-bold hover:scale-101 hover:bg-yellow-500 transition-all duration-100 hover:scale-105 sm:text-sm " onClick={()=>router.push(`/products/${product?.id}/checkout`)}  >CHECKOUT</button>
+                                <button disabled className="cart  bg-primaryYellow font-josefinSans md:text-3xl  border  sm:w-min text-sm  md:w-full w-full border-black md:px-10 md:py-3 justify-center align-middle flex items-center rounded-lg font-bold hover:scale-101 hover:bg-yellow-500 transition-all duration-100 hover:scale-105 sm:text-sm " onClick={()=>router.push(`/products/${product?.id}/checkout`)}  >Service Not Available</button>
                             </div>
                             <div className="marketplace  flex rounded-lg gap-2 w-max ">
-                                <button className="tokped text-black border  border-black flex items-center px-2  rounded-lg hover:bg-gray-200 hover:scale-105 "><Image src={ tokopedia} alt={''} width={100} height={100} ></Image></button>
-                                <button className="tokped text-black border border-black  flex items-center px-2 rounded-lg h-full  py-2 hover:bg-gray-200 hover:scale-105 "><Image src={ shopee} alt={''} width={40} height={20} className='  scale-75 '></Image></button>
+                                <a href="">
+                                <button className="tokped text-black border  border-black flex items-center px-2  rounded-lg hover:bg-gray-200 hover:scale-105 "><Image src={tokopedia} alt={''} width={100} height={100} ></Image></button>
+                                </a>
+                                <a href="">
+                                    <button className="shopee text-black border border-black  flex items-center px-2 rounded-lg h-full  py-2 hover:bg-gray-200 hover:scale-105 "><Image src={ shopee} alt={''} width={40} height={20} className='  scale-75 '></Image></button>
+                                </a>
                             </div>
                         </div>
                     </div>
