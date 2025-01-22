@@ -20,7 +20,7 @@ export default async function login({ email, password }: LoginParams) {
     const response = await toast.promise(myPromise, {
         loading: "Loading",
         success: (response) => {
-            if (response.data.code >= 400) {
+            if (response.data.statusCode >= 400) {
                 throw new Error(response.data.message);
             }
             return "Admin successfully logged in";
