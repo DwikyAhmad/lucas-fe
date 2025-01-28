@@ -92,7 +92,7 @@ export default function Complaint({ products }: props) {
             <Toaster />
             <div>
                 <h1 className="font-bold text-2xl lg:text-5xl text-center mt-10">
-                    SIDE EFFECT <br className="lg:hidden"/> COMPLAINT CENTRE
+                    PHARMACOVILIENCE
                 </h1>
                 <div className="w-full flex justify-center mt-2 px-12">
                     <div className="bg-primaryRed w-[200px] lg:w-[400px] h-1"></div>

@@ -3,6 +3,7 @@ import React, {  } from 'react'
 import HeaderNews from './HeaderNews'
 
 import { Button } from '../ui/button';
+import Footer from '../footer';
 // import myStorage  from '@/firebase/storage';
 // import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -26,9 +27,6 @@ import { useRouter } from "next/navigation";
 
 
 function NewsForm() {
-  
-
-
   const formSchema = z
   .object({
       title: z
@@ -105,7 +103,7 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
 };
   return (
     <>
-      <div className=' bg-primaryBlueNavy w-full  mb-4  p-4 '>
+      <div className=' bg-primaryBlueNavy w-full h-full   p-4 '>
           <HeaderNews pageTitle={'ADD NEWS'}   />
         <div className='flex gap-x-2 gap-y-4  flex-wrap items-center justify-center align-middle'>
         </div>
@@ -114,16 +112,16 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-col gap-y-2"
+                    className="flex flex-col gap-y-2 "
                 >
                     <FormField
                         control={form.control}
                         name="title"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>News Title</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="News Title" {...field} />
+                                <FormLabel >News Title</FormLabel>
+                                <FormControl >
+                                    <Input placeholder="News Title" {...field} className="text-white" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -191,7 +189,9 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
             </Form>
           
         </div>
+        
       </div>
+      <Footer />
     </>
   )
 }
