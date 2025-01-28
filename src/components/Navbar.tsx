@@ -115,8 +115,10 @@ export default function Navbar() {
                         Home
                     </Link>
                 </li>
-                <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
-                    About Us
+                <li>
+                    <Link href={'/#aboutus'} className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
+                        About Us
+                    </Link>
                 </li>
                 <li>
                     <Link
@@ -139,14 +141,14 @@ export default function Navbar() {
                         href="/complaint"
                         className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
                     >
-                        Complaint
+                        PHARMACOVILIENCE
                     </Link>
                 </li>
                 <li>
                     <Link
                         href={{
                             pathname: "/products",
-                            query: { filter: "Generik" },
+                            // query: { filter: "Generik" },
                         }}
                         className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
                     >

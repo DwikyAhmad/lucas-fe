@@ -21,8 +21,6 @@ export default async function login({ email, password }: LoginParams) {
         loading: "Loading",
         success: (response) => {
             if (response.data.statusCode >= 400) {
-                console.log(response.data.statusCode);
-                console.log(email + " "+password);
                 throw new Error(response.data.message);
             }
             return "Admin successfully logged in";
