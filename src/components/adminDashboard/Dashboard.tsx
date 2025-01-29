@@ -44,6 +44,14 @@ export default function Dashboard() {
                             <p>Pusat Pengaduan</p>
                         </div>
                     </Link>
+                    <Link href={"/admin/add/news"}>
+                        <div
+                            className="bg-[#c96100] w-[200px] h-[60px] sm:w-[200px] sm:h-[100px] flex justify-center items-center rounded-xl
+                        hover:brightness-75 transition-all duration-200 hover:cursor-pointer"
+                        >
+                            <p>Add News</p>
+                        </div>
+                    </Link>
                 </div>
                 <div className="flex justify-center sm:justify-end mt-10">
                     <LogoutButton />
