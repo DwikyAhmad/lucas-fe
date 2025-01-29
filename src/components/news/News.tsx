@@ -16,7 +16,7 @@ interface News {
 }
 
 interface newsProps{
-  listOfNews:News[]
+  listOfNews:News[] 
 }
 
 
@@ -32,7 +32,8 @@ function News({listOfNews}:newsProps) {
           <HeaderNews pageTitle={'NEWS'}   />
         <div className='w-full flex gap-x-2 gap-y-4  flex-wrap items-center justify-center align-middle'>
         {listOfNews.map((newsItem: News, index: React.Key | null | undefined) => (
-            <CardNews key={index} newsItem={newsItem} />
+          <CardNews key={index} newsItem={newsItem} />
+          
           ))}
           <NewsForm />
         </div>

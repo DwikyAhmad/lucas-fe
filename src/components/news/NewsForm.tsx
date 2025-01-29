@@ -37,6 +37,10 @@ function NewsForm() {
           .string()
           .min(1, { message: "Writer must be at least 1 characters." })
           .max(50),
+      teaser: z
+          .string()
+          .min(1, { message: "Teaser must be at least 1 characters." })
+          .max(200),
     newsPoster: z
       .instanceof(File)
       .refine(
@@ -62,8 +66,9 @@ const form = useForm<z.infer<typeof formSchema>>({
   defaultValues: {
     title: "",
     writer: "",
-      newsPoster: undefined as unknown as File,
-      newsFile: undefined as unknown as File,
+    teaser: "",
+    newsPoster: undefined as unknown as File,
+    newsFile: undefined as unknown as File,
   },
 });
 
@@ -136,6 +141,21 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
                                         <FormLabel>Writer</FormLabel>
                                         <FormControl >
                                             <Input placeholder="News Author" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                          </div>
+                        <div className="w-full">
+                            <FormField
+                                control={form.control}
+                                name="teaser"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Teaser</FormLabel>
+                                        <FormControl >
+                                            <Input placeholder="News Teaser" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
