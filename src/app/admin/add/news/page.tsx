@@ -1,15 +1,16 @@
-import NewsForm from '@/components/news/NewsForm'
-import React from 'react'
+import axios from "axios";
+import API_URL from "@/utils/utils";
+import CardNews from "@/components/news/CardNews";
 
 
-function page() {
-  return (
-    <div>
-      
-          <NewsForm />
-      
-    </div>
-  )
+export default async function page() {
+    let news = [];
+    try {
+        const response = await axios.get(`${API_URL}/news`);
+        news = response.data.news;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return <CardNews newsItem={news} />;
 }
-
-export default page
