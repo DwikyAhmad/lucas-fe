@@ -4,9 +4,7 @@ import { Button } from '../ui/button';
 import News from './News';
 import Image from 'next/image';
 import bgHero from "@/assets/homepage/bg_hero.svg";
-import { ref, getDownloadURL } from "firebase/storage";
-import { useEffect, useState } from 'react';
-import myStorage from '@/firebase/storage';
+
 
 
 interface CardNewsProps {
