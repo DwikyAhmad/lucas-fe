@@ -6,7 +6,7 @@ import axios from "axios";
 import React from "react";
 
 export default async function page() {
-    const news = (await axios.get(`${API_URL}/product`)).data.products;
+    const news = (await axios.get(`${API_URL}/news`)).data.news;
 
     return (
         <>

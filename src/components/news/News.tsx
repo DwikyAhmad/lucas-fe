@@ -6,8 +6,8 @@ import CardNews from "./CardNews";
 interface News {
     title: string;
     writer: string;
-    urlFile: string;
-    urlImage: string;
+    fileUrl: string;
+    imageUrl: string;
     teaser: string;
     createdAt: Date;
 }
@@ -19,7 +19,7 @@ interface newsProps {
 function News({ listOfNews }: newsProps) {
     return (
         <>
-            <div className=" bg-primaryBlueNavy w-full p-4 ">
+            <div className=" bg-primaryBlueNavy w-full p-4 min-h-screen">
                 <HeaderNews pageTitle={"NEWS"} />
                 <div className="w-full flex gap-x-2 gap-y-4  flex-wrap items-center justify-center align-middle">
                     {listOfNews.map(
