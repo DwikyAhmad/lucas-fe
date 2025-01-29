@@ -2,7 +2,7 @@
 
 import React, { forwardRef } from 'react'
 
-
+  
 interface titleProps extends React.HTMLAttributes<HTMLDivElement> {
     title : string
 }
