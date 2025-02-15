@@ -1,13 +1,11 @@
 import Image from "next/image";
 import phapros from "@/assets/homepage/Phapros.svg";
 import bgHero from "@/assets/homepage/bg_hero.svg";
-import icon from "@/app/icon.svg"
-import LoginForm from "./loginForm";
-import { Button } from "@/components/ui/button"
-import arrow from "@/assets/miscellaneous/Arrow.svg"
+import icon from "@/app/icon.svg";
+import { Button } from "@/components/ui/button";
+import arrow from "@/assets/miscellaneous/Arrow.svg";
 
-
-export default function Hero() {    
+export default function Hero() {
     return (
         <>
             <div className="pt-6 pb-12 px-4 relative font-poppins">
@@ -28,7 +26,7 @@ export default function Hero() {
                         Penuhi kebutuhan kesehatanmu disini
                     </p>
                 </div>
-                <div className="flex mt-10 justify-evenly">
+                <div className="flex mt-10 justify-evenly flex-wrap gap-5">
                     <div>
                         <div className="bg-[#999999] flex gap-4 py-3 px-5 rounded-xl font-semibold w-max">
                             <div className="flex items-center">
@@ -41,7 +39,9 @@ export default function Hero() {
                                 </div>
                             </div>
                             <div className="flex flex-col items-end">
-                                <p className="text-[28px] sm:text-5xl">LUCAS DJAJA</p>
+                                <p className="text-[28px] sm:text-5xl">
+                                    LUCAS DJAJA
+                                </p>
                                 <Image
                                     className="w-[90px] sm:w-[150px]"
                                     src={phapros}
@@ -61,12 +61,27 @@ export default function Hero() {
                         text-lg"
                         >
                             Check Our Product Here
-                            <Image src={arrow} alt="Arrow" className="w-[10px] ml-3" />
-                            <Image src={arrow} alt="Arrow" className="w-[10px]" />
+                            <Image
+                                src={arrow}
+                                alt="Arrow"
+                                className="w-[10px] ml-3"
+                            />
+                            <Image
+                                src={arrow}
+                                alt="Arrow"
+                                className="w-[10px]"
+                            />
                         </Button>
                     </div>
-                    <div className="hidden justify-center lg:flex">
-                        <LoginForm/>
+                    <div className="justify-center lg:flex">
+                        <iframe
+                            className="min-w-[300px] min-h-[300px] aspect-square lg:aspect-video"
+                            src="https://www.youtube.com/embed/87B9ocZarZ0?si=p2h3V4BZRhSZeyn0"
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
+                        ></iframe>
                     </div>
                 </div>
             </div>
