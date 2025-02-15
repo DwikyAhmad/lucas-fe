@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react'
 import Image from 'next/image';
-import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
+// import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import jne from "@/assets/kurir/jne.svg";
 import Navbar from '@/components/Navbar';
 
@@ -37,7 +37,7 @@ const Summary = () => {
             
             </div>
             <div className="delete-logo hover:bg-primaryRed bg-red-700 flex align-middle justify-center items-center p-2 rounded-r-md">
-                <DeleteSharpIcon className='scale-110' />
+                {/* <DeleteSharpIcon className='scale-110' /> */}
             </div>
 
           </div>
