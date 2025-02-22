@@ -45,6 +45,3 @@ export const deleteFile = async (downloadURL) => {
     throw error;
   }
 };
-
-const myStorage = getStorage(app);
-export default myStorage;

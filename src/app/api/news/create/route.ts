@@ -4,14 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { uploadFile } from "@/firebase/storage";
 
 export async function POST(request: NextRequest) {
-    const data = await request.formData()
+    const data = await request.formData();
 
     const title = data.get("title");
     const writer = data.get("writer");
     const teaser = data.get("teaser");
     const newsPoster = data.get("newsPoster");
     const newsFile = data.get("newsFile");
-   
+
     const accessToken = request.cookies.get("accessTokenAdmin");
     if (!accessToken) {
         return NextResponse.error();
@@ -35,18 +35,21 @@ export async function POST(request: NextRequest) {
     const fileUrl = await uploadFile(newsFile, "news"); //Menyesuaikan firebase
 
     try {
-        const response = await axios.post(`${API_URL}/news/create`, {
-            title,
-            writer,
-            teaser,
-            posterUrl: posterUrl,
-            fileUrl: fileUrl,
-          
-        }, {
-            headers: {
-                Authorization: `Bearer ${accessToken.value}`,
+        const response = await axios.post(
+            `${API_URL}/news/create`,
+            {
+                title,
+                writer,
+                teaser,
+                imageUrl: posterUrl,
+                fileUrl: fileUrl,
             },
-        });
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken.value}`,
+                },
+            }
+        );
         return NextResponse.json(response.data);
     } catch (error) {
         if (error instanceof axios.AxiosError) {
