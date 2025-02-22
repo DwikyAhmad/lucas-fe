@@ -24,7 +24,7 @@ export default async function Products() {
     
     return (
         <div className=" py-4 font-poppins flex flex-col items-center p-8 ">
-            <div className="w-full py-8 flex flex-col items-center   border border-black">
+            <div className="w-full py-8 flex flex-col items-center  ">
                 <h1 className="text-primaryRed text-center text-3xl sm:text-5xl font-semibold ">
                     OUR <span className="text-primaryBlueNavy">PRODUCTS</span>
                    
@@ -43,7 +43,7 @@ export default async function Products() {
                                     <CarouselItem key={category.id} className=" lg:basis-1/3 w-full h-full">
                                     <div className="p-1 w-full h-max border">
                                     <Card className="w-full h-full flex justify-start items-start">
-                                        <CardContent className="flex flex-col w-full h-max items-center justify-center p-6 border border-black ">
+                                        <CardContent className="flex flex-col w-full h-max items-center justify-center p-6 ">
                                                 <Image src={amino} alt={""}   className="flex w-[250px] " ></Image>
                                                 <span className="text-3xl font-semibold text-center uppercase text-primaryBlueNavy line-clamp-1">{category.name}</span>
                                                 <Link href={"/category"} className="self-end sm:flex items-center flex w-full">
