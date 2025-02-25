@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import amino from "@/assets/homepage/AMINO.svg";
 import { Button } from "@/components/ui/button";

@@ -76,7 +76,7 @@ export default function Hero() {
                     <div className="justify-center lg:flex">
                         <iframe
                             className="min-w-[300px] min-h-[300px] aspect-square lg:aspect-video"
-                            src="https://www.youtube.com/embed/87B9ocZarZ0?si=p2h3V4BZRhSZeyn0"
+                            src="https://www.youtube.com/embed/7gK2LiP1f3g?si=7ZCumZ87NKbOn_6m"
                             title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerPolicy="strict-origin-when-cross-origin"

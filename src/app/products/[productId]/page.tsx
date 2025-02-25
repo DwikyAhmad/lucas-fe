@@ -110,21 +110,23 @@ const CheckoutAndWarningContainer = ({
 
 const ProductDetail = (props: detailProps) => {
   const [product, setProduct] = useState<Product>();
-  const getProductById = async () => {
-    try {
-      const { productId } = props.params;
-      const response = await axios.get(`${API_URL}/product/${productId}`);
-      const result: Product = response.data.product;
-      setProduct(result);
-      return result;
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     const fetchProduct = async () => {
       console.log("ID :", props.params.productId);
+      
+      const getProductById = async () => {
+        try {
+          const { productId } = props.params;
+          const response = await axios.get(`${API_URL}/product/${productId}`);
+          const result: Product = response.data.product;
+          setProduct(result);
+          return result;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
       const fetchedProduct: Product | undefined = await getProductById();
 
       if (fetchedProduct) {
@@ -136,7 +138,7 @@ const ProductDetail = (props: detailProps) => {
       }
     };
     fetchProduct();
-  }, [props.params.productId]); // Memastikan effect dipanggil ulang saat productId berubah
+  }, [props.params.productId, props.params]); // Sekarang dependency list hanya berisi productId
 
   useEffect(() => {
     console.log("Updated product:", product); // Memantau perubahan product
