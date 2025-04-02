@@ -20,7 +20,7 @@ export default function Aboutus() {
     const isMisiInView = useInView(misiRef, { once: true, amount: 0.3 });
 
     return (
-        <div className="bg-white py-8 font-poppins px-4" id="aboutus">
+        <div className="bg-white py-8 font-poppins px-4 overflow-x-hidden" id="aboutus">
             {/* About Us Section */}
             <motion.div
                 className="py-8"
