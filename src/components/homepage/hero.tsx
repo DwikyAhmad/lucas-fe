@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 export default function Hero() {
     return (
         <>
-            <div className="pt-6 pb-12 px-4 relative font-poppins">
+            <div className="pt-6 pb-12 px-4 relative font-poppins overflow-x-hidden">
                 <Image
                     className="-z-10 object-fill"
                     src={bgHero}
@@ -40,7 +40,7 @@ export default function Hero() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
                     >
-                        <div className="bg-[#999999] flex gap-4 py-3 px-5 rounded-xl font-semibold w-max">
+                        <div className=" flex gap-4 py-3 px-5 rounded-xl font-semibold w-max">
                             <div className="flex items-center">
                                 <motion.div 
                                     className="bg-[#E42228] p-1 sm:p-2"
@@ -107,7 +107,7 @@ export default function Hero() {
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
                         <iframe
-                            className="min-w-[300px] min-h-[300px] aspect-square lg:aspect-video"
+                            className="min-w-[300px] min-h-[300px] aspect-square lg:aspect-video rounded-lg border-primaryBlack border-4"
                             src="https://www.youtube.com/embed/7gK2LiP1f3g?si=7ZCumZ87NKbOn_6m"
                             title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

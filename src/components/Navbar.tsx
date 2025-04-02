@@ -11,11 +11,13 @@ import { FaCartShopping } from "react-icons/fa6";
 import { handleLogout } from "./userAuth/authServerAction";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isOpenProfile, setIsOpenProfile] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const checkAuthStatus = async () => {
@@ -39,13 +41,15 @@ export default function Navbar() {
     };
 
     return (
-        <div className="flex font-poppins bg-darkRed justify-between px-4 py-2 items-center sticky top-0 z-20">
-            <Image className="w-[25px]" src={icon} alt="LucasDjaja Logo" />
+        <div className="flex font-poppins bg-white justify-between px-4 py-2 items-center sticky top-0 z-20 shadow-md">
+            <div className="bg-primaryRed px-[6px] py-1">
+                <Image className="w-[25px]" src={icon} alt="LucasDjaja Logo" />
+            </div>
             <div className="lg:hidden font-poppins">
                 <Sheet>
                     <SheetTrigger asChild>
                         <button className="text-xl p-2 hover:bg-darkRed2 rounded-lg duration-200">
-                            <Menu />
+                            <Menu className="text-darkRed hover:text-white"/>
                         </button>
                     </SheetTrigger>
                     <SheetContent
@@ -142,11 +146,11 @@ export default function Navbar() {
                     </SheetContent>
                 </Sheet>
             </div>
-            <ul className="hidden lg:flex gap-2 font-light items-center">
+            <ul className="hidden lg:flex gap-2 font-normal items-center text-darkRed">
                 <li>
                     <Link
                         href="/"
-                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                        className={`hover:bg-gray-200 px-3 py-1 rounded-lg cursor-pointer ${pathname === "/" ? "font-bold" : ""}`}
                     >
                         Home
                     </Link>
@@ -154,22 +158,22 @@ export default function Navbar() {
                 <li>
                     <Link
                         href={"/#aboutus"}
-                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                        className={`hover:bg-gray-200 px-3 py-1 rounded-lg cursor-pointer ${pathname === "/#aboutus" ? "font-bold" : ""}`}
                     >
                         About Us
                     </Link>
                 </li>
                 <li>
                     <Link
-                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                        className={`hover:bg-gray-200 px-3 py-1 rounded-lg cursor-pointer ${pathname === "/category" ? "font-bold" : ""}`}
                         href="/category"
                     >
                         Product & Services
                     </Link>
                 </li>
-                <li className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer">
+                <li>
                     <Link
-                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                        className={`hover:bg-gray-200 px-3 py-1 rounded-lg cursor-pointer ${pathname === "/news" ? "font-bold" : ""}`}
                         href="/news"
                     >
                         News
@@ -178,7 +182,7 @@ export default function Navbar() {
                 <li>
                     <Link
                         href="/complaint"
-                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                        className={`hover:bg-gray-200 px-3 py-1 rounded-lg cursor-pointer ${pathname === "/complaint" ? "font-bold" : ""}`}
                     >
                         Pharmacovigilance
                     </Link>
@@ -189,14 +193,14 @@ export default function Navbar() {
                             pathname: "/products",
                             // query: { filter: "Generik" },
                         }}
-                        className="hover:bg-[#4A0D0D] px-3 py-1 rounded-lg cursor-pointer"
+                        className={`hover:bg-gray-200 px-3 py-1 rounded-lg cursor-pointer ${pathname === "/products" ? "font-bold" : ""}`}
                     >
                         LucaShop
                     </Link>
                 </li>
             </ul>
             {loading && (
-                <div className="bg-primaryBlack rounded-xl justify-between items-center py-2 w-[85px] h-[36px] px-4 text-xl hidden md:flex"></div>
+                <div className="bg-darkRed rounded-xl justify-between items-center py-2 w-[85px] h-[36px] px-4 text-xl hidden lg:flex"></div>
             )}
             {isAuthenticated && !loading && (
                 <div className="items-center hidden lg:flex">
@@ -239,7 +243,7 @@ export default function Navbar() {
             )}
             {!isAuthenticated && !loading && (
                 <Link href={"/login"} className="hidden lg:block">
-                    <button className="bg-white text-primaryRed rounded-lg px-4 py-1 hover:brightness-75 duration-200">
+                    <button className="bg-darkRed text-white rounded-lg px-4 py-1 hover:brightness-75 duration-200 shadow-md">
                         Login
                     </button>
                 </Link>

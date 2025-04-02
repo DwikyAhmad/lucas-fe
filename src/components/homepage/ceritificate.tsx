@@ -8,7 +8,6 @@ import kemenkes from "@/assets/homepage/Logo Kementerian Kesehatan (Kemenkes) Re
 import mui from "@/assets/homepage/Halal MUI Logo (SVG-1080p) - FileVector69.svg";
 import iaf from "@/assets/homepage/IAF.svg";
 import Image from "next/image";
-import lucas from "@/assets/homepage/Lucasdjaja-6.svg";
 import {
     Carousel,
     CarouselContent,
@@ -21,9 +20,7 @@ import { useRef } from "react";
 
 export default function Ceritificate() {
     const certificateRef = useRef(null);
-    const lucasRef = useRef(null);
     const isCertificateInView = useInView(certificateRef, { once: true, amount: 0.3 });
-    const isLucasInView = useInView(lucasRef, { once: true, amount: 0.3 });
 
     return (
         <div>
@@ -89,26 +86,6 @@ export default function Ceritificate() {
                         <CarouselPrevious />
                         <CarouselNext />
                     </Carousel>
-                </motion.div>
-            </motion.div>
-            <motion.div 
-                className="bg-white flex justify-center pt-9"
-                ref={lucasRef}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isLucasInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-            >
-                <motion.div
-                    initial={{ scale: 0.9 }}
-                    animate={isLucasInView ? { scale: 1 } : { scale: 0.9 }}
-                    transition={{ 
-                        duration: 1,
-                        delay: 0.4,
-                        type: "spring",
-                        stiffness: 100
-                    }}
-                >
-                    <Image src={lucas} alt="lucas" className="w-[280px] sm:w-[600px] lg:w-[800px]" />
                 </motion.div>
             </motion.div>
         </div>

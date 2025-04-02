@@ -6,16 +6,17 @@ import Products from "../components/homepage/products";
 import Clients from "../components/homepage/clients";
 import Qna from "../components/homepage/qna";
 import Footer from "../components/footer";
-
+import FacilitiesAndProducts from "../components/homepage/facilitiesandproducts";
 export default function Home() {
     return (
         <div>
             <Navbar />
             <Hero />
-            <Ceritificate />
+            <FacilitiesAndProducts />
             <Aboutus />
-            <Products />
+            <Ceritificate />
             <Clients />
+            <Products />
             <Qna />
             <Footer />
         </div>
