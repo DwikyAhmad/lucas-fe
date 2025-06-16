@@ -1,17 +1,17 @@
 "use client";
 
-import HeaderCategories from "@/components/productService/headerCategoriesName";
-import HeaderProduct from "@/components/productService/productCategoriesHeader";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { IoCart } from "react-icons/io5";
-import { useSearchParams } from "next/navigation";
-import { Checkbox } from "@/components/ui/checkbox";
-import { formatRupiah } from "@/utils/utils";
-import { ScrollArea } from "../ui/scroll-area";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
+import { IoCart } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
+import { IoFilter } from "react-icons/io5";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ScrollArea } from "../ui/scroll-area";
+import { formatRupiah } from "@/utils/utils";
+import { useSearchParams } from "next/navigation";
 
 interface Category {
     id: string;
@@ -49,18 +49,27 @@ export default function LucaShop({
         filter ? [filter] : []
     );
     const [search, setSearch] = useState("");
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
     const shopRef = useRef(null);
     const isShopInView = useInView(shopRef, { once: true, amount: 0.2 });
 
     const handleCheckboxChange = (categoryName: string, isChecked: boolean) => {
         if (isChecked) {
-            // Jika checkbox dicentang, ganti filter dengan kategori yang dipilih (bukan menambahkan)
             setListFilter([categoryName]);
         } else {
-            // Jika checkbox tidak dicentang, hapus filter
             setListFilter([]);
         }
     };
+
+    // Flatten all products for display when no filter is selected
+    const allProducts = Object.values(productsPerCategory).flat();
+    
+    // Filter products based on search and category
+    const filteredProducts = listFilter.length > 0
+        ? (productsPerCategory[listFilter[0]] || []).filter(product => 
+            product.name.toLowerCase().includes(search.toLowerCase()))
+        : allProducts.filter(product => 
+            product.name.toLowerCase().includes(search.toLowerCase()));
 
     return (
         <motion.div 
@@ -68,51 +77,90 @@ export default function LucaShop({
             initial={{ opacity: 0 }}
             animate={isShopInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="h-full w-full font-poppins bg-white gap-4 mb-8"
+            className="container mx-auto px-4 py-8 font-poppins"
         >
+            {/* Header and Search */}
             <motion.div
                 initial={{ y: -20, opacity: 0 }}
                 animate={isShopInView ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
+                className="mb-8"
             >
-                <HeaderProduct
-                    pageTitle="ALL PRODUCTS"
-                    className="text-primaryBlueNavy flex flex-col w-full pt-4 items-center"
-                    search={search}
-                    onSearch={setSearch}
-                />
+                <h1 className="text-3xl md:text-4xl font-bold text-primaryBlueNavy text-center mb-4">
+                    Lucas Pharmacy
+                </h1>
+                <p className="text-gray-600 text-center mb-6">
+                    High-quality medicine products for your health needs
+                </p>
+                
+                <div className="flex flex-col md:flex-row gap-4 items-center justify-between text-primaryBlueNavy">
+                    {/* Search Bar */}
+                    <div className="relative w-full md:w-1/2">
+                        <input
+                            type="text"
+                            placeholder="Search products..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="w-full py-3 pl-12 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryBlueNavy"
+                        />
+                        <IoSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
+                    </div>
+                    
+                    {/* Mobile Filter Button */}
+                    <button 
+                        onClick={() => setIsFilterOpen(!isFilterOpen)}
+                        className="flex md:hidden items-center gap-2 bg-primaryBlueNavy text-white px-4 py-2 rounded-full"
+                    >
+                        <IoFilter />
+                        <span>Filter</span>
+                    </button>
+                </div>
             </motion.div>
-            <div className="flex lg:flex-row flex-col items-center lg:items-start justify-start align-middle w-full px-6 mt-2 gap-8">
+            
+            <div className="flex flex-col md:flex-row gap-6">
+                {/* Category Filter */}
                 <motion.div 
                     initial={{ x: -50, opacity: 0 }}
                     animate={isShopInView ? { x: 0, opacity: 1 } : { x: -50, opacity: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="filter text-white bg-redBricks lg:h-full w-max rounded-md lg:rounded-xl px-4 py-4 gap-2 lg:pt-5 lg:px-10 lg:pb-20 flex lg:flex-col lg:items-start items-center align-middle justify-center shadow-md"
+                    className={`md:w-64 bg-white rounded-xl shadow-md p-4 md:block ${isFilterOpen ? 'block' : 'hidden md:block'} sticky top-4 self-start`}
                 >
-                    <h2 className="md:text-2xl text-xl mb-5 font-semibold lg:flex hidden">
-                        FILTER
+                    <h2 className="text-xl font-semibold mb-4 text-primaryBlueNavy border-b pb-2">
+                        Categories
                     </h2>
-                    <ScrollArea className="max-lg:w-[230px] max-lg:h-[200px] h-[400px]">
-                        <div className="flex flex-col gap-4">
+                    <ScrollArea className="h-[400px] pr-4 text-primaryBlueNavy">
+                        <div className="flex flex-col gap-2">
+                            <div className="flex space-x-2 items-center hover:bg-gray-100 p-2 rounded transition-colors">
+                                <Checkbox
+                                    id="all"
+                                    checked={listFilter.length === 0}
+                                    onCheckedChange={(isChecked) => {
+                                        if (isChecked) setListFilter([]);
+                                    }}
+                                    className="border-gray-300 data-[state=checked]:bg-primaryBlueNavy"
+                                />
+                                <label
+                                    htmlFor="all"
+                                    className="text-sm font-medium cursor-pointer"
+                                >
+                                    All Products
+                                </label>
+                            </div>
+                            
                             {categories.map((category, index) => (
-                                <div key={index} className="flex space-x-2 items-center hover:bg-white/10 p-1 rounded-md transition-colors">
+                                <div key={index} className="flex space-x-2 items-center hover:bg-gray-100 p-2 rounded transition-colors">
                                     <Checkbox
                                         id={category.id}
-                                        checked={listFilter.includes(
-                                            category.name
-                                        )}
+                                        checked={listFilter.includes(category.name)}
                                         onCheckedChange={(isChecked) =>
-                                            handleCheckboxChange(
-                                                category.name,
-                                                !!isChecked
-                                            )
+                                            handleCheckboxChange(category.name, !!isChecked)
                                         }
-                                        className="border-white data-[state=checked]:bg-white data-[state=checked]:text-redBricks"
+                                        className="border-gray-300 data-[state=checked]:bg-primaryBlueNavy"
                                     />
-                                    <div className="grid gap-1.5 leading-none">
+                                    <div className="grid gap-1">
                                         <label
                                             htmlFor={category.id}
-                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                                            className="text-sm font-medium cursor-pointer"
                                         >
                                             {category.name}
                                         </label>
@@ -122,113 +170,87 @@ export default function LucaShop({
                         </div>
                     </ScrollArea>
                 </motion.div>
+                
+                {/* Product Grid */}
                 <motion.div 
                     initial={{ x: 50, opacity: 0 }}
                     animate={isShopInView ? { x: 0, opacity: 1 } : { x: 50, opacity: 0 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
-                    className="w-full flex flex-col items-center align-top justify-start border rounded-lg shadow-sm"
+                    className="flex-1"
                 >
-                    {listFilter.length > 0 ? (
-                        <div className="w-full h-full flex flex-col mb-5">
-                            <HeaderCategories title={listFilter[0]} />
-                            {productsPerCategory[listFilter[0]] ? (
-                                <div className="w-full flex-wrap flex flex-row items-center align-top justify-center md:justify-start gap-6 px-4">
-                                    {productsPerCategory[listFilter[0]]
-                                        .filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
-                                        .map((product, idx) => (
-                                            <motion.div
-                                                key={idx}
-                                                initial={{ y: 50, opacity: 0 }}
-                                                animate={isShopInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-                                                transition={{ duration: 0.5, delay: 0.5 + (idx * 0.1) }}
-                                            >
-                                                <Link href={`/products/${product.id}`}>
-                                                    <div
-                                                        className="text-black border flex items-center
-                                                        flex-col justify-evenly border-black border-opacity-20 hover:scale-105 text-3xl rounded-2xl
-                                                        transition-all duration-200 ease-in-out lg:py-1 py-0 pb-2 h-[380px] w-[300px] cursor-pointer
-                                                        hover:shadow-lg"
-                                                    >
-                                                        <div
-                                                            className="product-image border rounded-xl drop-shadow-2xl border-black
-                                                        border-opacity-20 flex items-center justify-center align-middle
-                                                        mb-2 mt-4 overflow-hidden"
-                                                        >
-                                                            <Image
-                                                                src={
-                                                                    product.image || "https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg"
-                                                                }
-                                                                className="rounded-xl border border-black hover:scale-110 transition-transform duration-300"
-                                                                alt={product.name}
-                                                                width={150}
-                                                                height={100}
-                                                            ></Image>
-                                                        </div>
-                                                        <div className="md:px-4 px-2 flex flex-col items-center w-full mt-auto mb-4">
-                                                            <div className="md:mx-4 w-full">
-                                                                <div
-                                                                    className="font-semibold font-poppins lg:text-2xl text-xl
-                                                                text-primaryBlueNavy truncate max-w-[280px]"
-                                                                >
-                                                                    {product.name}
-                                                                </div>
-                                                                <div className="title text-xs font-medium text-black text-opacity-30">
-                                                                    {product.type}
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex justify-between md:mt-8 mt-4 md:gap-4 gap-2 w-full">
-                                                                <p
-                                                                    className="border border-primaryBlack md:rounded-xl px-5 md:py-1 py-1
-                                                                    lg:text-xl text-lg text-nowrap font-semibold hover:bg-primaryBlack
-                                                                    hover:text-white transition-transform duration-300 ease-in-out hover:scale-105
-                                                                    drop-shadow-2xl md:w-full w-full items-center align-middle
-                                                                    justify-center content-center flex rounded-full"
-                                                                >
-                                                                    {formatRupiah(
-                                                                        product.price
-                                                                    )}
-                                                                </p>
-                                                                <div className="marketplace">
-                                                                    <div
-                                                                        className="border border-primaryBlack rounded-xl px-2 py-1
-                                                                        text-2xl font-semibold h-full items-center flex bg-primaryYellow
-                                                                        text-white transition-transform duration-300 ease-in-out hover:scale-105
-                                                                        md:scale-100 scale-75 drop-shadow-2xl hover:bg-darkYellow"
-                                                                        style={{
-                                                                            cursor: "pointer",
-                                                                        }}
-                                                                    >
-                                                                        <IoCart />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </Link>
-                                            </motion.div>
-                                        ))}
-                                    {productsPerCategory[listFilter[0]].filter(product => 
-                                        product.name.toLowerCase().includes(search.toLowerCase())
-                                    ).length === 0 && (
-                                        <div className="w-full py-10">
-                                            <h3 className="text-xl text-primaryBlueNavy font-medium text-center">
-                                                No products match your search
-                                            </h3>
-                                        </div>
-                                    )}
-                                </div>
-                            ) : (
-                                <h2
-                                    className="text-2xl text-primaryBlueNavy font-semibold text-center mb-5 py-10"
+                    {/* Category Title */}
+                    <h2 className="text-2xl font-semibold mb-6 text-primaryBlueNavy">
+                        {listFilter.length > 0 ? listFilter[0] : "All Products"}
+                        <span className="text-sm font-normal text-gray-500 ml-2">
+                            ({filteredProducts.length} items)
+                        </span>
+                    </h2>
+                    
+                    {filteredProducts.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {filteredProducts.map((product, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ y: 50, opacity: 0 }}
+                                    animate={isShopInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.5 + (idx * 0.05) }}
                                 >
-                                    Product not found
-                                </h2>
-                            )}
+                                    <Link href={`/products/${product.id}`}>
+                                        <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden h-full flex flex-col">
+                                            {/* Product Image */}
+                                            <div className="p-4 flex justify-center bg-gray-50">
+                                                <Image
+                                                    src={product.image || "https://i.pinimg.com/564x/ee/62/96/ee62964178d22165482a2c1a0343cb2a.jpg"}
+                                                    alt={product.name}
+                                                    width={150}
+                                                    height={150}
+                                                    className="object-contain h-[150px] w-[150px] transition-transform duration-300 hover:scale-105"
+                                                />
+                                            </div>
+                                            
+                                            <div className="p-4 flex flex-col flex-grow">
+                                                {/* Product Type Badge */}
+                                                <span className="text-xs font-medium px-2 py-1 rounded-full bg-blue-100 text-primaryBlueNavy w-fit mb-2">
+                                                    {product.type}
+                                                </span>
+                                                
+                                                {/* Product Name */}
+                                                <h3 className="font-semibold text-lg mb-1 text-primaryBlueNavy line-clamp-2">
+                                                    {product.name}
+                                                </h3>
+                                                
+                                                {/* Stock Status */}
+                                                <span className={`text-xs ${product.stock > 0 ? 'text-green-600' : 'text-red-600'} mb-2`}>
+                                                    {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                                                </span>
+                                                
+                                                <div className="mt-auto pt-4 flex justify-between items-center">
+                                                    <span className="font-bold text-lg">
+                                                        {formatRupiah(product.price)}
+                                                    </span>
+                                                    
+                                                    <button 
+                                                        className="p-2 rounded-full bg-primaryYellow text-white hover:bg-darkYellow transition-colors"
+                                                        aria-label="Add to cart"
+                                                    >
+                                                        <IoCart size={18} />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </motion.div>
+                            ))}
                         </div>
                     ) : (
-                        <h2 className="text-2xl text-primaryBlueNavy font-semibold text-center mb-5 mt-5 py-10">
-                            Please select a category
-                        </h2>
+                        <div className="bg-white rounded-xl p-8 text-center shadow-[0_0_15px_0_rgba(0,0,0,0.1)]">
+                            <h3 className="text-xl text-primaryBlueNavy font-medium">
+                                No products match your search
+                            </h3>
+                            <p className="text-gray-500 mt-2">
+                                Try adjusting your search or filter criteria
+                            </p>
+                        </div>
                     )}
                 </motion.div>
             </div>

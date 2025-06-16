@@ -25,7 +25,6 @@ export const dynamic = 'force-dynamic';
 export default async function page() {
     const products = (await axios.get(`${API_URL}/product`)).data.products;
     const categories = (await axios.get(`${API_URL}/category`)).data.categories;
-    console.log(categories);
 
     const productsPerCategory: ProductPerCategory = {};
 
@@ -38,7 +37,6 @@ export default async function page() {
         }
     }
 
-    console.log(productsPerCategory);
 
     return (
         <div>
