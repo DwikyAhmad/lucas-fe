@@ -16,34 +16,27 @@ interface Product {
     image: string;
     categoryName: string[];
 }
-interface ProductPerCategory {
-    [key: string]: Product[];
+
+interface Category {
+    id: string;
+    name: string;
 }
 
 export const dynamic = 'force-dynamic';
 
 export default async function page() {
-    const products = (await axios.get(`${API_URL}/product`)).data.products;
-    const categories = (await axios.get(`${API_URL}/category`)).data.categories;
+    const [productsResponse, categoriesResponse] = await Promise.all([
+        axios.get(`${API_URL}/product`),
+        axios.get(`${API_URL}/category`)
+    ]);
 
-    const productsPerCategory: ProductPerCategory = {};
-
-    for (const product of products) {
-        for (const category of product.categoryName) {
-            if (!productsPerCategory[category]) {
-                productsPerCategory[category] = [];
-            }
-            productsPerCategory[category].push(product);
-        }
-    }
-
+    const products: Product[] = productsResponse.data.products;
+    const categories: Category[] = categoriesResponse.data.categories;
 
     return (
         <div>
             <Navbar />
-            <LucaShop productsPerCategory={productsPerCategory} categories={categories} />
-            
-            {/* <ComingSoon /> */}
+            <LucaShop products={products} categories={categories} />
             <Footer />
         </div>
     );
