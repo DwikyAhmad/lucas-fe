@@ -1,5 +1,10 @@
 import Register from "@/components/userAuth/Register";
 
-export default function page() {
-    return <Register />;
+interface PageProps {
+    searchParams: { redirect?: string };
+}
+
+export default function page({ searchParams }: PageProps) {
+    const redirectUrl = searchParams.redirect || '/';
+    return <Register redirectUrl={redirectUrl} />;
 }

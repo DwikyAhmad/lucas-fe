@@ -16,10 +16,14 @@ import { Input } from "@/components/ui/input";
 import API_URL from "@/utils/utils";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function RegisterForm() {
+interface RegisterFormProps {
+    redirectUrl: string;
+}
+
+export default function RegisterForm({ redirectUrl }: RegisterFormProps) {
     const formSchema = z
         .object({
             email: z
@@ -70,8 +74,6 @@ export default function RegisterForm() {
     });
 
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const redirectUrl = searchParams.get('redirect');
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {

@@ -16,12 +16,14 @@ import { Input } from "@/components/ui/input";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
+interface LoginFormProps {
+    redirectUrl: string;
+}
+
+export default function LoginForm({ redirectUrl }: LoginFormProps) {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const redirectUrl = searchParams.get('redirect') || '/';
 
     const formSchema = z.object({
         email: z

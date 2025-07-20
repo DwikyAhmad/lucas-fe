@@ -1,15 +1,14 @@
-"use client";
-
 import bg_hero from "@/assets/homepage/bg_hero.svg";
 import Image from "next/image";
 import RegisterForm from "./RegisterForm";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
-export default function Register() {
-    const searchParams = useSearchParams();
-    const redirectUrl = searchParams.get('redirect');
+interface RegisterProps {
+    redirectUrl: string;
+}
+
+export default function Register({ redirectUrl }: RegisterProps) {
     return (
         <div className="font-poppins text-black min-h-screen relative">
             <Image
@@ -19,7 +18,7 @@ export default function Register() {
                 alt="bg_hero"
             />
             <div className="flex">
-                <RegisterForm />
+                <RegisterForm redirectUrl={redirectUrl} />
                 <div className="mx-auto hidden sm:flex flex-col justify-center gap-24 text-white items-center text-center">
                     <div>
                         <p>WELCOME TO</p>
