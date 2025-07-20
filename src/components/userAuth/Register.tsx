@@ -1,10 +1,15 @@
+"use client";
+
 import bg_hero from "@/assets/homepage/bg_hero.svg";
 import Image from "next/image";
 import RegisterForm from "./RegisterForm";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function Register() {
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get('redirect');
     return (
         <div className="font-poppins text-black min-h-screen relative">
             <Image
@@ -33,7 +38,7 @@ export default function Register() {
                         <p className="font-light text-sm">
                             Already have an account?
                         </p>
-                        <Link href={"/login"}>
+                        <Link href={`/login${redirectUrl ? `?redirect=${encodeURIComponent(redirectUrl)}` : ''}`}>
                             <Button
                                 className="text-md font-semibold mt-2"
                                 variant={"secondary"}

@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Footer from "@/components/footer";
+import ProductComments from "@/components/ProductComments";
 import { formatRupiah } from "@/utils/utils";
 import { OctagonAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -232,6 +233,11 @@ export default function ProductDetail({ product }: { product: Product }) {
                             quantity={quantity}
                         />
                     </div>
+                </div>
+
+                {/* Comments Section */}
+                <div className="w-full max-w-5xl mt-8">
+                    <ProductComments productId={productId} />
                 </div>
             </main>
             <Footer />

@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import API_URL from "@/utils/utils";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default function RegisterForm() {
@@ -70,6 +70,8 @@ export default function RegisterForm() {
     });
 
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get('redirect');
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -85,7 +87,7 @@ export default function RegisterForm() {
                 success: "Register success",
                 error: "Register failed",
             });
-            router.push("/login");
+            router.push(`/login${redirectUrl ? `?redirect=${encodeURIComponent(redirectUrl)}` : ''}`);
         } catch (error) {
             if (error instanceof axios.AxiosError) {
                 toast.error(error.response?.data.message);
@@ -221,7 +223,7 @@ export default function RegisterForm() {
                     </div>
                     <p className="text-center text-sm">
                         Already have an account?{" "}
-                        <Link href={'/login'}><span className="underline font-semibold">Sign in</span></Link>
+                        <Link href={`/login${redirectUrl ? `?redirect=${encodeURIComponent(redirectUrl)}` : ''}`}><span className="underline font-semibold">Sign in</span></Link>
                     </p>
                 </form>
             </Form>

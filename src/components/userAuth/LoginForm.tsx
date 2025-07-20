@@ -16,9 +16,13 @@ import { Input } from "@/components/ui/input";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import Link from "next/link";
-import { redirectPage } from "./authServerAction";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginForm() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get('redirect') || '/';
+
     const formSchema = z.object({
         email: z
             .string()
@@ -57,7 +61,7 @@ export default function LoginForm() {
                 error: (error) => error.message,
             });
             if ((await myPromise).data.code === 200) {
-                redirectPage();
+                router.push(redirectUrl);
             }
         } catch (error) {
             toast.error("Unknown error occured");
@@ -117,7 +121,7 @@ export default function LoginForm() {
                     </div>
                     <p className="text-center text-sm">
                         Don&apos;t have an account?{" "}
-                        <Link href="/register">
+                        <Link href={`/register${redirectUrl !== '/' ? `?redirect=${encodeURIComponent(redirectUrl)}` : ''}`}>
                             <span className="underline font-semibold">
                                 Register
                             </span>
